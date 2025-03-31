@@ -154,17 +154,17 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -201,154 +201,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.huluapple.xin/2025/03/31/Compiler/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250331171042.jpg">
-      <meta itemprop="name" content="Hulu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hulu's Blog">
-      <meta itemprop="description" content="Welcome to my blog where I share my thoughts and experiences.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hulu's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/31/Compiler/" class="post-title-link" itemprop="url">Compiler</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-03-31 22:35:30" itemprop="dateCreated datePublished" datetime="2025-03-31T22:35:30+08:00">2025-03-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h1><p><img data-src="/images/Compiler/20250331224528_001.jpg" alt="编译链接流程图"></p>
-<h2 id="1-预处理指令的处理-预编译"><a href="#1-预处理指令的处理-预编译" class="headerlink" title="1. 预处理指令的处理(预编译)"></a>1. 预处理指令的处理(预编译)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-
-<p>&#x3D;&#x3D;<strong>用<code>gcc</code>编译器查看预处理指令情况</strong>&#x3D;&#x3D;</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
-
-<p>附</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例"></p>
-<blockquote>
-<p>[!note]</p>
-<ul>
-<li>&#x3D;&#x3D;如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行&#x3D;&#x3D;</li>
-</ul>
-</blockquote>
-<h2 id="2-编译"><a href="#2-编译" class="headerlink" title="2.编译"></a>2.编译</h2><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/Compiler/20250331224530_003.png" alt="编译过程示例1"></p>
-<p><img data-src="/images/Compiler/20250331224532_004.png" alt="编译过程示例2"></p>
-<p><img data-src="/images/Compiler/20250331224533_005.png" alt="编译过程示例3"></p>
-<p><img data-src="/images/Compiler/20250331224535_006.png" alt="编译过程示例4"></p>
-<h2 id="3-汇编"><a href="#3-汇编" class="headerlink" title="3.汇编"></a>3.汇编</h2><p><img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例"></p>
-<blockquote>
-<p>[!important]</p>
-<p>&#x3D;&#x3D;汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表&#x3D;&#x3D;</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 链接过程</span><br><span class="line">---</span><br><span class="line">graph TD</span><br><span class="line">	第一个目标文件.o--&gt;|链接|可执行文件</span><br><span class="line">	第二个目标文件.o--&gt;|链接|可执行文件</span><br><span class="line">	链接库--&gt;|链接|可执行文件</span><br><span class="line">	形成一个符号表</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h2><p><img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例"></p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>[!warning]</p>
-<ul>
-<li><p><strong>&#x3D;&#x3D;预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件&#x3D;&#x3D;</strong></p>
-</li>
-<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 编译与链接</span><br><span class="line">---</span><br><span class="line">graph LR</span><br><span class="line">	预处理-E生成.i文件--&gt;编译-S生成.s文件--&gt;汇编-c生成.o目标文件--&gt;链接</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a>编码问题</h3><ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p>
-</li>
-<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>  两种格式不一样导致乱码</p>
-</li>
-</ul>
-<blockquote>
-<p>[!note]</p>
-<p>解决方法</p>
-<ol>
-<li><p>把编程环境改为GBK编码形式</p>
-</li>
-<li><p>把Windows终端改为UTF-8编码格式</p>
-</li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p>
- <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></li>
-</ol>
-</blockquote>
-<p><img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
