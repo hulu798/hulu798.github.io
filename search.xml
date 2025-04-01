@@ -1,6 +1,449 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Compiler</title>
+    <url>/2025/03/31/Compiler/</url>
+    <content><![CDATA[<h1 id="编译和链接">编译和链接</h1>
+<figure>
+<img data-src="/images/Compiler/20250331224528_001.jpg"
+alt="编译链接流程图" />
+<figcaption aria-hidden="true">编译链接流程图</figcaption>
+</figure>
+<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
+<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
+<p>附</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
+<figcaption aria-hidden="true">预处理示例</figcaption>
+</figure>
+<blockquote>
+<p>[!note]</p>
+<ul>
+<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+</ul>
+</blockquote>
+<h2 id="编译">2.编译</h2>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224530_003.png"
+alt="编译过程示例1" />
+<figcaption aria-hidden="true">编译过程示例1</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224532_004.png"
+alt="编译过程示例2" />
+<figcaption aria-hidden="true">编译过程示例2</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224533_005.png"
+alt="编译过程示例3" />
+<figcaption aria-hidden="true">编译过程示例3</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224535_006.png"
+alt="编译过程示例4" />
+<figcaption aria-hidden="true">编译过程示例4</figcaption>
+</figure>
+<h2 id="汇编">3.汇编</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
+<figcaption aria-hidden="true">汇编过程示例</figcaption>
+</figure>
+<blockquote>
+<p>[!important]</p>
+<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
+</blockquote>
+<pre class="mermaid">---
+title: 链接过程
+---
+graph TD
+    第一个目标文件.o-->|链接|可执行文件
+    第二个目标文件.o-->|链接|可执行文件
+    链接库-->|链接|可执行文件
+    形成一个符号表</pre>
+<h2 id="链接">4.链接</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
+<figcaption aria-hidden="true">链接过程示例</figcaption>
+</figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!warning]</p>
+<ul>
+<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
+<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<pre class="mermaid">---
+title: 编译与链接
+---
+graph LR
+    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<h3 id="编码问题">编码问题</h3>
+<ul>
+<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
+<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
+<p>两种格式不一样导致乱码</p></li>
+</ul>
+<blockquote>
+<p>[!note]</p>
+<p>解决方法</p>
+<ol type="1">
+<li><p>把编程环境改为GBK编码形式</p></li>
+<li><p>把Windows终端改为UTF-8编码格式</p></li>
+<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+</ol>
+<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure>
+<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
+<figcaption aria-hidden="true">编码问题示例</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>GCC Compiler</tag>
+        <tag>技术笔记</tag>
+        <tag>编译原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MCP工具指南</title>
+    <url>/2025/03/31/MCP-Tools/</url>
+    <content><![CDATA[<h1 id="mcp工具指南">MCP工具指南</h1>
+<h2 id="什么是mcp">什么是MCP？</h2>
+<p>MCP（Model Context
+Protocol）是一个开源标准，用于连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。它的目标是帮助前沿模型产生更好、更相关的响应。</p>
+<p>MCP采用客户端-主机-服务器架构，使AI应用程序能够与各种数据源和工具无缝连接：</p>
+<ul>
+<li><strong>MCP主机</strong>：使用MCP与各种资源交互的应用程序，如Claude
+Desktop、开发环境或AI工具。</li>
+<li><strong>MCP客户端</strong>：主机中与特定服务器建立直接一对一连接的组件。</li>
+<li><strong>MCP服务器</strong>：设计用于通过MCP框架提供特定功能的小型程序。</li>
+<li><strong>本地资源</strong>：计算机上的资源，如文件、数据库或服务，MCP服务器可以安全地检索和管理。</li>
+<li><strong>远程资源</strong>：MCP服务器可以连接以获取数据或功能的外部在线资源，如API或基于云的服务。</li>
+</ul>
+<h2 id="可用的mcp工具列表">可用的MCP工具列表</h2>
+<p>以下是当前可用的MCP工具及其功能和配置方法：</p>
+<h3 id="文件系统工具-mcp_filesystem">1. 文件系统工具
+(mcp_filesystem)</h3>
+<p>这组工具允许AI助手与文件系统交互，执行文件和目录操作。</p>
+<h4 id="可用功能">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_filesystem_read_file</code></td>
+<td>从文件系统读取文件的完整内容。处理各种文本编码并在无法读取文件时提供详细的错误消息。</td>
+<td><code>path</code>: 文件路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_read_multiple_files</code></td>
+<td>同时读取多个文件的内容。当需要分析或比较多个文件时，这比一个一个读取文件更有效率。</td>
+<td><code>paths</code>: 文件路径数组（字符串数组）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_write_file</code></td>
+<td>创建新文件或完全覆盖现有文件的内容。谨慎使用，因为它会覆盖现有文件而不发出警告。</td>
+<td><code>path</code>: 文件路径（字符串）<br><code>content</code>:
+文件内容（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_edit_file</code></td>
+<td>对文本文件进行基于行的编辑。每次编辑都会用新内容替换精确的行序列。返回显示所做更改的git风格差异。</td>
+<td><code>path</code>: 文件路径（字符串）<br><code>edits</code>:
+编辑数组<br><code>dryRun</code>:
+是否预览更改（布尔值，默认为false）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_create_directory</code></td>
+<td>创建新目录或确保目录存在。可以在一次操作中创建多个嵌套目录。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_list_directory</code></td>
+<td>获取指定路径中所有文件和目录的详细列表。结果清楚地区分文件和目录，分别带有[FILE]和[DIR]前缀。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_directory_tree</code></td>
+<td>获取文件和目录的递归树视图作为JSON结构。每个条目包括”name”、“type”（文件/目录）和目录的”children”。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_move_file</code></td>
+<td>移动或重命名文件和目录。可以在单个操作中移动文件并重命名它们。</td>
+<td><code>source</code>: 源路径（字符串）<br><code>destination</code>:
+目标路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_search_files</code></td>
+<td>递归搜索匹配模式的文件和目录。从起始路径搜索所有子目录。搜索不区分大小写并匹配部分名称。</td>
+<td><code>path</code>: 起始路径（字符串）<br><code>pattern</code>:
+搜索模式（字符串）<br><code>excludePatterns</code>:
+排除模式数组（可选）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_get_file_info</code></td>
+<td>检索有关文件或目录的详细元数据。返回包括大小、创建时间、最后修改时间、权限和类型在内的综合信息。</td>
+<td><code>path</code>: 文件或目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_list_allowed_directories</code></td>
+<td>返回此服务器允许访问的目录列表。在尝试访问文件之前使用此功能了解哪些目录可用。</td>
+<td><code>random_string</code>: 虚拟参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置方法">配置方法：</h4>
+<p><strong>NPX方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/Users/username/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/path/to/other/allowed/dir&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Docker方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;run&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-i&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--rm&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/Users/username/Desktop,dst=/projects/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/other/allowed/dir,dst=/projects/other/allowed/dir,ro&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/file.txt,dst=/projects/path/to/file.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;mcp/filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/projects&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="网络抓取工具-mcp_fetch">2. 网络抓取工具 (mcp_fetch)</h3>
+<p>这个工具允许AI助手从互联网获取信息。</p>
+<h4 id="可用功能-1">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_fetch_fetch</code></td>
+<td>从互联网获取URL并可选择将其内容提取为markdown。</td>
+<td><code>url</code>: 要获取的URL（字符串）<br><code>max_length</code>:
+返回的最大字符数（整数，默认5000）<br><code>raw</code>:
+是否获取实际HTML内容（布尔值，默认false）<br><code>start_index</code>:
+从此字符索引开始返回输出（整数，默认0）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="网页自动化工具-mcp_playwright">3. 网页自动化工具
+(mcp_playwright)</h3>
+<p>这组工具允许AI助手自动化网页交互，如导航、点击、填写表单等。</p>
+<h4 id="可用功能-2">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_playwright_playwright_navigate</code></td>
+<td>导航到URL</td>
+<td><code>url</code>: 要导航到的URL（字符串）<br><code>width</code>:
+视口宽度（数字，默认1280）<br><code>height</code>:
+视口高度（数字，默认720）<br><code>timeout</code>:
+导航超时（毫秒）<br><code>waitUntil</code>: 导航等待条件</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_screenshot</code></td>
+<td>截取当前页面或特定元素的屏幕截图</td>
+<td><code>name</code>: 截图名称（字符串）<br><code>selector</code>:
+要截图的元素的CSS选择器（可选）<br><code>fullPage</code>:
+是否存储整个页面的截图（布尔值，默认false）<br><code>width</code>:
+宽度（像素，默认800）<br><code>height</code>:
+高度（像素，默认600）<br><code>savePng</code>:
+是否将截图保存为PNG文件（布尔值，默认false）<br><code>storeBase64</code>:
+是否以base64格式存储截图（布尔值，默认true）<br><code>downloadsDir</code>:
+自定义下载目录路径</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_click</code></td>
+<td>点击页面上的元素</td>
+<td><code>selector</code>: 要点击的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_iframe_click</code></td>
+<td>点击页面上iframe中的元素</td>
+<td><code>iframeSelector</code>:
+包含要点击元素的iframe的CSS选择器（字符串）<br><code>selector</code>:
+要点击的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_fill</code></td>
+<td>填写输入字段</td>
+<td><code>selector</code>:
+输入字段的CSS选择器（字符串）<br><code>value</code>:
+要填写的值（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_select</code></td>
+<td>选择页面上带有Select标签的元素</td>
+<td><code>selector</code>:
+要选择的元素的CSS选择器（字符串）<br><code>value</code>:
+要选择的值（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_hover</code></td>
+<td>悬停在页面上的元素上</td>
+<td><code>selector</code>: 要悬停的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_evaluate</code></td>
+<td>在浏览器控制台中执行JavaScript</td>
+<td><code>script</code>: 要执行的JavaScript代码（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_console_logs</code></td>
+<td>从浏览器检索控制台日志，带有过滤选项</td>
+<td><code>type</code>: 要检索的日志类型（all, error, warning, log, info,
+debug）<br><code>search</code>:
+在日志中搜索的文本<br><code>limit</code>:
+要返回的最大日志数<br><code>clear</code>:
+是否在检索后清除日志（布尔值，默认false）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_close</code></td>
+<td>关闭浏览器并释放所有资源</td>
+<td><code>random_string</code>: 虚拟参数</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_get</code></td>
+<td>执行HTTP GET请求</td>
+<td><code>url</code>: 要执行GET操作的URL（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_post</code></td>
+<td>执行HTTP POST请求</td>
+<td><code>url</code>:
+要执行POST操作的URL（字符串）<br><code>value</code>:
+要在正文中发布的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_put</code></td>
+<td>执行HTTP PUT请求</td>
+<td><code>url</code>:
+要执行PUT操作的URL（字符串）<br><code>value</code>:
+要在正文中PUT的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_patch</code></td>
+<td>执行HTTP PATCH请求</td>
+<td><code>url</code>:
+要执行PATCH操作的URL（字符串）<br><code>value</code>:
+要在正文中PATCH的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_delete</code></td>
+<td>执行HTTP DELETE请求</td>
+<td><code>url</code>: 要执行DELETE操作的URL（字符串）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置方法-1">配置方法：</h4>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;puppeteer&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;-y&quot;</span><span class="punctuation">,</span> <span class="string">&quot;@modelcontextprotocol/server-puppeteer&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="顺序思考工具-mcp_sequential_thinking">4. 顺序思考工具
+(mcp_sequential_thinking)</h3>
+<p>这个工具帮助AI助手通过灵活的思考过程进行动态和反思性的问题解决。</p>
+<h4 id="可用功能-3">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_sequential_thinking_sequentialthinking</code></td>
+<td>通过思想进行详细的动态和反思性问题解决的工具。这个工具通过可以适应和发展的灵活思考过程帮助分析问题。每个思想可以在理解深入时建立在前面的见解上，质疑或修改它们。</td>
+<td><code>thought</code>:
+当前思考步骤（字符串）<br><code>nextThoughtNeeded</code>:
+是否需要另一个思考步骤（布尔值）<br><code>thoughtNumber</code>:
+当前思考编号（整数，最小值1）<br><code>totalThoughts</code>:
+估计需要的总思考数（整数，最小值1）<br><code>isRevision</code>:
+这是否修改了之前的思考（布尔值，可选）<br><code>revisesThought</code>:
+正在重新考虑哪个思考（整数，最小值1，可选）<br><code>branchFromThought</code>:
+分支点思考编号（整数，最小值1，可选）<br><code>branchId</code>:
+分支标识符（字符串，可选）<br><code>needsMoreThoughts</code>:
+是否需要更多思考（布尔值，可选）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用场景">使用场景：</h4>
+<ul>
+<li>分解复杂问题为步骤</li>
+<li>需要修改空间的规划和设计</li>
+<li>可能需要修正的分析</li>
+<li>初始范围不明确的问题</li>
+<li>需要在多个步骤中保持上下文的任务</li>
+<li>需要过滤无关信息的情况</li>
+</ul>
+<h4 id="配置方法-2">配置方法：</h4>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;sequential-thinking&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-sequential-thinking&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="官方mcp服务器">5. 官方MCP服务器</h3>
+<p>以下是Anthropic官方提供的MCP服务器及其配置方法：</p>
+<h4
+id="brave搜索mcp工具-modelcontextprotocolserver-brave-search">Brave搜索MCP工具
+(<span class="citation"
+data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/server-brave-search</span>)</h4>
+<p>允许Claude Desktop应用程序在网络上搜索。</p>
+<p><strong>功能：</strong></p>
+<ul>
+<li><strong>brave_web_search</strong>：执行网络搜索，支持分页和过滤
+<ul>
+<li>参数：
+<ul>
+<li><code>query</code></li>
+</ul></li>
+</ul></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术教程</category>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>MCP</tag>
+        <tag>开发工具</tag>
+        <tag>AI工具</tag>
+        <tag>Claude</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cursor rules</title>
     <url>/2025/03/31/Cursor-rules/</url>
     <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
@@ -174,121 +617,32 @@ Guidelines</li>
       </tags>
   </entry>
   <entry>
-    <title>Compiler</title>
-    <url>/2025/03/31/Compiler/</url>
-    <content><![CDATA[<h1 id="编译和链接">编译和链接</h1>
-<figure>
-<img data-src="/images/Compiler/20250331224528_001.jpg"
-alt="编译链接流程图" />
-<figcaption aria-hidden="true">编译链接流程图</figcaption>
-</figure>
-<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
-<p>附</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
-<figcaption aria-hidden="true">预处理示例</figcaption>
-</figure>
-<blockquote>
-<p>[!note]</p>
-<ul>
-<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
-</ul>
-</blockquote>
-<h2 id="编译">2.编译</h2>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224530_003.png"
-alt="编译过程示例1" />
-<figcaption aria-hidden="true">编译过程示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224532_004.png"
-alt="编译过程示例2" />
-<figcaption aria-hidden="true">编译过程示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224533_005.png"
-alt="编译过程示例3" />
-<figcaption aria-hidden="true">编译过程示例3</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224535_006.png"
-alt="编译过程示例4" />
-<figcaption aria-hidden="true">编译过程示例4</figcaption>
-</figure>
-<h2 id="汇编">3.汇编</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
-<figcaption aria-hidden="true">汇编过程示例</figcaption>
-</figure>
-<blockquote>
-<p>[!important]</p>
-<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
-</blockquote>
-<pre class="mermaid">---
-title: 链接过程
----
-graph TD
-    第一个目标文件.o-->|链接|可执行文件
-    第二个目标文件.o-->|链接|可执行文件
-    链接库-->|链接|可执行文件
-    形成一个符号表</pre>
-<h2 id="链接">4.链接</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
-<figcaption aria-hidden="true">链接过程示例</figcaption>
-</figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>[!warning]</p>
-<ul>
-<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
-<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<pre class="mermaid">---
-title: 编译与链接
----
-graph LR
-    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<h3 id="编码问题">编码问题</h3>
-<ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
-<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>两种格式不一样导致乱码</p></li>
-</ul>
-<blockquote>
-<p>[!note]</p>
-<p>解决方法</p>
-<ol type="1">
-<li><p>把编程环境改为GBK编码形式</p></li>
-<li><p>把Windows终端改为UTF-8编码格式</p></li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
-</ol>
-<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<figure>
-<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
-<figcaption aria-hidden="true">编码问题示例</figcaption>
-</figure>
+    <title>Hello World</title>
+    <url>/2025/03/31/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>GCC Compiler</tag>
-        <tag>技术笔记</tag>
-        <tag>编译原理</tag>
-      </tags>
   </entry>
   <entry>
     <title>Typora-Notes</title>
@@ -787,360 +1141,6 @@ role="doc-backlink">↩︎</a></p></li>
         <tag>技术笔记</tag>
         <tag>Typora</tag>
         <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2025/03/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>MCP工具指南</title>
-    <url>/2025/03/31/MCP-Tools/</url>
-    <content><![CDATA[<h1 id="mcp工具指南">MCP工具指南</h1>
-<h2 id="什么是mcp">什么是MCP？</h2>
-<p>MCP（Model Context
-Protocol）是一个开源标准，用于连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。它的目标是帮助前沿模型产生更好、更相关的响应。</p>
-<p>MCP采用客户端-主机-服务器架构，使AI应用程序能够与各种数据源和工具无缝连接：</p>
-<ul>
-<li><strong>MCP主机</strong>：使用MCP与各种资源交互的应用程序，如Claude
-Desktop、开发环境或AI工具。</li>
-<li><strong>MCP客户端</strong>：主机中与特定服务器建立直接一对一连接的组件。</li>
-<li><strong>MCP服务器</strong>：设计用于通过MCP框架提供特定功能的小型程序。</li>
-<li><strong>本地资源</strong>：计算机上的资源，如文件、数据库或服务，MCP服务器可以安全地检索和管理。</li>
-<li><strong>远程资源</strong>：MCP服务器可以连接以获取数据或功能的外部在线资源，如API或基于云的服务。</li>
-</ul>
-<h2 id="可用的mcp工具列表">可用的MCP工具列表</h2>
-<p>以下是当前可用的MCP工具及其功能和配置方法：</p>
-<h3 id="文件系统工具-mcp_filesystem">1. 文件系统工具
-(mcp_filesystem)</h3>
-<p>这组工具允许AI助手与文件系统交互，执行文件和目录操作。</p>
-<h4 id="可用功能">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_filesystem_read_file</code></td>
-<td>从文件系统读取文件的完整内容。处理各种文本编码并在无法读取文件时提供详细的错误消息。</td>
-<td><code>path</code>: 文件路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_read_multiple_files</code></td>
-<td>同时读取多个文件的内容。当需要分析或比较多个文件时，这比一个一个读取文件更有效率。</td>
-<td><code>paths</code>: 文件路径数组（字符串数组）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_write_file</code></td>
-<td>创建新文件或完全覆盖现有文件的内容。谨慎使用，因为它会覆盖现有文件而不发出警告。</td>
-<td><code>path</code>: 文件路径（字符串）<br><code>content</code>:
-文件内容（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_edit_file</code></td>
-<td>对文本文件进行基于行的编辑。每次编辑都会用新内容替换精确的行序列。返回显示所做更改的git风格差异。</td>
-<td><code>path</code>: 文件路径（字符串）<br><code>edits</code>:
-编辑数组<br><code>dryRun</code>:
-是否预览更改（布尔值，默认为false）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_create_directory</code></td>
-<td>创建新目录或确保目录存在。可以在一次操作中创建多个嵌套目录。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_list_directory</code></td>
-<td>获取指定路径中所有文件和目录的详细列表。结果清楚地区分文件和目录，分别带有[FILE]和[DIR]前缀。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_directory_tree</code></td>
-<td>获取文件和目录的递归树视图作为JSON结构。每个条目包括”name”、“type”（文件/目录）和目录的”children”。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_move_file</code></td>
-<td>移动或重命名文件和目录。可以在单个操作中移动文件并重命名它们。</td>
-<td><code>source</code>: 源路径（字符串）<br><code>destination</code>:
-目标路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_search_files</code></td>
-<td>递归搜索匹配模式的文件和目录。从起始路径搜索所有子目录。搜索不区分大小写并匹配部分名称。</td>
-<td><code>path</code>: 起始路径（字符串）<br><code>pattern</code>:
-搜索模式（字符串）<br><code>excludePatterns</code>:
-排除模式数组（可选）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_get_file_info</code></td>
-<td>检索有关文件或目录的详细元数据。返回包括大小、创建时间、最后修改时间、权限和类型在内的综合信息。</td>
-<td><code>path</code>: 文件或目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_list_allowed_directories</code></td>
-<td>返回此服务器允许访问的目录列表。在尝试访问文件之前使用此功能了解哪些目录可用。</td>
-<td><code>random_string</code>: 虚拟参数</td>
-</tr>
-</tbody>
-</table>
-<h4 id="配置方法">配置方法：</h4>
-<p><strong>NPX方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/Users/username/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/path/to/other/allowed/dir&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Docker方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;run&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-i&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--rm&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/Users/username/Desktop,dst=/projects/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/other/allowed/dir,dst=/projects/other/allowed/dir,ro&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/file.txt,dst=/projects/path/to/file.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;mcp/filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/projects&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="网络抓取工具-mcp_fetch">2. 网络抓取工具 (mcp_fetch)</h3>
-<p>这个工具允许AI助手从互联网获取信息。</p>
-<h4 id="可用功能-1">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_fetch_fetch</code></td>
-<td>从互联网获取URL并可选择将其内容提取为markdown。</td>
-<td><code>url</code>: 要获取的URL（字符串）<br><code>max_length</code>:
-返回的最大字符数（整数，默认5000）<br><code>raw</code>:
-是否获取实际HTML内容（布尔值，默认false）<br><code>start_index</code>:
-从此字符索引开始返回输出（整数，默认0）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="网页自动化工具-mcp_playwright">3. 网页自动化工具
-(mcp_playwright)</h3>
-<p>这组工具允许AI助手自动化网页交互，如导航、点击、填写表单等。</p>
-<h4 id="可用功能-2">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_playwright_playwright_navigate</code></td>
-<td>导航到URL</td>
-<td><code>url</code>: 要导航到的URL（字符串）<br><code>width</code>:
-视口宽度（数字，默认1280）<br><code>height</code>:
-视口高度（数字，默认720）<br><code>timeout</code>:
-导航超时（毫秒）<br><code>waitUntil</code>: 导航等待条件</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_screenshot</code></td>
-<td>截取当前页面或特定元素的屏幕截图</td>
-<td><code>name</code>: 截图名称（字符串）<br><code>selector</code>:
-要截图的元素的CSS选择器（可选）<br><code>fullPage</code>:
-是否存储整个页面的截图（布尔值，默认false）<br><code>width</code>:
-宽度（像素，默认800）<br><code>height</code>:
-高度（像素，默认600）<br><code>savePng</code>:
-是否将截图保存为PNG文件（布尔值，默认false）<br><code>storeBase64</code>:
-是否以base64格式存储截图（布尔值，默认true）<br><code>downloadsDir</code>:
-自定义下载目录路径</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_click</code></td>
-<td>点击页面上的元素</td>
-<td><code>selector</code>: 要点击的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_iframe_click</code></td>
-<td>点击页面上iframe中的元素</td>
-<td><code>iframeSelector</code>:
-包含要点击元素的iframe的CSS选择器（字符串）<br><code>selector</code>:
-要点击的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_fill</code></td>
-<td>填写输入字段</td>
-<td><code>selector</code>:
-输入字段的CSS选择器（字符串）<br><code>value</code>:
-要填写的值（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_select</code></td>
-<td>选择页面上带有Select标签的元素</td>
-<td><code>selector</code>:
-要选择的元素的CSS选择器（字符串）<br><code>value</code>:
-要选择的值（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_hover</code></td>
-<td>悬停在页面上的元素上</td>
-<td><code>selector</code>: 要悬停的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_evaluate</code></td>
-<td>在浏览器控制台中执行JavaScript</td>
-<td><code>script</code>: 要执行的JavaScript代码（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_console_logs</code></td>
-<td>从浏览器检索控制台日志，带有过滤选项</td>
-<td><code>type</code>: 要检索的日志类型（all, error, warning, log, info,
-debug）<br><code>search</code>:
-在日志中搜索的文本<br><code>limit</code>:
-要返回的最大日志数<br><code>clear</code>:
-是否在检索后清除日志（布尔值，默认false）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_close</code></td>
-<td>关闭浏览器并释放所有资源</td>
-<td><code>random_string</code>: 虚拟参数</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_get</code></td>
-<td>执行HTTP GET请求</td>
-<td><code>url</code>: 要执行GET操作的URL（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_post</code></td>
-<td>执行HTTP POST请求</td>
-<td><code>url</code>:
-要执行POST操作的URL（字符串）<br><code>value</code>:
-要在正文中发布的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_put</code></td>
-<td>执行HTTP PUT请求</td>
-<td><code>url</code>:
-要执行PUT操作的URL（字符串）<br><code>value</code>:
-要在正文中PUT的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_patch</code></td>
-<td>执行HTTP PATCH请求</td>
-<td><code>url</code>:
-要执行PATCH操作的URL（字符串）<br><code>value</code>:
-要在正文中PATCH的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_delete</code></td>
-<td>执行HTTP DELETE请求</td>
-<td><code>url</code>: 要执行DELETE操作的URL（字符串）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="配置方法-1">配置方法：</h4>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;puppeteer&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;-y&quot;</span><span class="punctuation">,</span> <span class="string">&quot;@modelcontextprotocol/server-puppeteer&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="顺序思考工具-mcp_sequential_thinking">4. 顺序思考工具
-(mcp_sequential_thinking)</h3>
-<p>这个工具帮助AI助手通过灵活的思考过程进行动态和反思性的问题解决。</p>
-<h4 id="可用功能-3">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_sequential_thinking_sequentialthinking</code></td>
-<td>通过思想进行详细的动态和反思性问题解决的工具。这个工具通过可以适应和发展的灵活思考过程帮助分析问题。每个思想可以在理解深入时建立在前面的见解上，质疑或修改它们。</td>
-<td><code>thought</code>:
-当前思考步骤（字符串）<br><code>nextThoughtNeeded</code>:
-是否需要另一个思考步骤（布尔值）<br><code>thoughtNumber</code>:
-当前思考编号（整数，最小值1）<br><code>totalThoughts</code>:
-估计需要的总思考数（整数，最小值1）<br><code>isRevision</code>:
-这是否修改了之前的思考（布尔值，可选）<br><code>revisesThought</code>:
-正在重新考虑哪个思考（整数，最小值1，可选）<br><code>branchFromThought</code>:
-分支点思考编号（整数，最小值1，可选）<br><code>branchId</code>:
-分支标识符（字符串，可选）<br><code>needsMoreThoughts</code>:
-是否需要更多思考（布尔值，可选）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="使用场景">使用场景：</h4>
-<ul>
-<li>分解复杂问题为步骤</li>
-<li>需要修改空间的规划和设计</li>
-<li>可能需要修正的分析</li>
-<li>初始范围不明确的问题</li>
-<li>需要在多个步骤中保持上下文的任务</li>
-<li>需要过滤无关信息的情况</li>
-</ul>
-<h4 id="配置方法-2">配置方法：</h4>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;sequential-thinking&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-sequential-thinking&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="官方mcp服务器">5. 官方MCP服务器</h3>
-<p>以下是Anthropic官方提供的MCP服务器及其配置方法：</p>
-<h4
-id="brave搜索mcp工具-modelcontextprotocolserver-brave-search">Brave搜索MCP工具
-(<span class="citation"
-data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/server-brave-search</span>)</h4>
-<p>允许Claude Desktop应用程序在网络上搜索。</p>
-<p><strong>功能：</strong></p>
-<ul>
-<li><strong>brave_web_search</strong>：执行网络搜索，支持分页和过滤
-<ul>
-<li>参数：
-<ul>
-<li><code>query</code></li>
-</ul></li>
-</ul></li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>MCP</tag>
-        <tag>开发工具</tag>
-        <tag>AI工具</tag>
-        <tag>Claude</tag>
       </tags>
   </entry>
 </search>
