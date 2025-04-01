@@ -1,12 +1,12 @@
 /* global NexT, CONFIG */
 
-HTMLElement.prototype.wrap = function(wrapper) {
+HTMLElement.prototype.wrap = function (wrapper) {
   this.parentNode.insertBefore(wrapper, this);
   this.parentNode.removeChild(this);
   wrapper.appendChild(this);
 };
 
-(function() {
+(function () {
   const onPageLoaded = () => document.dispatchEvent(
     new Event('page:loaded', {
       bubbles: true
@@ -204,9 +204,9 @@ NexT.utils = {
 
     backToTop && backToTop.addEventListener('click', () => {
       window.anime({
-        targets  : document.scrollingElement,
-        duration : 500,
-        easing   : 'linear',
+        targets: document.scrollingElement,
+        duration: 500,
+        easing: 'linear',
         scrollTop: 0
       });
     });
@@ -269,9 +269,9 @@ NexT.utils = {
         if (!CONFIG.stickytabs) return;
         const offset = nav.parentNode.getBoundingClientRect().top + window.scrollY + 10;
         window.anime({
-          targets  : document.scrollingElement,
-          duration : 500,
-          easing   : 'linear',
+          targets: document.scrollingElement,
+          duration: 500,
+          easing: 'linear',
           scrollTop: offset
         });
       });
@@ -322,11 +322,11 @@ NexT.utils = {
         event.preventDefault();
         const offset = target.getBoundingClientRect().top + window.scrollY;
         window.anime({
-          targets  : document.scrollingElement,
-          duration : 500,
-          easing   : 'linear',
+          targets: document.scrollingElement,
+          duration: 500,
+          easing: 'linear',
           scrollTop: offset,
-          complete : () => {
+          complete: () => {
             history.pushState(null, document.title, element.href);
           }
         });
@@ -378,9 +378,9 @@ NexT.utils = {
     const tocElement = document.querySelector(CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini' ? '.sidebar-panel-container' : '.sidebar');
     if (!document.querySelector('.sidebar-toc-active')) return;
     window.anime({
-      targets  : tocElement,
-      duration : 200,
-      easing   : 'linear',
+      targets: tocElement,
+      duration: 200,
+      easing: 'linear',
       scrollTop: tocElement.scrollTop - (tocElement.offsetHeight / 2) + target.getBoundingClientRect().top - tocElement.getBoundingClientRect().top
     });
   },
@@ -513,7 +513,7 @@ NexT.utils = {
 
   debounce(func, wait) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
       const context = this;
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(context, args), wait);
