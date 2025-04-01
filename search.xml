@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Compiler</title>
+    <url>/2025/03/31/Compiler/</url>
+    <content><![CDATA[<h1 id="编译和链接">编译和链接</h1>
+<figure>
+<img data-src="/images/Compiler/20250331224528_001.jpg"
+alt="编译链接流程图" />
+<figcaption aria-hidden="true">编译链接流程图</figcaption>
+</figure>
+<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
+<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
+<p>附</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
+<figcaption aria-hidden="true">预处理示例</figcaption>
+</figure>
+<blockquote>
+<p>[!note]</p>
+<ul>
+<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+</ul>
+</blockquote>
+<h2 id="编译">2.编译</h2>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224530_003.png"
+alt="编译过程示例1" />
+<figcaption aria-hidden="true">编译过程示例1</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224532_004.png"
+alt="编译过程示例2" />
+<figcaption aria-hidden="true">编译过程示例2</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224533_005.png"
+alt="编译过程示例3" />
+<figcaption aria-hidden="true">编译过程示例3</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224535_006.png"
+alt="编译过程示例4" />
+<figcaption aria-hidden="true">编译过程示例4</figcaption>
+</figure>
+<h2 id="汇编">3.汇编</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
+<figcaption aria-hidden="true">汇编过程示例</figcaption>
+</figure>
+<blockquote>
+<p>[!important]</p>
+<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
+</blockquote>
+<pre class="mermaid">---
+title: 链接过程
+---
+graph TD
+    第一个目标文件.o-->|链接|可执行文件
+    第二个目标文件.o-->|链接|可执行文件
+    链接库-->|链接|可执行文件
+    形成一个符号表</pre>
+<h2 id="链接">4.链接</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
+<figcaption aria-hidden="true">链接过程示例</figcaption>
+</figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!warning]</p>
+<ul>
+<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
+<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<pre class="mermaid">---
+title: 编译与链接
+---
+graph LR
+    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<h3 id="编码问题">编码问题</h3>
+<ul>
+<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
+<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
+<p>两种格式不一样导致乱码</p></li>
+</ul>
+<blockquote>
+<p>[!note]</p>
+<p>解决方法</p>
+<ol type="1">
+<li><p>把编程环境改为GBK编码形式</p></li>
+<li><p>把Windows终端改为UTF-8编码格式</p></li>
+<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+</ol>
+<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure>
+<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
+<figcaption aria-hidden="true">编码问题示例</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>GCC Compiler</tag>
+        <tag>技术笔记</tag>
+        <tag>编译原理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cursor rules</title>
     <url>/2025/03/31/Cursor-rules/</url>
     <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
@@ -172,34 +289,6 @@ Guidelines</li>
         <tag>学习记录</tag>
         <tag>资源分享</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2025/03/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>MCP工具指南</title>
@@ -528,123 +617,6 @@ data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/serv
       </tags>
   </entry>
   <entry>
-    <title>Compiler</title>
-    <url>/2025/03/31/Compiler/</url>
-    <content><![CDATA[<h1 id="编译和链接">编译和链接</h1>
-<figure>
-<img data-src="/images/Compiler/20250331224528_001.jpg"
-alt="编译链接流程图" />
-<figcaption aria-hidden="true">编译链接流程图</figcaption>
-</figure>
-<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
-<p>附</p>
-<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line"><span class="deletion">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span></span><br><span class="line"><span class="deletion">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span></span><br><span class="line"><span class="deletion">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span></span><br><span class="line"><span class="deletion">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span></span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
-<figcaption aria-hidden="true">预处理示例</figcaption>
-</figure>
-<blockquote>
-<p>[!note]</p>
-<ul>
-<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
-</ul>
-</blockquote>
-<h2 id="编译">2.编译</h2>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224530_003.png"
-alt="编译过程示例1" />
-<figcaption aria-hidden="true">编译过程示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224532_004.png"
-alt="编译过程示例2" />
-<figcaption aria-hidden="true">编译过程示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224533_005.png"
-alt="编译过程示例3" />
-<figcaption aria-hidden="true">编译过程示例3</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224535_006.png"
-alt="编译过程示例4" />
-<figcaption aria-hidden="true">编译过程示例4</figcaption>
-</figure>
-<h2 id="汇编">3.汇编</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
-<figcaption aria-hidden="true">汇编过程示例</figcaption>
-</figure>
-<blockquote>
-<p>[!important]</p>
-<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
-</blockquote>
-<pre class="mermaid">---
-title: 链接过程
----
-graph TD
-    第一个目标文件.o-->|链接|可执行文件
-    第二个目标文件.o-->|链接|可执行文件
-    链接库-->|链接|可执行文件
-    形成一个符号表</pre>
-<h2 id="链接">4.链接</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
-<figcaption aria-hidden="true">链接过程示例</figcaption>
-</figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>[!warning]</p>
-<ul>
-<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
-<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<pre class="mermaid">---
-title: 编译与链接
----
-graph LR
-    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<h3 id="编码问题">编码问题</h3>
-<ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
-<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>两种格式不一样导致乱码</p></li>
-</ul>
-<blockquote>
-<p>[!note]</p>
-<p>解决方法</p>
-<ol type="1">
-<li><p>把编程环境改为GBK编码形式</p></li>
-<li><p>把Windows终端改为UTF-8编码格式</p></li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
-</ol>
-<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<figure>
-<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
-<figcaption aria-hidden="true">编码问题示例</figcaption>
-</figure>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>GCC Compiler</tag>
-        <tag>技术笔记</tag>
-        <tag>编译原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora-Notes</title>
     <url>/2025/03/31/Typora-Notes/</url>
     <content><![CDATA[<h2 id="markdown-notes"># MarkDown Notes</h2>
@@ -733,14 +705,14 @@ graph LR
 时，则会被隐藏</mark></p></li>
 </ul>
 </blockquote>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">**这是粗体**</span><br><span class="line">*这是斜体*</span><br><span class="line">~~这是删除线~~</span><br><span class="line"><span class="tag">&lt;<span class="name">u</span>&gt;</span>这是下划线<span class="tag">&lt;/<span class="name">u</span>&gt;</span></span><br><span class="line">==这是高亮==</span><br><span class="line"><span class="comment">&lt;!--我是注释--&gt;</span> </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">**这是粗体**</span><br><span class="line">*这是斜体*</span><br><span class="line">~~这是删除线~~</span><br><span class="line">&lt;u&gt;这是下划线&lt;/u&gt;</span><br><span class="line">==这是高亮==</span><br><span class="line">&lt;!--我是注释--&gt; </span><br></pre></td></tr></table></figure>
 <h3 id="上下标">上下标</h3>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">上标<span class="symbol">:a^b^</span></span><br><span class="line">下标<span class="symbol">:a~b~</span></span><br><span class="line">用<span class="title class_">Latex</span>格式好看一点<span class="variable">$a</span>^&#123;b&#125;<span class="variable">$ </span>  <span class="variable">$a_</span>&#123;b&#125;$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">上标:a^b^</span><br><span class="line">下标:a~b~</span><br><span class="line">用Latex格式好看一点$a^&#123;b&#125;$   $a_&#123;b&#125;$</span><br></pre></td></tr></table></figure>
 <h3 id="文本查找">文本查找</h3>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">搜索<span class="symbol">:ctrl+F</span></span><br><span class="line">搜索+替换<span class="symbol">:ctrl+H//</span>这里和<span class="title class_">VsCode</span>类似</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索:ctrl+F</span><br><span class="line">搜索+替换:ctrl+H//这里和VsCode类似</span><br></pre></td></tr></table></figure>
 <h2 id="列表">3. 列表</h2>
 <h3 id="无序列表">1. 无序列表</h3>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">设置<span class="symbol">:*/-/+/+</span>空格或者ctrl+shift+]</span><br><span class="line">ctrl+[和ctrl+]将列表等级升级和降级</span><br><span class="line">退出列表<span class="symbol">:</span>两次回车退出一个等级列表,反复按回车键即可</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置:*/-/+/+空格或者ctrl+shift+]</span><br><span class="line">ctrl+[和ctrl+]将列表等级升级和降级</span><br><span class="line">退出列表:两次回车退出一个等级列表,反复按回车键即可</span><br></pre></td></tr></table></figure>
 <p>同级别:</p>
 <ul>
 <li>a</li>
@@ -758,7 +730,7 @@ graph LR
 </ul></li>
 </ul>
 <h3 id="有序列表">2. 有序列表</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">设置:数字+.+空格或者ctrl+<span class="built_in">shift</span>+[</span><br><span class="line">退出和等级变换快捷键和无序列表一致</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">设置:数字+.+空格或者ctrl+shift+[</span><br><span class="line">退出和等级变换快捷键和无序列表一致</span><br></pre></td></tr></table></figure>
 <h3 id="任务列表">3. 任务列表</h3>
 <blockquote>
 <ul class="task-list">
@@ -768,7 +740,7 @@ type="checkbox" /><strong>早起</strong></label></p></li>
 checked="" /><strong>晚睡</strong></label></p></li>
 </ul>
 </blockquote>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">-+空格<span class="selector-attr">[空格]</span>+空格,实际上是无序列表+<span class="selector-attr">[空格]</span>+空格</span><br><span class="line">-+空格<span class="selector-attr">[x]</span>+空格,实际上是无序列表+<span class="selector-attr">[x]</span>+空格</span><br><span class="line">升级降级退出方法和无序列表相同</span><br><span class="line">快捷键ctrl+shift+<span class="attribute">X</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-+空格[空格]+空格,实际上是无序列表+[空格]+空格</span><br><span class="line">-+空格[x]+空格,实际上是无序列表+[x]+空格</span><br><span class="line">升级降级退出方法和无序列表相同</span><br><span class="line">快捷键ctrl+shift+X</span><br></pre></td></tr></table></figure>
 <h2 id="区块显示引用">4.区块显示(引用)</h2>
 <blockquote>
 <blockquote>
@@ -780,7 +752,7 @@ checked="" /><strong>晚睡</strong></label></p></li>
 </blockquote>
 </blockquote>
 </blockquote>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">&gt;+空格</span><br><span class="line">&gt;+回车</span><br><span class="line">在输入完一个区块显示后直接回车会撤回(同上列表)</span><br><span class="line">ctrl+[和回车键可以取消前一个区块显示符号(和列表级别变换方法相同)</span><br><span class="line">如果想增加引用的行数<span class="symbol">:shift+enter</span></span><br><span class="line">&gt;+[!+类型]可以得到警告框,已有的类型是<span class="symbol">:note</span>,tip,warning,important,caution</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;+空格</span><br><span class="line">&gt;+回车</span><br><span class="line">在输入完一个区块显示后直接回车会撤回(同上列表)</span><br><span class="line">ctrl+[和回车键可以取消前一个区块显示符号(和列表级别变换方法相同)</span><br><span class="line">如果想增加引用的行数:shift+enter</span><br><span class="line">&gt;+[!+类型]可以得到警告框,已有的类型是:note,tip,warning,important,caution</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>[!note]</p>
 <p><strong>这是提醒内容</strong></p>
@@ -789,11 +761,11 @@ checked="" /><strong>晚睡</strong></label></p></li>
 <ul>
 <li>行内代码</li>
 </ul>
-<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line"><span class="string">`这是行内代码`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">`这是行内代码`</span><br></pre></td></tr></table></figure>
 <ul>
 <li>代码块</li>
 </ul>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">输入```+语言模式或者~~~加语言模式</span><br><span class="line"><span class="title">快捷键:</span>选中代码+ctrl+shift+K</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入```+语言模式或者~~~加语言模式</span><br><span class="line">快捷键:选中代码+ctrl+shift+K</span><br></pre></td></tr></table></figure>
 <h2 id="链接">6.链接</h2>
 <h3 id="链接网址">1.链接网址</h3>
 <h4 id="行内链接">行内链接</h4>
@@ -803,20 +775,20 @@ class="uri">http://github.com</a></p></li>
 <li><p><a href="http://github.com">GitHub</a></p></li>
 <li><p><a href="http://github.com" title="Github">GitHub</a></p></li>
 </ul>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">网址</span><br><span class="line">&lt;网址&gt;与直接输入网址作用相同</span><br><span class="line"><span class="selector-attr">[名称]</span>+(网址)</span><br><span class="line"><span class="selector-attr">[名称]</span>+(网址+空格+&quot;网址&quot;)<span class="comment">//将鼠标悬停显示备注</span></span><br><span class="line">ctrl+点击即可跳转</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">网址</span><br><span class="line">&lt;网址&gt;与直接输入网址作用相同</span><br><span class="line">[名称]+(网址)</span><br><span class="line">[名称]+(网址+空格+&quot;网址&quot;)//将鼠标悬停显示备注</span><br><span class="line">ctrl+点击即可跳转</span><br></pre></td></tr></table></figure>
 <h4 id="参考式">参考式</h4>
 <p>参考式链接的写法相当于行内式拆分成两部分，并通过一个 识别符 来
 连接两部分。<mark>参考式能尽量保持文章结构的简单，也方便统一管理<span
 class="math inline">\(URL\)</span></mark></p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-attr">[网址名字]</span><span class="selector-attr">[标识符]</span></span><br><span class="line"><span class="selector-attr">[标识符]</span>:空格+网址 <span class="string">&quot;说明(鼠标悬停)&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[网址名字][标识符]</span><br><span class="line">[标识符]:空格+网址 &quot;说明(鼠标悬停)&quot;</span><br></pre></td></tr></table></figure>
 <p><a href="http://github.com" title="代码托管平台">GitHub</a></p>
 <h3 id="文章内链接锚点">2.文章内链接(锚点)</h3>
 <p><a href="#1.%20标题" title="tip">标题</a></p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-attr">[备注]</span>(#+标题名+空格+&quot;说明&quot;)<span class="comment">//注意标题名要完整的标题包括空格</span></span><br><span class="line"><span class="selector-attr">[标题]</span>(#<span class="number">1</span>.标题)<span class="comment">//ctrl+点击跳转</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[备注](#+标题名+空格+&quot;说明&quot;)//注意标题名要完整的标题包括空格</span><br><span class="line">[标题](#1.标题)//ctrl+点击跳转</span><br></pre></td></tr></table></figure>
 <h3 id="链接文件">3.链接文件</h3>
 <p><a href="C:\Users\Dell\Desktop\C\Code\跳过整数.png">code</a></p>
 <p><a href="C:\Users\Dell\Desktop\组合优化与博弈论.pdf">book</a></p>
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line">[<span class="name">自主命名</span>](<span class="name">文件路径</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[自主命名](文件路径)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>[!warning]</p>
 <p><mark>链接本地文件其他设备打不开,可以上传文件到Gitee云端,再复制链接到<span
@@ -826,13 +798,13 @@ class="math inline">\(MarkDown\)</span>文件上面</mark></p>
 <p><strong>说明:对文本解释说明</strong></p>
 <p>文本<a href="#fn1" class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a></p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">文本[^脚注]</span><br><span class="line">[<span class="symbol">^脚注</span>]:<span class="link">内容</span></span><br><span class="line">如果内容太长要分为多行写,再分行的地方+<span class="language-xml"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span>+就可以实现多行脚注说明(原文链接依然在最后面)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本[^脚注]</span><br><span class="line">[^脚注]:内容</span><br><span class="line">如果内容太长要分为多行写,再分行的地方+&lt;br&gt;+就可以实现多行脚注说明(原文链接依然在最后面)</span><br></pre></td></tr></table></figure>
 <h2 id="图片插入"><mark>8.图片插入</mark></h2>
 <h3 id="行内插入">行内插入</h3>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">![图片命名](链接)</span><br><span class="line">//链接可为本地路径或者网址(无论是哪一种路径都会上传gitee转化为gitee网址!!)</span><br><span class="line"> 即!+[自己命名图片]+(图片路径+空格+&quot;图片标题&quot;)或者!+[自己命名图片]+(图片网址+空格+&quot;图片标题&quot;)</span><br><span class="line"> 图片标题是当把鼠标放在图片上面显示的文字(这个功能只有链接网址和图片插入才有,文件链接没有这功能!!!)</span><br><span class="line"> (无论是哪一种路径都会上传gitee转化为gitee网址)</span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://gitee.com/hulu135289/helloworld/raw/master/微信图片_20240830133102.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;微信图片_20240830133102&quot;</span> <span class="attr">style</span>=<span class="string">&quot;zoom:50%;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;小李睡了吗&quot;</span> /&gt;</span>加图片说明/标题格式</span><br><span class="line">(在设置了图片大小的时候用HTML格式输入)在没有调整图片大小的时候格式和上面![图片命名](链接+&quot;说明&quot;)一样</span><br></pre></td></tr></table></figure>
 <p><img data-src="/images/Typora-Notes/20250331231607_001.jpg" alt="微信图片_20240830133102" style="zoom:40%;" title="小李睡了吗" /></p>
 <h3 id="参考式-1">参考式</h3>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">!<span class="selector-attr">[图片命名]</span><span class="selector-attr">[标识符]</span></span><br><span class="line"><span class="selector-attr">[标识符]</span>:空格+网址+空格+<span class="string">&quot;鼠标悬梯说明&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![图片命名][标识符]</span><br><span class="line">[标识符]:空格+网址+空格+&quot;鼠标悬梯说明&quot;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>[!tip]</p>
 <ul>
@@ -872,7 +844,7 @@ role="doc-noteref"><sup>1</sup></a></p>
 </tr>
 </tbody>
 </table>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">在表格一个空位输入多行<span class="symbol">:shift+enter</span>或者&lt;br&gt;</span><br><span class="line">增加表格行数<span class="symbol">:ctrl+enter</span></span><br><span class="line">删除行<span class="symbol">:ctrl+shift+backspace</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">在表格一个空位输入多行:shift+enter或者&lt;br&gt;</span><br><span class="line">增加表格行数:ctrl+enter</span><br><span class="line">删除行:ctrl+shift+backspace</span><br></pre></td></tr></table></figure>
 <h2 id="图表">10.图表</h2>
 <blockquote>
 <p><strong>Mermaid语法:</strong>在代码模式中使用mermaid语言即可
@@ -891,7 +863,7 @@ href="https://mermaid.nodejs.cn/syntax/flowchart.html#cross-edge-example">cross
 edge</a>。</p>
 </blockquote>
 <h4 id="语法">语法</h4>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">title:+空格+标题</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">graph</span> <span class="string">方向</span>     <span class="string">//graph也可以用flowchart</span></span><br><span class="line">  <span class="string">内容</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title:+空格+标题</span><br><span class="line">---</span><br><span class="line">graph 方向     //graph也可以用flowchart</span><br><span class="line">	内容</span><br></pre></td></tr></table></figure>
 <p><strong><mark>示例:</mark></strong></p>
 <pre class="mermaid">---
 title: Node
@@ -902,7 +874,7 @@ graph LR
 <p>id是框中显示的内容</p>
 <p>也可以给框其别名:名字+(内容) //括住内容的括号框的形状</p>
 </blockquote>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Node</span> <span class="string">with</span> <span class="string">text</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">flowchart</span> <span class="string">LR</span></span><br><span class="line">    <span class="string">id1[This</span> <span class="string">is</span> <span class="string">the</span> <span class="string">text</span> <span class="string">in</span> <span class="string">the</span> <span class="string">box]</span></span><br><span class="line">    <span class="string">id1--&gt;A</span>       <span class="string">//后面再次调用这个文本框直接用别名即可</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: Node with text</span><br><span class="line">---</span><br><span class="line">flowchart LR</span><br><span class="line">    id1[This is the text in the box]</span><br><span class="line">    id1--&gt;A       //后面再次调用这个文本框直接用别名即可</span><br></pre></td></tr></table></figure>
 <pre class="mermaid">---
 title: Node with text
 ---
@@ -913,13 +885,13 @@ flowchart LR
 <li><strong>统一码文本</strong></li>
 </ul>
 <p>​ 使用 <code>""</code> 将 $unicode $文本括起来</p>
-<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">flowchart</span> <span class="built_in">LR</span></span><br><span class="line">    id[<span class="string">&quot;This ❤ Unicode&quot;</span>]   <span class="comment">//在不同Markdown中表示的可能不一样,Typora不加引号爱心也可以正常显示</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    id[&quot;This ❤ Unicode&quot;]   //在不同Markdown中表示的可能不一样,Typora不加引号爱心也可以正常显示</span><br></pre></td></tr></table></figure>
 <pre class="mermaid">flowchart LR
     id["This ❤ Unicode"]</pre>
 <ul>
 <li><p><strong>在一个文本框显示多行</strong></p>
 <p>直接在括号内部换行操作即可</p>
-<p><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    markdown[<span class="string">&quot;`This **is** _Markdown_`&quot;</span>]</span><br><span class="line">    newLines[<span class="string">&quot;`Line1</span></span><br><span class="line">    Line <span class="number">2</span></span><br><span class="line">    Line <span class="number">3</span>`<span class="string">&quot;]</span></span><br><span class="line">    markdown <span class="punctuation">-</span><span class="punctuation">-</span>&gt; newLines</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    markdown[&quot;`This **is** _Markdown_`&quot;]</span><br><span class="line">    newLines[&quot;`Line1</span><br><span class="line">    Line 2</span><br><span class="line">    Line 3`&quot;]</span><br><span class="line">    markdown --&gt; newLines</span><br></pre></td></tr></table></figure></p>
 <pre class="mermaid">   flowchart LR
       markdown["`This **is** _Markdown_`"]
       newLines["`Line1
@@ -1050,16 +1022,16 @@ class="math inline">\(graph或flowchart\)</span>后面接方向大写缩写</p>
 <li><p><strong>新的连线类型</strong></p>
 <ul>
 <li><p>圆边</p>
-<p><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> <span class="attr">--o</span> <span class="selector-tag">B</span></span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A --o B</span><br></pre></td></tr></table></figure></p>
 <pre class="mermaid">       flowchart LR
       A --o B</pre></li>
 <li><p>交叉边缘</p>
-<p><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> <span class="attr">--x</span> <span class="selector-tag">B</span></span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A --x B</span><br></pre></td></tr></table></figure></p>
 <pre class="mermaid">       flowchart LR
       A --x B</pre></li>
 </ul></li>
 <li><p><strong>多方向箭头</strong></p>
-<p><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> o<span class="attr">--o</span> <span class="selector-tag">B</span></span><br><span class="line">    <span class="selector-tag">B</span> &lt;--&gt; C</span><br><span class="line">    C <span class="attribute">x</span><span class="attr">--x</span> D</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A o--o B</span><br><span class="line">    B &lt;--&gt; C</span><br><span class="line">    C x--x D</span><br></pre></td></tr></table></figure></p>
 <pre class="mermaid">   flowchart LR
       A o--o B
       B <--> C
@@ -1068,7 +1040,7 @@ class="math inline">\(graph或flowchart\)</span>后面接方向大写缩写</p>
 <p>使用以下语法添加子图表</p>
 <p>设置了子图的名字后还可以指向整个子图</p>
 <p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">subgraph 别名[子图表名称]</span><br><span class="line"><span class="code">    子图表中的描述语句...</span></span><br><span class="line"><span class="code">end</span></span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line"><span class="code">    subgraph 买炸鸡前</span></span><br><span class="line"><span class="code">          begin(出门)--&gt; buy[出门买炸鸡]</span></span><br><span class="line"><span class="code">    end</span></span><br><span class="line"><span class="code">    buy --&gt; IsRemaining&#123;&quot;还有没有炸鸡？&quot;&#125;</span></span><br><span class="line"><span class="code">    IsRemaining --没有--&gt; sad[&quot;伤心&quot;]--&gt; goBack(回家)</span></span><br><span class="line"><span class="code">    IsRemaining --&gt;|有|happy[买完炸鸡开心]--&gt; goBack</span></span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line"><span class="code">	  subgraph 买炸鸡前</span></span><br><span class="line"><span class="code">   			 begin(出门)--&gt; buy[出门买炸鸡]</span></span><br><span class="line"><span class="code">    end</span></span><br><span class="line"><span class="code">    buy --&gt; IsRemaining&#123;&quot;还有没有炸鸡？&quot;&#125;</span></span><br><span class="line"><span class="code">    IsRemaining --没有--&gt; sad[&quot;伤心&quot;]--&gt; goBack(回家)</span></span><br><span class="line"><span class="code">    IsRemaining --&gt;|有|happy[买完炸鸡开心]--&gt; goBack</span></span><br></pre></td></tr></table></figure></p>
 <pre class="mermaid">   graph LR
         subgraph 买炸鸡前
                begin(出门)--> buy[出门买炸鸡]
@@ -1077,7 +1049,7 @@ class="math inline">\(graph或flowchart\)</span>后面接方向大写缩写</p>
       IsRemaining --没有--> sad["伤心"]--> goBack(回家)
       IsRemaining -->|有|happy[买完炸鸡开心]--> goBack</pre></li>
 </ul>
-<figure class="highlight xl"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="function"><span class="title">c1</span>--&gt;</span>a2</span><br><span class="line">    subgraph one</span><br><span class="line">    <span class="function"><span class="title">a1</span>--&gt;</span>a2</span><br><span class="line">    end</span><br><span class="line">    subgraph two</span><br><span class="line">    <span class="function"><span class="title">b1</span>--&gt;</span>b2</span><br><span class="line">    end</span><br><span class="line">    subgraph three</span><br><span class="line">    <span class="function"><span class="title">c1</span>--&gt;</span>c2</span><br><span class="line">    end</span><br><span class="line">    <span class="function"><span class="title">one</span> --&gt;</span> two</span><br><span class="line">    <span class="function"><span class="title">three</span> --&gt;</span> two</span><br><span class="line">    <span class="function"><span class="title">two</span> --&gt;</span> c2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    c1--&gt;a2</span><br><span class="line">    subgraph one</span><br><span class="line">    a1--&gt;a2</span><br><span class="line">    end</span><br><span class="line">    subgraph two</span><br><span class="line">    b1--&gt;b2</span><br><span class="line">    end</span><br><span class="line">    subgraph three</span><br><span class="line">    c1--&gt;c2</span><br><span class="line">    end</span><br><span class="line">    one --&gt; two</span><br><span class="line">    three --&gt; two</span><br><span class="line">    two --&gt; c2</span><br></pre></td></tr></table></figure>
 <pre class="mermaid">flowchart LR
     c1-->a2
     subgraph one
@@ -1093,7 +1065,7 @@ class="math inline">\(graph或flowchart\)</span>后面接方向大写缩写</p>
     three --> two
     two --> c2</pre>
 <h2 id="表情符号">11.表情符号(●‘◡’●)</h2>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">冒号+表情(<span class="title class_">EN</span>)+冒号</span><br><span class="line"><span class="symbol">:smile</span><span class="symbol">:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">冒号+表情(EN)+冒号</span><br><span class="line">:smile:</span><br></pre></td></tr></table></figure>
 <p>:happy:<span class="emoji" data-emoji="cry">😢</span><span
 class="emoji" data-emoji="sun_with_face">🌞</span><span class="emoji"
 data-emoji="smile">😄</span></p>
@@ -1142,5 +1114,33 @@ role="doc-backlink">↩︎</a></p></li>
         <tag>Typora</tag>
         <tag>Markdown</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2025/03/31/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
