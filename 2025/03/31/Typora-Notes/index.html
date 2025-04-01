@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.huluapple.xin","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.huluapple.xin","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="介绍Typora的Markdown语法,包括标题、段落、列表、区块显示、代码显示、链接、图片插入、数学公式、支持HTML元素、目录生成、表情符号等">
 <meta property="og:type" content="article">
@@ -33,9 +33,9 @@
 <meta property="article:published_time" content="2025-03-31T15:12:31.000Z">
 <meta property="article:modified_time" content="2025-03-31T15:12:31.000Z">
 <meta property="article:author" content="Hulu">
+<meta property="article:tag" content="技术笔记">
 <meta property="article:tag" content="Typora">
 <meta property="article:tag" content="Markdown">
-<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.huluapple.xin/images/Typora-Notes/20250331231607_001.jpg">
 
@@ -347,15 +347,15 @@
 </ul>
 <p>&#x3D;&#x3D;在编辑和预览时，注释的内容会被显示；在导出 PDF 或 Word 时，则会被隐藏&#x3D;&#x3D;</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">**这是粗体**</span><br><span class="line">*这是斜体*</span><br><span class="line">~~这是删除线~~</span><br><span class="line">&lt;u&gt;这是下划线&lt;/u&gt;</span><br><span class="line">==这是高亮==</span><br><span class="line">&lt;!--我是注释--&gt; </span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">**这是粗体**</span><br><span class="line">*这是斜体*</span><br><span class="line">~~这是删除线~~</span><br><span class="line"><span class="tag">&lt;<span class="name">u</span>&gt;</span>这是下划线<span class="tag">&lt;/<span class="name">u</span>&gt;</span></span><br><span class="line">==这是高亮==</span><br><span class="line"><span class="comment">&lt;!--我是注释--&gt;</span> </span><br></pre></td></tr></table></figure>
 
-<h3 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">上标:a^b^</span><br><span class="line">下标:a~b~</span><br><span class="line">用Latex格式好看一点$a^&#123;b&#125;$   $a_&#123;b&#125;$</span><br></pre></td></tr></table></figure>
+<h3 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">上标<span class="symbol">:a^b^</span></span><br><span class="line">下标<span class="symbol">:a~b~</span></span><br><span class="line">用<span class="title class_">Latex</span>格式好看一点<span class="variable">$a</span>^&#123;b&#125;<span class="variable">$ </span>  <span class="variable">$a_</span>&#123;b&#125;$</span><br></pre></td></tr></table></figure>
 
-<h3 id="文本查找"><a href="#文本查找" class="headerlink" title="文本查找"></a>文本查找</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索:ctrl+F</span><br><span class="line">搜索+替换:ctrl+H//这里和VsCode类似</span><br></pre></td></tr></table></figure>
+<h3 id="文本查找"><a href="#文本查找" class="headerlink" title="文本查找"></a>文本查找</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索<span class="symbol">:ctrl+F</span></span><br><span class="line">搜索+替换<span class="symbol">:ctrl+H//</span>这里和<span class="title class_">VsCode</span>类似</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="3-列表"><a href="#3-列表" class="headerlink" title="3. 列表"></a>3. 列表</h2><h3 id="1-无序列表"><a href="#1-无序列表" class="headerlink" title="1. 无序列表"></a>1. 无序列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设置:*/-/+/+空格或者ctrl+shift+]</span><br><span class="line">ctrl+[和ctrl+]将列表等级升级和降级</span><br><span class="line">退出列表:两次回车退出一个等级列表,反复按回车键即可</span><br></pre></td></tr></table></figure>
+<h2 id="3-列表"><a href="#3-列表" class="headerlink" title="3. 列表"></a>3. 列表</h2><h3 id="1-无序列表"><a href="#1-无序列表" class="headerlink" title="1. 无序列表"></a>1. 无序列表</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设置<span class="symbol">:*/-/+/+</span>空格或者ctrl+shift+]</span><br><span class="line">ctrl+[和ctrl+]将列表等级升级和降级</span><br><span class="line">退出列表<span class="symbol">:</span>两次回车退出一个等级列表,反复按回车键即可</span><br></pre></td></tr></table></figure>
 
 <p>同级别:</p>
 <ul>
@@ -373,7 +373,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-有序列表"><a href="#2-有序列表" class="headerlink" title="2. 有序列表"></a>2. 有序列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置:数字+.+空格或者ctrl+shift+[</span><br><span class="line">退出和等级变换快捷键和无序列表一致</span><br></pre></td></tr></table></figure>
+<h3 id="2-有序列表"><a href="#2-有序列表" class="headerlink" title="2. 有序列表"></a>2. 有序列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置:数字+.+空格或者ctrl+<span class="built_in">shift</span>+[</span><br><span class="line">退出和等级变换快捷键和无序列表一致</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-任务列表"><a href="#3-任务列表" class="headerlink" title="3. 任务列表"></a>3. 任务列表</h3><blockquote>
 <ul>
@@ -385,7 +385,7 @@
 </li>
 </ul>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-+空格[空格]+空格,实际上是无序列表+[空格]+空格</span><br><span class="line">-+空格[x]+空格,实际上是无序列表+[x]+空格</span><br><span class="line">升级降级退出方法和无序列表相同</span><br><span class="line">快捷键ctrl+shift+X</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-+空格<span class="selector-attr">[空格]</span>+空格,实际上是无序列表+<span class="selector-attr">[空格]</span>+空格</span><br><span class="line">-+空格<span class="selector-attr">[x]</span>+空格,实际上是无序列表+<span class="selector-attr">[x]</span>+空格</span><br><span class="line">升级降级退出方法和无序列表相同</span><br><span class="line">快捷键ctrl+shift+<span class="attribute">X</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="4-区块显示-引用"><a href="#4-区块显示-引用" class="headerlink" title="4.区块显示(引用)"></a>4.区块显示(引用)</h2><blockquote>
 <blockquote>
@@ -395,7 +395,7 @@
 </blockquote>
 </blockquote>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;+空格</span><br><span class="line">&gt;+回车</span><br><span class="line">在输入完一个区块显示后直接回车会撤回(同上列表)</span><br><span class="line">ctrl+[和回车键可以取消前一个区块显示符号(和列表级别变换方法相同)</span><br><span class="line">如果想增加引用的行数:shift+enter</span><br><span class="line">&gt;+[!+类型]可以得到警告框,已有的类型是:note,tip,warning,important,caution</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;+空格</span><br><span class="line">&gt;+回车</span><br><span class="line">在输入完一个区块显示后直接回车会撤回(同上列表)</span><br><span class="line">ctrl+[和回车键可以取消前一个区块显示符号(和列表级别变换方法相同)</span><br><span class="line">如果想增加引用的行数<span class="symbol">:shift+enter</span></span><br><span class="line">&gt;+[!+类型]可以得到警告框,已有的类型是<span class="symbol">:note</span>,tip,warning,important,caution</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>[!note]</p>
@@ -404,12 +404,12 @@
 <h2 id="5-代码显示"><a href="#5-代码显示" class="headerlink" title="&#x3D;&#x3D;5.代码显示&#x3D;&#x3D;"></a>&#x3D;&#x3D;5.代码显示&#x3D;&#x3D;</h2><ul>
 <li>行内代码</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`这是行内代码`</span><br></pre></td></tr></table></figure>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`这是行内代码`</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>代码块</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入```+语言模式或者~~~加语言模式</span><br><span class="line">快捷键:选中代码+ctrl+shift+K</span><br></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入```+语言模式或者~~~加语言模式</span><br><span class="line"><span class="title">快捷键:</span>选中代码+ctrl+shift+K</span><br></pre></td></tr></table></figure>
 
 
 
@@ -421,18 +421,18 @@
 <li><p><a target="_blank" rel="noopener" href="http://github.com/" title="Github">GitHub</a></p>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">网址</span><br><span class="line">&lt;网址&gt;与直接输入网址作用相同</span><br><span class="line">[名称]+(网址)</span><br><span class="line">[名称]+(网址+空格+&quot;网址&quot;)//将鼠标悬停显示备注</span><br><span class="line">ctrl+点击即可跳转</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">网址</span><br><span class="line">&lt;网址&gt;与直接输入网址作用相同</span><br><span class="line"><span class="selector-attr">[名称]</span>+(网址)</span><br><span class="line"><span class="selector-attr">[名称]</span>+(网址+空格+&quot;网址&quot;)<span class="comment">//将鼠标悬停显示备注</span></span><br><span class="line">ctrl+点击即可跳转</span><br></pre></td></tr></table></figure>
 
 <h4 id="参考式"><a href="#参考式" class="headerlink" title="参考式"></a>参考式</h4><p>参考式链接的写法相当于行内式拆分成两部分，并通过一个 识别符 来<br>连接两部分。&#x3D;&#x3D;参考式能尽量保持文章结构的简单，也方便统一管理$URL$&#x3D;&#x3D;</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[网址名字][标识符]</span><br><span class="line">[标识符]:空格+网址 &quot;说明(鼠标悬停)&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[网址名字]</span><span class="selector-attr">[标识符]</span></span><br><span class="line"><span class="selector-attr">[标识符]</span>:空格+网址 <span class="string">&quot;说明(鼠标悬停)&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="http://github.com/" title="代码托管平台">GitHub</a></p>
 <h3 id="2-文章内链接-锚点"><a href="#2-文章内链接-锚点" class="headerlink" title="2.文章内链接(锚点)"></a>2.文章内链接(锚点)</h3><p>[标题](#1. 标题 “tip”)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[备注](#+标题名+空格+&quot;说明&quot;)//注意标题名要完整的标题包括空格</span><br><span class="line">[标题](#1.标题)//ctrl+点击跳转</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[备注]</span>(#+标题名+空格+&quot;说明&quot;)<span class="comment">//注意标题名要完整的标题包括空格</span></span><br><span class="line"><span class="selector-attr">[标题]</span>(#<span class="number">1</span>.标题)<span class="comment">//ctrl+点击跳转</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="3-链接文件"><a href="#3-链接文件" class="headerlink" title="3.链接文件"></a>3.链接文件</h3><p><a href="C:\Users\Dell\Desktop\C\Code\跳过整数.png">code</a></p>
 <p><a href="C:\Users\Dell\Desktop\组合优化与博弈论.pdf">book</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[自主命名](文件路径)</span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">自主命名</span>](<span class="name">文件路径</span>)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>[!warning]</p>
@@ -440,7 +440,7 @@
 </blockquote>
 <h2 id="7-脚注"><a href="#7-脚注" class="headerlink" title="7.脚注"></a>7.脚注</h2><p><strong>说明:对文本解释说明</strong></p>
 <p>文本<a href="%E8%BF%99%E6%98%AF%E8%AF%B4%E6%98%8E">^1</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">文本[^脚注]</span><br><span class="line">[^脚注]:内容</span><br><span class="line">如果内容太长要分为多行写,再分行的地方+&lt;br&gt;+就可以实现多行脚注说明(原文链接依然在最后面)</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">文本[^脚注]</span><br><span class="line">[<span class="symbol">^脚注</span>]:<span class="link">内容</span></span><br><span class="line">如果内容太长要分为多行写,再分行的地方+<span class="language-xml"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span>+就可以实现多行脚注说明(原文链接依然在最后面)</span><br></pre></td></tr></table></figure>
 
 <h2 id="8-图片插入"><a href="#8-图片插入" class="headerlink" title="&#x3D;&#x3D;8.图片插入&#x3D;&#x3D;"></a>&#x3D;&#x3D;8.图片插入&#x3D;&#x3D;</h2><h3 id="行内插入"><a href="#行内插入" class="headerlink" title="行内插入"></a>行内插入</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">![图片命名](链接)</span><br><span class="line">//链接可为本地路径或者网址(无论是哪一种路径都会上传gitee转化为gitee网址!!)</span><br><span class="line"> 即!+[自己命名图片]+(图片路径+空格+&quot;图片标题&quot;)或者!+[自己命名图片]+(图片网址+空格+&quot;图片标题&quot;)</span><br><span class="line"> 图片标题是当把鼠标放在图片上面显示的文字(这个功能只有链接网址和图片插入才有,文件链接没有这功能!!!)</span><br><span class="line"> (无论是哪一种路径都会上传gitee转化为gitee网址)</span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://gitee.com/hulu135289/helloworld/raw/master/微信图片_20240830133102.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;微信图片_20240830133102&quot;</span> <span class="attr">style</span>=<span class="string">&quot;zoom:50%;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;小李睡了吗&quot;</span> /&gt;</span>加图片说明/标题格式</span><br><span class="line">(在设置了图片大小的时候用HTML格式输入)在没有调整图片大小的时候格式和上面![图片命名](链接+&quot;说明&quot;)一样</span><br></pre></td></tr></table></figure>
 
@@ -448,7 +448,7 @@
 
 <img data-src="/images/Typora-Notes/20250331231607_001.jpg" alt="微信图片_20240830133102" style="zoom:40%;" title="小李睡了吗" />
 
-<h3 id="参考式-1"><a href="#参考式-1" class="headerlink" title="参考式"></a>参考式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![图片命名][标识符]</span><br><span class="line">[标识符]:空格+网址+空格+&quot;鼠标悬梯说明&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="参考式-1"><a href="#参考式-1" class="headerlink" title="参考式"></a>参考式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!<span class="selector-attr">[图片命名]</span><span class="selector-attr">[标识符]</span></span><br><span class="line"><span class="selector-attr">[标识符]</span>:空格+网址+空格+<span class="string">&quot;鼠标悬梯说明&quot;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p> [!tip]</p>
@@ -488,7 +488,7 @@
 <td></td>
 </tr>
 </tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在表格一个空位输入多行:shift+enter或者&lt;br&gt;</span><br><span class="line">增加表格行数:ctrl+enter</span><br><span class="line">删除行:ctrl+shift+backspace</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在表格一个空位输入多行<span class="symbol">:shift+enter</span>或者&lt;br&gt;</span><br><span class="line">增加表格行数<span class="symbol">:ctrl+enter</span></span><br><span class="line">删除行<span class="symbol">:ctrl+shift+backspace</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="10-图表"><a href="#10-图表" class="headerlink" title="10.图表"></a>10.图表</h2><blockquote>
 <p>**Mermaid语法:**在代码模式中使用mermaid语言即可<br><strong>&#x3D;&#x3D;Mermad官网教学文档:&#x3D;&#x3D;</strong><a target="_blank" rel="noopener" href="https://mermaid.nodejs.cn/intro/" title="Mermaid官网文档">点我</a></p>
@@ -496,7 +496,7 @@
 <h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><blockquote>
 <p>[!warning]<br>如果你使用字母 “o” 或 “x” 作为连接流程图节点的首字母，请在字母前添加空格或将字母大写（例如，<code>&quot;dev--- ops&quot;、&quot;dev---Ops&quot;</code>）。输入 “A—oB” 将创建 <a target="_blank" rel="noopener" href="https://mermaid.nodejs.cn/syntax/flowchart.html#circle-edge-example">circle edge</a>。输入 “A—xB” 将创建 <a target="_blank" rel="noopener" href="https://mermaid.nodejs.cn/syntax/flowchart.html#cross-edge-example">cross edge</a>。</p>
 </blockquote>
-<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:+空格+标题</span><br><span class="line">---</span><br><span class="line">graph 方向     //graph也可以用flowchart</span><br><span class="line">	内容</span><br></pre></td></tr></table></figure>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">title:+空格+标题</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">graph</span> <span class="string">方向</span>     <span class="string">//graph也可以用flowchart</span></span><br><span class="line">  <span class="string">内容</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>&#x3D;&#x3D;示例:&#x3D;&#x3D;</strong></p>
 <pre class="mermaid">---
@@ -509,7 +509,7 @@ graph LR
 <p>id是框中显示的内容</p>
 <p>也可以给框其别名:名字+(内容)           &#x2F;&#x2F;括住内容的括号框的形状</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Node with text</span><br><span class="line">---</span><br><span class="line">flowchart LR</span><br><span class="line">    id1[This is the text in the box]</span><br><span class="line">    id1--&gt;A       //后面再次调用这个文本框直接用别名即可</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Node</span> <span class="string">with</span> <span class="string">text</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">flowchart</span> <span class="string">LR</span></span><br><span class="line">    <span class="string">id1[This</span> <span class="string">is</span> <span class="string">the</span> <span class="string">text</span> <span class="string">in</span> <span class="string">the</span> <span class="string">box]</span></span><br><span class="line">    <span class="string">id1--&gt;A</span>       <span class="string">//后面再次调用这个文本框直接用别名即可</span></span><br></pre></td></tr></table></figure>
 
 <pre class="mermaid">---
 title: Node with text
@@ -522,7 +522,7 @@ flowchart LR
 <li><strong>统一码文本</strong></li>
 </ul>
 <p>​	使用 <code>&quot;&quot;</code> 将 $unicode $文本括起来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    id[&quot;This ❤ Unicode&quot;]   //在不同Markdown中表示的可能不一样,Typora不加引号爱心也可以正常显示</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">flowchart</span> <span class="built_in">LR</span></span><br><span class="line">    id[<span class="string">&quot;This ❤ Unicode&quot;</span>]   <span class="comment">//在不同Markdown中表示的可能不一样,Typora不加引号爱心也可以正常显示</span></span><br></pre></td></tr></table></figure>
 
 <pre class="mermaid">flowchart LR
     id["This ❤ Unicode"]</pre>
@@ -530,7 +530,7 @@ flowchart LR
 <ul>
 <li><p><strong>在一个文本框显示多行</strong></p>
 <p>  直接在括号内部换行操作即可</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    markdown[&quot;`This **is** _Markdown_`&quot;]</span><br><span class="line">    newLines[&quot;`Line1</span><br><span class="line">    Line 2</span><br><span class="line">    Line 3`&quot;]</span><br><span class="line">    markdown --&gt; newLines</span><br></pre></td></tr></table></figure>
+  <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    markdown[<span class="string">&quot;`This **is** _Markdown_`&quot;</span>]</span><br><span class="line">    newLines[<span class="string">&quot;`Line1</span></span><br><span class="line">    Line <span class="number">2</span></span><br><span class="line">    Line <span class="number">3</span>`<span class="string">&quot;]</span></span><br><span class="line">    markdown <span class="punctuation">-</span><span class="punctuation">-</span>&gt; newLines</span><br></pre></td></tr></table></figure>
 
   <pre class="mermaid">    flowchart LR
       markdown["`This **is** _Markdown_`"]
@@ -666,21 +666,21 @@ flowchart LR
 <li><p><strong>新的连线类型</strong></p>
 <ul>
 <li><p>圆边</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A --o B</span><br></pre></td></tr></table></figure>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> <span class="attr">--o</span> <span class="selector-tag">B</span></span><br></pre></td></tr></table></figure>
 
   <pre class="mermaid">        flowchart LR
       A --o B</pre>
 
 </li>
 <li><p>交叉边缘</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A --x B</span><br></pre></td></tr></table></figure>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> <span class="attr">--x</span> <span class="selector-tag">B</span></span><br></pre></td></tr></table></figure>
 
   <pre class="mermaid">        flowchart LR
       A --x B</pre></li>
 </ul>
 </li>
 <li><p><strong>多方向箭头</strong></p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A o--o B</span><br><span class="line">    B &lt;--&gt; C</span><br><span class="line">    C x--x D</span><br></pre></td></tr></table></figure>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="selector-tag">A</span> o<span class="attr">--o</span> <span class="selector-tag">B</span></span><br><span class="line">    <span class="selector-tag">B</span> &lt;--&gt; C</span><br><span class="line">    C <span class="attribute">x</span><span class="attr">--x</span> D</span><br></pre></td></tr></table></figure>
 
   <pre class="mermaid">    flowchart LR
       A o--o B
@@ -693,7 +693,7 @@ flowchart LR
 <p>  设置了子图的名字后还可以指向整个子图</p>
   <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">subgraph 别名[子图表名称]</span><br><span class="line"><span class="code">    子图表中的描述语句...</span></span><br><span class="line"><span class="code">end</span></span><br></pre></td></tr></table></figure>
 
-  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"><span class="code">	  subgraph 买炸鸡前</span></span><br><span class="line"><span class="code">   			 begin(出门)--&gt; buy[出门买炸鸡]</span></span><br><span class="line"><span class="code">    end</span></span><br><span class="line"><span class="code">    buy --&gt; IsRemaining&#123;&quot;还有没有炸鸡？&quot;&#125;</span></span><br><span class="line"><span class="code">    IsRemaining --没有--&gt; sad[&quot;伤心&quot;]--&gt; goBack(回家)</span></span><br><span class="line"><span class="code">    IsRemaining --&gt;|有|happy[买完炸鸡开心]--&gt; goBack</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"><span class="code">    subgraph 买炸鸡前</span></span><br><span class="line"><span class="code">          begin(出门)--&gt; buy[出门买炸鸡]</span></span><br><span class="line"><span class="code">    end</span></span><br><span class="line"><span class="code">    buy --&gt; IsRemaining&#123;&quot;还有没有炸鸡？&quot;&#125;</span></span><br><span class="line"><span class="code">    IsRemaining --没有--&gt; sad[&quot;伤心&quot;]--&gt; goBack(回家)</span></span><br><span class="line"><span class="code">    IsRemaining --&gt;|有|happy[买完炸鸡开心]--&gt; goBack</span></span><br></pre></td></tr></table></figure>
 
   <pre class="mermaid">    graph LR
         subgraph 买炸鸡前
@@ -703,7 +703,7 @@ flowchart LR
       IsRemaining --没有--> sad["伤心"]--> goBack(回家)
       IsRemaining -->|有|happy[买完炸鸡开心]--> goBack</pre></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    c1--&gt;a2</span><br><span class="line">    subgraph one</span><br><span class="line">    a1--&gt;a2</span><br><span class="line">    end</span><br><span class="line">    subgraph two</span><br><span class="line">    b1--&gt;b2</span><br><span class="line">    end</span><br><span class="line">    subgraph three</span><br><span class="line">    c1--&gt;c2</span><br><span class="line">    end</span><br><span class="line">    one --&gt; two</span><br><span class="line">    three --&gt; two</span><br><span class="line">    two --&gt; c2</span><br></pre></td></tr></table></figure>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    <span class="function"><span class="title">c1</span>--&gt;</span>a2</span><br><span class="line">    subgraph one</span><br><span class="line">    <span class="function"><span class="title">a1</span>--&gt;</span>a2</span><br><span class="line">    end</span><br><span class="line">    subgraph two</span><br><span class="line">    <span class="function"><span class="title">b1</span>--&gt;</span>b2</span><br><span class="line">    end</span><br><span class="line">    subgraph three</span><br><span class="line">    <span class="function"><span class="title">c1</span>--&gt;</span>c2</span><br><span class="line">    end</span><br><span class="line">    <span class="function"><span class="title">one</span> --&gt;</span> two</span><br><span class="line">    <span class="function"><span class="title">three</span> --&gt;</span> two</span><br><span class="line">    <span class="function"><span class="title">two</span> --&gt;</span> c2</span><br></pre></td></tr></table></figure>
 
 <pre class="mermaid">flowchart LR
     c1-->a2
@@ -722,7 +722,7 @@ flowchart LR
 
 
 
-<h2 id="11-表情符号-●’◡’●"><a href="#11-表情符号-●’◡’●" class="headerlink" title="11.表情符号(●’◡’●)"></a>11.表情符号(●’◡’●)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">冒号+表情(EN)+冒号</span><br><span class="line">:smile:</span><br></pre></td></tr></table></figure>
+<h2 id="11-表情符号-●’◡’●"><a href="#11-表情符号-●’◡’●" class="headerlink" title="11.表情符号(●’◡’●)"></a>11.表情符号(●’◡’●)</h2><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">冒号+表情(<span class="title class_">EN</span>)+冒号</span><br><span class="line"><span class="symbol">:smile</span><span class="symbol">:</span></span><br></pre></td></tr></table></figure>
 
 <p>:happy::cry::sun_with_face::smile:</p>
 <p><a target="_blank" rel="noopener" href="https://gitee.com/hulu135289/Typora/blob/d609d5b94c18043abb92a2f9f56df53fe6f129c4/%E8%A1%A8%E6%83%85%E5%8C%85.md">部分表情包点我:happy:</a></p>
@@ -770,9 +770,9 @@ flowchart LR
 </div>
 
           <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" rel="tag"># 技术笔记</a>
               <a href="/tags/Typora/" rel="tag"># Typora</a>
               <a href="/tags/Markdown/" rel="tag"># Markdown</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" rel="tag"># 技术笔记</a>
           </div>
 
         
