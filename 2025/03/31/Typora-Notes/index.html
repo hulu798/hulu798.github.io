@@ -473,19 +473,14 @@ role="doc-noteref"><sup>1</sup></a></p>
 <ul>
 <li>直接拖入视频也可以插入视频,但是这里插入的是路径和HTML语法,如果考虑迁移可以修改路径为Gitte网址:</li>
 </ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;xxx.mp4&quot;</span> /&gt;</span></span>    //拖动视频显示这个插入方式,这个时候把路径改为云端视频网址即可</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;xxx.mp4&quot;</span> /&gt;</span></span>    //拖动视频显示这个插入方式,这个时候把路径改为云端视频网址即可</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;/videos/hero-light-lg.webm&quot;</span> <span class="attr">autoplay</span> <span class="attr">muted</span> <span class="attr">playsinline</span> <span class="attr">loop</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span></span><br><span class="line"><span class="bullet">1.</span> autoplay - 启用自动播放</span><br><span class="line"><span class="bullet">2.</span> muted - 静音播放（绕过浏览器限制）</span><br><span class="line"><span class="bullet">3.</span> playsinline - 支持移动设备内联播放</span><br><span class="line"><span class="bullet">4.</span> loop - 循环播放视频</span><br></pre></td></tr></table></figure>
 <ul>
 <li>插入音频</li>
 </ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">src</span>=<span class="string">&quot;xxx.mp3&quot;</span> /&gt;</span></span>    //与上同理</span><br><span class="line">video src=&quot;/videos/hero-light-lg.webm&quot; autoplay muted playsinline loop&gt;<span class="language-xml"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>autoplay - 启用自动播放</li>
-<li>muted - 静音播放（绕过浏览器限制）</li>
-<li>playsinline - 支持移动设备内联播放</li>
-<li>loop - 循环播放视频
-<video src="/videos/hero-light-lg.webm" autoplay muted playsinline loop></video></li>
-</ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">src</span>=<span class="string">&quot;xxx.mp3&quot;</span> /&gt;</span></span>    //与上同理</span><br></pre></td></tr></table></figure>
 </blockquote>
+<video src="/videos/hero-light-lg.webm" autoplay muted playsinline loop>
+</video>
 <h2 id="表格">9.表格</h2>
 <p>不建议使用源代码方式,建议采用快捷键<code>ctrl+T</code></p>
 <table>
