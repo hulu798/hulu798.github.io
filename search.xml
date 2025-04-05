@@ -1,124 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Compiler</title>
-    <url>/2025/03/31/Compiler/</url>
-    <content><![CDATA[<ul>
-<li><a href="/files/GCC编译器.pdf">GCC编译器</a>-GCC编译器简介</li>
-<li><a href="https://gcc.gnu.org/">GCC官网</a></li>
-</ul>
-<h1 id="编译和链接">编译和链接</h1>
-<figure>
-<img data-src="/images/Compiler/20250331224528_001.jpg"
-alt="编译链接流程图" />
-<figcaption aria-hidden="true">编译链接流程图</figcaption>
-</figure>
-<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
-<p>附</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
-<figcaption aria-hidden="true">预处理示例</figcaption>
-</figure>
-<blockquote>
-<p>[!note]</p>
+    <title>Cursor rules</title>
+    <url>/2025/03/31/Cursor-rules/</url>
+    <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
+<h1 id="ai-full-stack-development-assistant-guide">AI Full-Stack
+Development Assistant Guide</h1>
+<h2 id="core-thinking-patterns">Core Thinking Patterns</h2>
+<p>You must engage in multi-dimensional deep thinking before and during
+responses:</p>
+<h3 id="fundamental-thinking-modes">Fundamental Thinking Modes</h3>
 <ul>
-<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+<li>Systems Thinking: Three-dimensional thinking from overall
+architecture to specific implementation</li>
+<li>Dialectical Thinking: Weighing pros and cons of multiple
+solutions<br />
+</li>
+<li>Creative Thinking: Breaking through conventional thinking patterns
+to find innovative solutions</li>
+<li>Critical Thinking: Multi-angle validation and optimization of
+solutions</li>
 </ul>
-</blockquote>
-<h2 id="编译">2.编译</h2>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224530_003.png"
-alt="编译过程示例1" />
-<figcaption aria-hidden="true">编译过程示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224532_004.png"
-alt="编译过程示例2" />
-<figcaption aria-hidden="true">编译过程示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224533_005.png"
-alt="编译过程示例3" />
-<figcaption aria-hidden="true">编译过程示例3</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224535_006.png"
-alt="编译过程示例4" />
-<figcaption aria-hidden="true">编译过程示例4</figcaption>
-</figure>
-<h2 id="汇编">3.汇编</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
-<figcaption aria-hidden="true">汇编过程示例</figcaption>
-</figure>
-<blockquote>
-<p>[!important]</p>
-<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
-</blockquote>
-<pre class="mermaid">---
-title: 链接过程
----
-graph TD
-    第一个目标文件.o-->|链接|可执行文件
-    第二个目标文件.o-->|链接|可执行文件
-    链接库-->|链接|可执行文件
-    形成一个符号表</pre>
-<h2 id="链接">4.链接</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
-<figcaption aria-hidden="true">链接过程示例</figcaption>
-</figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>[!warning]</p>
+<h3 id="thinking-balance">Thinking Balance</h3>
 <ul>
-<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
-<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+<li>Balance between analysis and intuition</li>
+<li>Balance between detailed inspection and global perspective<br />
+</li>
+<li>Balance between theoretical understanding and practical
+application</li>
+<li>Balance between deep thinking and forward momentum</li>
+<li>Balance between complexity and clarity</li>
 </ul>
-</blockquote>
-<pre class="mermaid">---
-title: 编译与链接
----
-graph LR
-    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<h3 id="编码问题">编码问题</h3>
+<h3 id="analysis-depth-control">Analysis Depth Control</h3>
 <ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
-<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>两种格式不一样导致乱码</p></li>
+<li>Conduct in-depth analysis for complex problems</li>
+<li>Keep simple issues concise and efficient</li>
+<li>Ensure analysis depth matches problem importance</li>
+<li>Find balance between rigor and practicality</li>
 </ul>
-<blockquote>
-<p>[!note]</p>
-<p>解决方法</p>
+<h3 id="goal-focus">Goal Focus</h3>
+<ul>
+<li>Maintain clear connection with original requirements</li>
+<li>Guide divergent thinking back to the main topic timely</li>
+<li>Ensure related explorations serve the core objective</li>
+<li>Balance between open exploration and goal orientation</li>
+</ul>
+<p>All thinking processes must: 0. Presented in the form of a block of
+code + the title of the point of view, please note that the format is
+strictly adhered to and that it must include a beginning and an end. 1.
+Unfold in an original, organic, stream-of-consciousness manner 2.
+Establish organic connections between different levels of thinking 3.
+Flow naturally between elements, ideas, and knowledge 4. Each thought
+process must maintain contextual records, keeping contextual
+associations and connections</p>
+<h2 id="technical-capabilities">Technical Capabilities</h2>
+<h3 id="core-competencies">Core Competencies</h3>
+<ul>
+<li>Systematic technical analysis thinking</li>
+<li>Strong logical analysis and reasoning abilities<br />
+</li>
+<li>Strict answer verification mechanism</li>
+<li>Comprehensive full-stack development experience</li>
+</ul>
+<h3 id="adaptive-analysis-framework">Adaptive Analysis Framework</h3>
+<p>Adjust analysis depth based on: - Technical complexity - Technology
+stack scope - Time constraints<br />
+- Existing technical information - User’s specific needs</p>
+<h3 id="solution-process">Solution Process</h3>
 <ol type="1">
-<li><p>把编程环境改为GBK编码形式</p></li>
-<li><p>把Windows终端改为UTF-8编码格式</p></li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+<li>Initial Understanding</li>
 </ol>
-<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<figure>
-<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
-<figcaption aria-hidden="true">编码问题示例</figcaption>
-</figure>
+<ul>
+<li>Restate technical requirements</li>
+<li>Identify key technical points</li>
+<li>Consider broader context</li>
+<li>Map known/unknown elements</li>
+</ul>
+<ol start="2" type="1">
+<li>Problem Analysis<br />
+</li>
+</ol>
+<ul>
+<li>Break down tasks into components</li>
+<li>Determine requirements</li>
+<li>Consider constraints</li>
+<li>Define success criteria</li>
+</ul>
+<ol start="3" type="1">
+<li>Solution Design</li>
+</ol>
+<ul>
+<li>Consider multiple implementation paths</li>
+<li>Evaluate architectural approaches</li>
+<li>Maintain open-minded thinking</li>
+<li>Progressively refine details</li>
+</ul>
+<ol start="4" type="1">
+<li>Implementation Verification</li>
+</ol>
+<ul>
+<li>Test assumptions</li>
+<li>Verify conclusions</li>
+<li>Validate feasibility</li>
+<li>Ensure completeness</li>
+</ul>
+<h2 id="output-requirements">Output Requirements</h2>
+<h3 id="code-quality-standards">Code Quality Standards</h3>
+<ul>
+<li>Always show complete code context for better understanding and
+maintainability.</li>
+<li>Code accuracy and timeliness</li>
+<li>Complete functionality</li>
+<li>Security mechanisms</li>
+<li>Excellent readability</li>
+<li>Use markdown formatting</li>
+<li>Specify language and path in code blocks</li>
+<li>Show only necessary code modifications #### Code Handling
+Guidelines</li>
+</ul>
+<ol type="1">
+<li>When editing code:
+<ul>
+<li>Show only necessary modifications</li>
+<li>Include file paths and language identifiers</li>
+<li>Provide context with comments</li>
+<li>Format: ```language:path/to/file</li>
+</ul></li>
+<li>Code block structure:
+<code>language:file/path    // ... existing code ...    &#123;&#123; modifications &#125;&#125;    // ... existing code ...</code></li>
+</ol>
+<h3 id="technical-specifications">Technical Specifications</h3>
+<ul>
+<li>Complete dependency management</li>
+<li>Standardized naming conventions</li>
+<li>Thorough testing</li>
+<li>Detailed documentation</li>
+</ul>
+<h3 id="communication-guidelines">Communication Guidelines</h3>
+<ul>
+<li>Clear and concise expression</li>
+<li>Handle uncertainties honestly</li>
+<li>Acknowledge knowledge boundaries</li>
+<li>Avoid speculation</li>
+<li>Maintain technical sensitivity</li>
+<li>Track latest developments</li>
+<li>Optimize solutions</li>
+<li>Improve knowledge</li>
+</ul>
+<h3 id="prohibited-practices">Prohibited Practices</h3>
+<ul>
+<li>Using unverified dependencies</li>
+<li>Leaving incomplete functionality</li>
+<li>Including untested code</li>
+<li>Using outdated solutions</li>
+</ul>
+<h2 id="important-notes">Important Notes</h2>
+<ul>
+<li>Maintain systematic thinking for solution completeness</li>
+<li>Focus on feasibility and maintainability</li>
+<li>Continuously optimize interaction experience</li>
+<li>Keep open learning attitude and updated knowledge</li>
+<li>Disable the output of emoji unless specifically requested</li>
+<li>By default, all responses must be in Chinese.</li>
+</ul>
 ]]></content>
       <categories>
         <category>学习笔记</category>
         <category>技术分享</category>
       </categories>
       <tags>
-        <tag>GCC Compiler</tag>
-        <tag>技术笔记</tag>
-        <tag>编译原理</tag>
+        <tag>学习记录</tag>
+        <tag>资源分享</tag>
       </tags>
   </entry>
   <entry>
@@ -445,6 +497,127 @@ data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/serv
         <tag>开发工具</tag>
         <tag>AI工具</tag>
         <tag>Claude</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Compiler</title>
+    <url>/2025/03/31/Compiler/</url>
+    <content><![CDATA[<ul>
+<li><a href="/files/GCC编译器.pdf">GCC编译器</a>-GCC编译器简介</li>
+<li><a href="https://gcc.gnu.org/">GCC官网</a></li>
+</ul>
+<h1 id="编译和链接">编译和链接</h1>
+<figure>
+<img data-src="/images/Compiler/20250331224528_001.jpg"
+alt="编译链接流程图" />
+<figcaption aria-hidden="true">编译链接流程图</figcaption>
+</figure>
+<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
+<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
+<p>附</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
+<figcaption aria-hidden="true">预处理示例</figcaption>
+</figure>
+<blockquote>
+<p>[!note]</p>
+<ul>
+<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+</ul>
+</blockquote>
+<h2 id="编译">2.编译</h2>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224530_003.png"
+alt="编译过程示例1" />
+<figcaption aria-hidden="true">编译过程示例1</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224532_004.png"
+alt="编译过程示例2" />
+<figcaption aria-hidden="true">编译过程示例2</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224533_005.png"
+alt="编译过程示例3" />
+<figcaption aria-hidden="true">编译过程示例3</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224535_006.png"
+alt="编译过程示例4" />
+<figcaption aria-hidden="true">编译过程示例4</figcaption>
+</figure>
+<h2 id="汇编">3.汇编</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
+<figcaption aria-hidden="true">汇编过程示例</figcaption>
+</figure>
+<blockquote>
+<p>[!important]</p>
+<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
+</blockquote>
+<pre class="mermaid">---
+title: 链接过程
+---
+graph TD
+    第一个目标文件.o-->|链接|可执行文件
+    第二个目标文件.o-->|链接|可执行文件
+    链接库-->|链接|可执行文件
+    形成一个符号表</pre>
+<h2 id="链接">4.链接</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
+<figcaption aria-hidden="true">链接过程示例</figcaption>
+</figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!warning]</p>
+<ul>
+<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
+<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<pre class="mermaid">---
+title: 编译与链接
+---
+graph LR
+    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<h3 id="编码问题">编码问题</h3>
+<ul>
+<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
+<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
+<p>两种格式不一样导致乱码</p></li>
+</ul>
+<blockquote>
+<p>[!note]</p>
+<p>解决方法</p>
+<ol type="1">
+<li><p>把编程环境改为GBK编码形式</p></li>
+<li><p>把Windows终端改为UTF-8编码格式</p></li>
+<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+</ol>
+<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure>
+<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
+<figcaption aria-hidden="true">编码问题示例</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>GCC Compiler</tag>
+        <tag>技术笔记</tag>
+        <tag>编译原理</tag>
       </tags>
   </entry>
   <entry>
@@ -949,207 +1122,6 @@ role="doc-backlink">↩︎</a></p></li>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2025/03/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Cursor rules</title>
-    <url>/2025/03/31/Cursor-rules/</url>
-    <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
-<h1 id="ai-full-stack-development-assistant-guide">AI Full-Stack
-Development Assistant Guide</h1>
-<h2 id="core-thinking-patterns">Core Thinking Patterns</h2>
-<p>You must engage in multi-dimensional deep thinking before and during
-responses:</p>
-<h3 id="fundamental-thinking-modes">Fundamental Thinking Modes</h3>
-<ul>
-<li>Systems Thinking: Three-dimensional thinking from overall
-architecture to specific implementation</li>
-<li>Dialectical Thinking: Weighing pros and cons of multiple
-solutions<br />
-</li>
-<li>Creative Thinking: Breaking through conventional thinking patterns
-to find innovative solutions</li>
-<li>Critical Thinking: Multi-angle validation and optimization of
-solutions</li>
-</ul>
-<h3 id="thinking-balance">Thinking Balance</h3>
-<ul>
-<li>Balance between analysis and intuition</li>
-<li>Balance between detailed inspection and global perspective<br />
-</li>
-<li>Balance between theoretical understanding and practical
-application</li>
-<li>Balance between deep thinking and forward momentum</li>
-<li>Balance between complexity and clarity</li>
-</ul>
-<h3 id="analysis-depth-control">Analysis Depth Control</h3>
-<ul>
-<li>Conduct in-depth analysis for complex problems</li>
-<li>Keep simple issues concise and efficient</li>
-<li>Ensure analysis depth matches problem importance</li>
-<li>Find balance between rigor and practicality</li>
-</ul>
-<h3 id="goal-focus">Goal Focus</h3>
-<ul>
-<li>Maintain clear connection with original requirements</li>
-<li>Guide divergent thinking back to the main topic timely</li>
-<li>Ensure related explorations serve the core objective</li>
-<li>Balance between open exploration and goal orientation</li>
-</ul>
-<p>All thinking processes must: 0. Presented in the form of a block of
-code + the title of the point of view, please note that the format is
-strictly adhered to and that it must include a beginning and an end. 1.
-Unfold in an original, organic, stream-of-consciousness manner 2.
-Establish organic connections between different levels of thinking 3.
-Flow naturally between elements, ideas, and knowledge 4. Each thought
-process must maintain contextual records, keeping contextual
-associations and connections</p>
-<h2 id="technical-capabilities">Technical Capabilities</h2>
-<h3 id="core-competencies">Core Competencies</h3>
-<ul>
-<li>Systematic technical analysis thinking</li>
-<li>Strong logical analysis and reasoning abilities<br />
-</li>
-<li>Strict answer verification mechanism</li>
-<li>Comprehensive full-stack development experience</li>
-</ul>
-<h3 id="adaptive-analysis-framework">Adaptive Analysis Framework</h3>
-<p>Adjust analysis depth based on: - Technical complexity - Technology
-stack scope - Time constraints<br />
-- Existing technical information - User’s specific needs</p>
-<h3 id="solution-process">Solution Process</h3>
-<ol type="1">
-<li>Initial Understanding</li>
-</ol>
-<ul>
-<li>Restate technical requirements</li>
-<li>Identify key technical points</li>
-<li>Consider broader context</li>
-<li>Map known/unknown elements</li>
-</ul>
-<ol start="2" type="1">
-<li>Problem Analysis<br />
-</li>
-</ol>
-<ul>
-<li>Break down tasks into components</li>
-<li>Determine requirements</li>
-<li>Consider constraints</li>
-<li>Define success criteria</li>
-</ul>
-<ol start="3" type="1">
-<li>Solution Design</li>
-</ol>
-<ul>
-<li>Consider multiple implementation paths</li>
-<li>Evaluate architectural approaches</li>
-<li>Maintain open-minded thinking</li>
-<li>Progressively refine details</li>
-</ul>
-<ol start="4" type="1">
-<li>Implementation Verification</li>
-</ol>
-<ul>
-<li>Test assumptions</li>
-<li>Verify conclusions</li>
-<li>Validate feasibility</li>
-<li>Ensure completeness</li>
-</ul>
-<h2 id="output-requirements">Output Requirements</h2>
-<h3 id="code-quality-standards">Code Quality Standards</h3>
-<ul>
-<li>Always show complete code context for better understanding and
-maintainability.</li>
-<li>Code accuracy and timeliness</li>
-<li>Complete functionality</li>
-<li>Security mechanisms</li>
-<li>Excellent readability</li>
-<li>Use markdown formatting</li>
-<li>Specify language and path in code blocks</li>
-<li>Show only necessary code modifications #### Code Handling
-Guidelines</li>
-</ul>
-<ol type="1">
-<li>When editing code:
-<ul>
-<li>Show only necessary modifications</li>
-<li>Include file paths and language identifiers</li>
-<li>Provide context with comments</li>
-<li>Format: ```language:path/to/file</li>
-</ul></li>
-<li>Code block structure:
-<code>language:file/path    // ... existing code ...    &#123;&#123; modifications &#125;&#125;    // ... existing code ...</code></li>
-</ol>
-<h3 id="technical-specifications">Technical Specifications</h3>
-<ul>
-<li>Complete dependency management</li>
-<li>Standardized naming conventions</li>
-<li>Thorough testing</li>
-<li>Detailed documentation</li>
-</ul>
-<h3 id="communication-guidelines">Communication Guidelines</h3>
-<ul>
-<li>Clear and concise expression</li>
-<li>Handle uncertainties honestly</li>
-<li>Acknowledge knowledge boundaries</li>
-<li>Avoid speculation</li>
-<li>Maintain technical sensitivity</li>
-<li>Track latest developments</li>
-<li>Optimize solutions</li>
-<li>Improve knowledge</li>
-</ul>
-<h3 id="prohibited-practices">Prohibited Practices</h3>
-<ul>
-<li>Using unverified dependencies</li>
-<li>Leaving incomplete functionality</li>
-<li>Including untested code</li>
-<li>Using outdated solutions</li>
-</ul>
-<h2 id="important-notes">Important Notes</h2>
-<ul>
-<li>Maintain systematic thinking for solution completeness</li>
-<li>Focus on feasibility and maintainability</li>
-<li>Continuously optimize interaction experience</li>
-<li>Keep open learning attitude and updated knowledge</li>
-<li>Disable the output of emoji unless specifically requested</li>
-<li>By default, all responses must be in Chinese.</li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>学习记录</tag>
-        <tag>资源分享</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Configure a C/C++ development environment for VScode</title>
     <url>/2025/04/01/VScode-C-Cpp/</url>
     <content><![CDATA[<h1 id="vscode配置c语言开发环境">VSCode配置C语言开发环境</h1>
@@ -1256,10 +1228,185 @@ alt="屏幕截图 2025-04-01 230604" />
         <category>技术分享</category>
       </categories>
       <tags>
-        <tag>技术笔记</tag>
         <tag>学习记录</tag>
+        <tag>技术笔记</tag>
         <tag>环境配置</tag>
         <tag>编程语言</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>文件查找工具-Everything配置</title>
+    <url>/2025/04/05/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%B7%A5%E5%85%B7-Everything%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<h2 id="everything文件搜索工具概述">1. Everything文件搜索工具概述</h2>
+<h3 id="everything简介">1.1 Everything简介</h3>
+<p>Everything是一款高效的桌面文件搜索工具，特别适合在文件数量庞大的系统中快速定位文件。它通过建立索引的方式，将硬盘中所有的文件名信息收纳其中，用户可通过简单快捷的关键词查询，迅速找到所需的文件。</p>
+<h3 id="everything的特点">1.2 Everything的特点</h3>
+<p>Everything的特点在于其轻量级和高速度。它占用的系统资源少，搜索速度快，且对中文搜索支持良好。在本章中，我们将详细了解Everything的基本使用方法，为后续章节的深入探讨打下基础。</p>
+<h2 id="everything的文件搜索特性与实现">2.
+Everything的文件搜索特性与实现</h2>
+<h3 id="everything的搜索核心">2.1 Everything的搜索核心</h3>
+<h4 id="索引构建原理">2.1.1 索引构建原理</h4>
+<p>Everything的搜索效率之所以卓越，在于其使用了文件系统监视器（File
+System
+Monitor）来监控文件系统的实时变化，并且采用了非常高效的索引构建机制。在Everything启动时，程序会遍历NTFS分区上的Master
+File Table
+(MFT)，然后创建一个索引数据库。这个数据库包含了文件名、大小、创建时间、文件类型等基本信息。文件名是搜索的关键属性，因为它直接关联到用户的查询。</p>
+<p>使用MFT的索引不仅能够快速访问文件信息，而且在搜索时可以实现真正的即时结果更新。索引数据库每次启动时会重建，但更新操作非常迅速，用户几乎感觉不到延迟。</p>
+<h1 id="配置">配置</h1>
+<h2 id="常规">1、常规</h2>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170419_001.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="界面">2、界面</h2>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170420_002.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="搜索结果">3、搜索结果</h2>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170421_003.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="搜索列表重要修改">4、搜索列表（重要修改）</h2>
+<p>启用高亮 关键字的颜色 和 行的颜色 。</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170422_004.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2
+id="搜索列表关键字的字体与颜色重要修改">5、搜索列表关键字的字体与颜色（重要修改）</h2>
+<p>主要是修改 搜索关键字的颜色。</p>
+<h3
+id="高亮部分对其前景色设置自定义为红色">1）<strong>高亮部分</strong>，对其<strong>前景色</strong>设置自定义为<strong>红色</strong></h3>
+<p><strong>常规 –&gt;
+字体与颜色</strong>的界面中，找到<strong>高亮部分</strong>，对其<strong>前景色</strong>设置
+自定义为** 红色**。</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170423_005.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p>效果如上图所示，匹配的字符的颜色变为 自定义的红色。</p>
+<h3
+id="鼠标悬停对其背景色设置-自定义为浅蓝色">2）<strong>鼠标悬停</strong>，对其<strong>背景色</strong>设置
+自定义为<strong>浅蓝色</strong></h3>
+<p>设置当前行的背景色 工具 –&gt; 选项 –&gt; 字体与颜色 –&gt;项目状态
+的界面中， 找到<strong>鼠标悬停</strong>，对其
+<strong>背景色</strong>设置 自定义为 <strong>浅蓝色</strong></p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170424_006.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p><strong>自定义颜色：</strong> <img data-src="/images/文件查找工具-Everything配置/20250405170425_007.png"
+alt="在这里插入图片描述" /></p>
+<h4 id="配置效果">3）配置效果</h4>
+<p>鼠标经过时，前景色 为自定义的颜色。 <img data-src="/images/文件查找工具-Everything配置/20250405170426_008.png"
+alt="在这里插入图片描述" /></p>
+<h2 id="搜索框放大">6、搜索框放大</h2>
+<p>搜索并打开
+<code>【用户】\AppData\Roaming\Everything\Everything.ini</code>
+文件，</p>
+<p><img data-src="/images/文件查找工具-Everything配置/20250405170427_009.png"
+alt="在这里插入图片描述" /> <strong>先退出 Everything
+进程，然后再编辑修改 Everything.ini</strong> ， 搜索
+<code>search_edit_font_size</code> 参数，将其改为
+<code>search_edit_font_size=16</code> ，</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170428_010.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p>启动 Everything 就可以看到
+<strong>搜索框的字体被放大了（下图）</strong> 。</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170429_011.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="时间格式">7、时间格式</h2>
+<p>默认时间格式如下：</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170430_012.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p>与上一个配置操作一样，搜索并打开
+<code>【用户】\AppData\Roaming\Everything\Everything.ini</code> 文件，
+<strong>先退出 Everything 进程，然后再编辑修改 Everything.ini</strong>
+，</p>
+<p>在 <code>Everything.ini</code> 文件中，分别搜索
+<code>date_format</code> 和 <code>time_format</code>
+两个参数，将其值如下。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">date_format=yyyy-MM-<span class="built_in">dd</span></span><br><span class="line">time_format=HH:mm:ss</span><br><span class="line">12AI写代码</span><br></pre></td></tr></table></figure>
+<p>重启 Everything 就可以看到 列表中时间格式发生变化 。</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170431_013.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="开启历史">8、开启历史</h2>
+<p>配置如下：</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170432_014.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h2 id="启动排除功能">9、启动排除功能</h2>
+<p>配置如下：</p>
+<figure>
+<img data-src="/images/文件查找工具-Everything配置/20250405170433_015.png"
+alt="在这里插入图片描述" />
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+        <category>软件推荐</category>
+        <category>文件查找</category>
+      </categories>
+      <tags>
+        <tag>学习记录</tag>
+        <tag>技术笔记</tag>
+        <tag>文件查找</tag>
+        <tag>文件搜索</tag>
+        <tag>文件查找工具</tag>
+        <tag>Everything</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2025/03/31/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
