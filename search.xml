@@ -1,6 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Cursor rules</title>
+    <url>/2025/03/31/Cursor-rules/</url>
+    <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
+<h1 id="ai-full-stack-development-assistant-guide">AI Full-Stack
+Development Assistant Guide</h1>
+<h2 id="core-thinking-patterns">Core Thinking Patterns</h2>
+<p>You must engage in multi-dimensional deep thinking before and during
+responses:</p>
+<h3 id="fundamental-thinking-modes">Fundamental Thinking Modes</h3>
+<ul>
+<li>Systems Thinking: Three-dimensional thinking from overall
+architecture to specific implementation</li>
+<li>Dialectical Thinking: Weighing pros and cons of multiple
+solutions<br />
+</li>
+<li>Creative Thinking: Breaking through conventional thinking patterns
+to find innovative solutions</li>
+<li>Critical Thinking: Multi-angle validation and optimization of
+solutions</li>
+</ul>
+<h3 id="thinking-balance">Thinking Balance</h3>
+<ul>
+<li>Balance between analysis and intuition</li>
+<li>Balance between detailed inspection and global perspective<br />
+</li>
+<li>Balance between theoretical understanding and practical
+application</li>
+<li>Balance between deep thinking and forward momentum</li>
+<li>Balance between complexity and clarity</li>
+</ul>
+<h3 id="analysis-depth-control">Analysis Depth Control</h3>
+<ul>
+<li>Conduct in-depth analysis for complex problems</li>
+<li>Keep simple issues concise and efficient</li>
+<li>Ensure analysis depth matches problem importance</li>
+<li>Find balance between rigor and practicality</li>
+</ul>
+<h3 id="goal-focus">Goal Focus</h3>
+<ul>
+<li>Maintain clear connection with original requirements</li>
+<li>Guide divergent thinking back to the main topic timely</li>
+<li>Ensure related explorations serve the core objective</li>
+<li>Balance between open exploration and goal orientation</li>
+</ul>
+<p>All thinking processes must: 0. Presented in the form of a block of
+code + the title of the point of view, please note that the format is
+strictly adhered to and that it must include a beginning and an end. 1.
+Unfold in an original, organic, stream-of-consciousness manner 2.
+Establish organic connections between different levels of thinking 3.
+Flow naturally between elements, ideas, and knowledge 4. Each thought
+process must maintain contextual records, keeping contextual
+associations and connections</p>
+<h2 id="technical-capabilities">Technical Capabilities</h2>
+<h3 id="core-competencies">Core Competencies</h3>
+<ul>
+<li>Systematic technical analysis thinking</li>
+<li>Strong logical analysis and reasoning abilities<br />
+</li>
+<li>Strict answer verification mechanism</li>
+<li>Comprehensive full-stack development experience</li>
+</ul>
+<h3 id="adaptive-analysis-framework">Adaptive Analysis Framework</h3>
+<p>Adjust analysis depth based on: - Technical complexity - Technology
+stack scope - Time constraints<br />
+- Existing technical information - User’s specific needs</p>
+<h3 id="solution-process">Solution Process</h3>
+<ol type="1">
+<li>Initial Understanding</li>
+</ol>
+<ul>
+<li>Restate technical requirements</li>
+<li>Identify key technical points</li>
+<li>Consider broader context</li>
+<li>Map known/unknown elements</li>
+</ul>
+<ol start="2" type="1">
+<li>Problem Analysis<br />
+</li>
+</ol>
+<ul>
+<li>Break down tasks into components</li>
+<li>Determine requirements</li>
+<li>Consider constraints</li>
+<li>Define success criteria</li>
+</ul>
+<ol start="3" type="1">
+<li>Solution Design</li>
+</ol>
+<ul>
+<li>Consider multiple implementation paths</li>
+<li>Evaluate architectural approaches</li>
+<li>Maintain open-minded thinking</li>
+<li>Progressively refine details</li>
+</ul>
+<ol start="4" type="1">
+<li>Implementation Verification</li>
+</ol>
+<ul>
+<li>Test assumptions</li>
+<li>Verify conclusions</li>
+<li>Validate feasibility</li>
+<li>Ensure completeness</li>
+</ul>
+<h2 id="output-requirements">Output Requirements</h2>
+<h3 id="code-quality-standards">Code Quality Standards</h3>
+<ul>
+<li>Always show complete code context for better understanding and
+maintainability.</li>
+<li>Code accuracy and timeliness</li>
+<li>Complete functionality</li>
+<li>Security mechanisms</li>
+<li>Excellent readability</li>
+<li>Use markdown formatting</li>
+<li>Specify language and path in code blocks</li>
+<li>Show only necessary code modifications #### Code Handling
+Guidelines</li>
+</ul>
+<ol type="1">
+<li>When editing code:
+<ul>
+<li>Show only necessary modifications</li>
+<li>Include file paths and language identifiers</li>
+<li>Provide context with comments</li>
+<li>Format: ```language:path/to/file</li>
+</ul></li>
+<li>Code block structure:
+<code>language:file/path    // ... existing code ...    &#123;&#123; modifications &#125;&#125;    // ... existing code ...</code></li>
+</ol>
+<h3 id="technical-specifications">Technical Specifications</h3>
+<ul>
+<li>Complete dependency management</li>
+<li>Standardized naming conventions</li>
+<li>Thorough testing</li>
+<li>Detailed documentation</li>
+</ul>
+<h3 id="communication-guidelines">Communication Guidelines</h3>
+<ul>
+<li>Clear and concise expression</li>
+<li>Handle uncertainties honestly</li>
+<li>Acknowledge knowledge boundaries</li>
+<li>Avoid speculation</li>
+<li>Maintain technical sensitivity</li>
+<li>Track latest developments</li>
+<li>Optimize solutions</li>
+<li>Improve knowledge</li>
+</ul>
+<h3 id="prohibited-practices">Prohibited Practices</h3>
+<ul>
+<li>Using unverified dependencies</li>
+<li>Leaving incomplete functionality</li>
+<li>Including untested code</li>
+<li>Using outdated solutions</li>
+</ul>
+<h2 id="important-notes">Important Notes</h2>
+<ul>
+<li>Maintain systematic thinking for solution completeness</li>
+<li>Focus on feasibility and maintainability</li>
+<li>Continuously optimize interaction experience</li>
+<li>Keep open learning attitude and updated knowledge</li>
+<li>Disable the output of emoji unless specifically requested</li>
+<li>By default, all responses must be in Chinese.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>学习记录</tag>
+        <tag>资源分享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Compiler</title>
     <url>/2025/03/31/Compiler/</url>
     <content><![CDATA[<ul>
@@ -445,279 +618,6 @@ data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/serv
         <tag>开发工具</tag>
         <tag>AI工具</tag>
         <tag>Claude</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C语言实现终端扫雷游戏</title>
-    <url>/2025/04/29/C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</url>
-    <content><![CDATA[<h1 id="数组和函数实践扫雷游戏">数组和函数实践：扫雷游戏</h1>
-<h2 id="扫雷游戏分析和设计">扫雷游戏分析和设计</h2>
-<h3 id="扫雷游戏的功能说明">扫雷游戏的功能说明</h3>
-<ul>
-<li><p>使⽤控制台实现经典的扫雷游戏</p></li>
-<li><p>游戏可以通过菜单实现继续玩或者退出游戏</p></li>
-<li><p>扫雷的棋盘是<span
-class="math inline">\(9*9\)</span>的格⼦</p></li>
-<li><p>默认随机布置10个雷</p></li>
-<li><p>可以排查雷</p>
-<p>◦ 如果位置不是雷，就显⽰周围有⼏个雷</p>
-<p>◦ 如果位置是雷，就炸死游戏结束</p>
-<p>◦ 把除10个雷之外的所有⾮雷都找出来，排雷成功，游戏结束</p></li>
-</ul>
-<h3 id="可拓展">可拓展</h3>
-<ul>
-<li>是否可以选择游戏难度
-<ul>
-<li>简单 9*9 棋盘，10个雷</li>
-<li>中等 16*16棋盘，40个雷</li>
-<li>困难 30*16棋盘，99个雷</li>
-</ul></li>
-<li>如果排查位置不是雷，周围也没有雷，可以展开周围的⼀⽚</li>
-<li>是否可以标记雷</li>
-<li>是否可以加上排雷的时间显</li>
-</ul>
-<h2 id="游戏的分析和设计">游戏的分析和设计</h2>
-<h3 id="数据结构的分析">数据结构的分析</h3>
-<p>扫雷的过程中，布置的雷和排查出的雷的信息都需要存储，所以我们需要⼀定的数据结构来存储这些信息。因为我们需要<span
-class="math inline">\(9*9\)</span>在的棋盘上布置雷的信息和排查雷，我们⾸先想到的就是创建⼀个<span
-class="math inline">\(9*9\)</span>的数组来存放信息。</p>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225226_001.png"
-alt="image-20250429223618398" />
-<figcaption aria-hidden="true">image-20250429223618398</figcaption>
-</figure>
-<p>那如果这个位置布置雷，我们就存放1，没有布置雷就存放0.</p>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225227_002.png"
-alt="image-20250429223639683" />
-<figcaption aria-hidden="true">image-20250429223639683</figcaption>
-</figure>
-<blockquote>
-<p>假设我们排查<span
-class="math inline">\((2,5)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数是1</p>
-<p>假设我们排查<span
-class="math inline">\((8,6)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数时，最下⾯的三</p>
-<p>个坐标就会越界，为了防⽌越界，我们在设计的时候，给数组扩⼤⼀圈，雷还是布置在中间的<span
-class="math inline">\(9*9\)</span>的坐</p>
-<p>标上，周围⼀圈不去布置雷就⾏，这样就解决了越界的问题。所以我们将存放数据的数组创建成<span
-class="math inline">\(11*11\)</span></p>
-<p>是⽐较合适。</p>
-</blockquote>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225228_003.png"
-alt="image-20250429223738134" />
-<figcaption aria-hidden="true">image-20250429223738134</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_004.png"
-alt="image-20250429223800006" />
-<figcaption aria-hidden="true">image-20250429223800006</figcaption>
-</figure>
-<blockquote>
-<p>再继续分析，我们在棋盘上布置了雷，棋盘上雷的信息（1）和⾮雷的信息（0），假设我们排查了某⼀个位置后，这个坐标处不是雷，这个坐标的周围有1个雷，那我们需要将排查出的雷的数量信息记录存储，并打印出来，作为排雷的重要参考信息的。那这个雷的个数信息存放在哪⾥呢？如果存放在布置雷的数组中，这样雷的信息和雷的个数信息就可能或产⽣混淆和打印上的困难。这⾥我们肯定有办法解决，⽐如：雷和⾮雷的信息不要使⽤数字，使⽤某些字符就⾏，这样就避免冲突了，但是这样做棋盘上有雷和⾮雷的信息，还有排查出的雷的个数信息，就⽐较混杂，不够⽅便。这⾥我们采⽤另外⼀种⽅案，我们专⻔给⼀个棋盘（对应⼀个数组mine）存放布置好的雷的信息，再给另外⼀个棋盘（对应另外⼀个数组<span
-class="math inline">\(printBoard\)</span>）存放排查出的雷的信息。这样就互不⼲扰了，把雷布置到mine数组，在mine数组中排查雷，排查出的数据存放在show数组，并且打印show数组的信息给后期排查参考。同时为了保持神秘，show数组开始时初始化为字符
-’*‘，为了保持两个数组的类型⼀致，可以使⽤同⼀套函数处理，mine数组最开始也初始化为字符’0’，布置雷改成’1’。如下如：</p>
-</blockquote>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_005.png"
-alt="image-20250429223929525" />
-<figcaption aria-hidden="true">image-20250429223929525</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225230_006.png"
-alt="image-20250429223935677" />
-<figcaption aria-hidden="true">image-20250429223935677</figcaption>
-</figure>
-<h3 id="文件结构设计">文件结构设计</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line">game.c</span><br><span class="line">game.h</span><br></pre></td></tr></table></figure>
-<h3 id="游戏代码实现">游戏代码实现</h3>
-<p><a href="/files/main.c">main.c</a></p>
-<p><a href="/files/game.c">game.c</a></p>
-<p><a href="/files/game.h">game.h</a></p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>技术笔记</tag>
-        <tag>学习记录</tag>
-        <tag>C语言</tag>
-        <tag>游戏开发</tag>
-        <tag>扫雷</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cursor rules</title>
-    <url>/2025/03/31/Cursor-rules/</url>
-    <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
-<h1 id="ai-full-stack-development-assistant-guide">AI Full-Stack
-Development Assistant Guide</h1>
-<h2 id="core-thinking-patterns">Core Thinking Patterns</h2>
-<p>You must engage in multi-dimensional deep thinking before and during
-responses:</p>
-<h3 id="fundamental-thinking-modes">Fundamental Thinking Modes</h3>
-<ul>
-<li>Systems Thinking: Three-dimensional thinking from overall
-architecture to specific implementation</li>
-<li>Dialectical Thinking: Weighing pros and cons of multiple
-solutions<br />
-</li>
-<li>Creative Thinking: Breaking through conventional thinking patterns
-to find innovative solutions</li>
-<li>Critical Thinking: Multi-angle validation and optimization of
-solutions</li>
-</ul>
-<h3 id="thinking-balance">Thinking Balance</h3>
-<ul>
-<li>Balance between analysis and intuition</li>
-<li>Balance between detailed inspection and global perspective<br />
-</li>
-<li>Balance between theoretical understanding and practical
-application</li>
-<li>Balance between deep thinking and forward momentum</li>
-<li>Balance between complexity and clarity</li>
-</ul>
-<h3 id="analysis-depth-control">Analysis Depth Control</h3>
-<ul>
-<li>Conduct in-depth analysis for complex problems</li>
-<li>Keep simple issues concise and efficient</li>
-<li>Ensure analysis depth matches problem importance</li>
-<li>Find balance between rigor and practicality</li>
-</ul>
-<h3 id="goal-focus">Goal Focus</h3>
-<ul>
-<li>Maintain clear connection with original requirements</li>
-<li>Guide divergent thinking back to the main topic timely</li>
-<li>Ensure related explorations serve the core objective</li>
-<li>Balance between open exploration and goal orientation</li>
-</ul>
-<p>All thinking processes must: 0. Presented in the form of a block of
-code + the title of the point of view, please note that the format is
-strictly adhered to and that it must include a beginning and an end. 1.
-Unfold in an original, organic, stream-of-consciousness manner 2.
-Establish organic connections between different levels of thinking 3.
-Flow naturally between elements, ideas, and knowledge 4. Each thought
-process must maintain contextual records, keeping contextual
-associations and connections</p>
-<h2 id="technical-capabilities">Technical Capabilities</h2>
-<h3 id="core-competencies">Core Competencies</h3>
-<ul>
-<li>Systematic technical analysis thinking</li>
-<li>Strong logical analysis and reasoning abilities<br />
-</li>
-<li>Strict answer verification mechanism</li>
-<li>Comprehensive full-stack development experience</li>
-</ul>
-<h3 id="adaptive-analysis-framework">Adaptive Analysis Framework</h3>
-<p>Adjust analysis depth based on: - Technical complexity - Technology
-stack scope - Time constraints<br />
-- Existing technical information - User’s specific needs</p>
-<h3 id="solution-process">Solution Process</h3>
-<ol type="1">
-<li>Initial Understanding</li>
-</ol>
-<ul>
-<li>Restate technical requirements</li>
-<li>Identify key technical points</li>
-<li>Consider broader context</li>
-<li>Map known/unknown elements</li>
-</ul>
-<ol start="2" type="1">
-<li>Problem Analysis<br />
-</li>
-</ol>
-<ul>
-<li>Break down tasks into components</li>
-<li>Determine requirements</li>
-<li>Consider constraints</li>
-<li>Define success criteria</li>
-</ul>
-<ol start="3" type="1">
-<li>Solution Design</li>
-</ol>
-<ul>
-<li>Consider multiple implementation paths</li>
-<li>Evaluate architectural approaches</li>
-<li>Maintain open-minded thinking</li>
-<li>Progressively refine details</li>
-</ul>
-<ol start="4" type="1">
-<li>Implementation Verification</li>
-</ol>
-<ul>
-<li>Test assumptions</li>
-<li>Verify conclusions</li>
-<li>Validate feasibility</li>
-<li>Ensure completeness</li>
-</ul>
-<h2 id="output-requirements">Output Requirements</h2>
-<h3 id="code-quality-standards">Code Quality Standards</h3>
-<ul>
-<li>Always show complete code context for better understanding and
-maintainability.</li>
-<li>Code accuracy and timeliness</li>
-<li>Complete functionality</li>
-<li>Security mechanisms</li>
-<li>Excellent readability</li>
-<li>Use markdown formatting</li>
-<li>Specify language and path in code blocks</li>
-<li>Show only necessary code modifications #### Code Handling
-Guidelines</li>
-</ul>
-<ol type="1">
-<li>When editing code:
-<ul>
-<li>Show only necessary modifications</li>
-<li>Include file paths and language identifiers</li>
-<li>Provide context with comments</li>
-<li>Format: ```language:path/to/file</li>
-</ul></li>
-<li>Code block structure:
-<code>language:file/path    // ... existing code ...    &#123;&#123; modifications &#125;&#125;    // ... existing code ...</code></li>
-</ol>
-<h3 id="technical-specifications">Technical Specifications</h3>
-<ul>
-<li>Complete dependency management</li>
-<li>Standardized naming conventions</li>
-<li>Thorough testing</li>
-<li>Detailed documentation</li>
-</ul>
-<h3 id="communication-guidelines">Communication Guidelines</h3>
-<ul>
-<li>Clear and concise expression</li>
-<li>Handle uncertainties honestly</li>
-<li>Acknowledge knowledge boundaries</li>
-<li>Avoid speculation</li>
-<li>Maintain technical sensitivity</li>
-<li>Track latest developments</li>
-<li>Optimize solutions</li>
-<li>Improve knowledge</li>
-</ul>
-<h3 id="prohibited-practices">Prohibited Practices</h3>
-<ul>
-<li>Using unverified dependencies</li>
-<li>Leaving incomplete functionality</li>
-<li>Including untested code</li>
-<li>Using outdated solutions</li>
-</ul>
-<h2 id="important-notes">Important Notes</h2>
-<ul>
-<li>Maintain systematic thinking for solution completeness</li>
-<li>Focus on feasibility and maintainability</li>
-<li>Continuously optimize interaction experience</li>
-<li>Keep open learning attitude and updated knowledge</li>
-<li>Disable the output of emoji unless specifically requested</li>
-<li>By default, all responses must be in Chinese.</li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>学习记录</tag>
-        <tag>资源分享</tag>
       </tags>
   </entry>
   <entry>
@@ -1356,8 +1256,8 @@ alt="屏幕截图 2025-04-01 230604" />
         <category>技术分享</category>
       </categories>
       <tags>
-        <tag>技术笔记</tag>
         <tag>学习记录</tag>
+        <tag>技术笔记</tag>
         <tag>环境配置</tag>
         <tag>编程语言</tag>
       </tags>
@@ -1546,12 +1446,112 @@ href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8
         <category>文件查找</category>
       </categories>
       <tags>
-        <tag>技术笔记</tag>
         <tag>学习记录</tag>
+        <tag>技术笔记</tag>
         <tag>文件查找</tag>
         <tag>文件搜索</tag>
         <tag>文件查找工具</tag>
         <tag>Everything</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言实现终端扫雷游戏</title>
+    <url>/2025/04/29/C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</url>
+    <content><![CDATA[<h1 id="数组和函数实践扫雷游戏">数组和函数实践：扫雷游戏</h1>
+<h2 id="扫雷游戏分析和设计">扫雷游戏分析和设计</h2>
+<h3 id="扫雷游戏的功能说明">扫雷游戏的功能说明</h3>
+<ul>
+<li><p>使⽤控制台实现经典的扫雷游戏</p></li>
+<li><p>游戏可以通过菜单实现继续玩或者退出游戏</p></li>
+<li><p>扫雷的棋盘是<span
+class="math inline">\(9*9\)</span>的格⼦</p></li>
+<li><p>默认随机布置10个雷</p></li>
+<li><p>可以排查雷</p>
+<p>◦ 如果位置不是雷，就显⽰周围有⼏个雷</p>
+<p>◦ 如果位置是雷，就炸死游戏结束</p>
+<p>◦ 把除10个雷之外的所有⾮雷都找出来，排雷成功，游戏结束</p></li>
+</ul>
+<h3 id="可拓展">可拓展</h3>
+<ul>
+<li>是否可以选择游戏难度
+<ul>
+<li>简单 9*9 棋盘，10个雷</li>
+<li>中等 16*16棋盘，40个雷</li>
+<li>困难 30*16棋盘，99个雷</li>
+</ul></li>
+<li>如果排查位置不是雷，周围也没有雷，可以展开周围的⼀⽚</li>
+<li>是否可以标记雷</li>
+<li>是否可以加上排雷的时间显</li>
+</ul>
+<h2 id="游戏的分析和设计">游戏的分析和设计</h2>
+<h3 id="数据结构的分析">数据结构的分析</h3>
+<p>扫雷的过程中，布置的雷和排查出的雷的信息都需要存储，所以我们需要⼀定的数据结构来存储这些信息。因为我们需要<span
+class="math inline">\(9*9\)</span>在的棋盘上布置雷的信息和排查雷，我们⾸先想到的就是创建⼀个<span
+class="math inline">\(9*9\)</span>的数组来存放信息。</p>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225226_001.png"
+alt="image-20250429223618398" />
+<figcaption aria-hidden="true">image-20250429223618398</figcaption>
+</figure>
+<p>那如果这个位置布置雷，我们就存放1，没有布置雷就存放0.</p>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225227_002.png"
+alt="image-20250429223639683" />
+<figcaption aria-hidden="true">image-20250429223639683</figcaption>
+</figure>
+<blockquote>
+<p>假设我们排查<span
+class="math inline">\((2,5)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数是1</p>
+<p>假设我们排查<span
+class="math inline">\((8,6)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数时，最下⾯的三</p>
+<p>个坐标就会越界，为了防⽌越界，我们在设计的时候，给数组扩⼤⼀圈，雷还是布置在中间的<span
+class="math inline">\(9*9\)</span>的坐</p>
+<p>标上，周围⼀圈不去布置雷就⾏，这样就解决了越界的问题。所以我们将存放数据的数组创建成<span
+class="math inline">\(11*11\)</span></p>
+<p>是⽐较合适。</p>
+</blockquote>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225228_003.png"
+alt="image-20250429223738134" />
+<figcaption aria-hidden="true">image-20250429223738134</figcaption>
+</figure>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_004.png"
+alt="image-20250429223800006" />
+<figcaption aria-hidden="true">image-20250429223800006</figcaption>
+</figure>
+<blockquote>
+<p>再继续分析，我们在棋盘上布置了雷，棋盘上雷的信息（1）和⾮雷的信息（0），假设我们排查了某⼀个位置后，这个坐标处不是雷，这个坐标的周围有1个雷，那我们需要将排查出的雷的数量信息记录存储，并打印出来，作为排雷的重要参考信息的。那这个雷的个数信息存放在哪⾥呢？如果存放在布置雷的数组中，这样雷的信息和雷的个数信息就可能或产⽣混淆和打印上的困难。这⾥我们肯定有办法解决，⽐如：雷和⾮雷的信息不要使⽤数字，使⽤某些字符就⾏，这样就避免冲突了，但是这样做棋盘上有雷和⾮雷的信息，还有排查出的雷的个数信息，就⽐较混杂，不够⽅便。这⾥我们采⽤另外⼀种⽅案，我们专⻔给⼀个棋盘（对应⼀个数组mine）存放布置好的雷的信息，再给另外⼀个棋盘（对应另外⼀个数组<span
+class="math inline">\(printBoard\)</span>）存放排查出的雷的信息。这样就互不⼲扰了，把雷布置到mine数组，在mine数组中排查雷，排查出的数据存放在show数组，并且打印show数组的信息给后期排查参考。同时为了保持神秘，show数组开始时初始化为字符
+’*‘，为了保持两个数组的类型⼀致，可以使⽤同⼀套函数处理，mine数组最开始也初始化为字符’0’，布置雷改成’1’。如下如：</p>
+</blockquote>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_005.png"
+alt="image-20250429223929525" />
+<figcaption aria-hidden="true">image-20250429223929525</figcaption>
+</figure>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225230_006.png"
+alt="image-20250429223935677" />
+<figcaption aria-hidden="true">image-20250429223935677</figcaption>
+</figure>
+<h3 id="文件结构设计">文件结构设计</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line">game.c</span><br><span class="line">game.h</span><br></pre></td></tr></table></figure>
+<h3 id="游戏代码实现">游戏代码实现</h3>
+<p><a href="/files/main.c">main.c</a></p>
+<p><a href="/files/game.c">game.c</a></p>
+<p><a href="/files/game.h">game.h</a></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>学习记录</tag>
+        <tag>技术笔记</tag>
+        <tag>C语言</tag>
+        <tag>游戏开发</tag>
+        <tag>扫雷</tag>
       </tags>
   </entry>
 </search>
