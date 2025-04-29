@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.huluapple.xin","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":{"gitalk":{"text":"加载 Gitalk","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="GCC编译器-GCC编译器简介 GCC官网  编译和链接   编译链接流程图  1. 预处理指令的处理(预编译) 123&#x2F;&#x2F;比如#include&lt;stdio.h&gt;   &#x2F;&#x2F;预处理后会把stdio.h的所有内容替换这个包含#define a 100       &#x2F;&#x2F;预处理后会把以后的所有a全部替换为100 用gcc编译器查看预处理指令情况 12gcc -E .c">
+    <meta name="description" content="GCC编译器-GCC编译器简介 GCC官网  编译和链接 1. 预处理指令的处理(预编译)123&#x2F;&#x2F;比如#include&lt;stdio.h&gt;   &#x2F;&#x2F;预处理后会把stdio.h的所有内容替换这个包含#define a 100       &#x2F;&#x2F;预处理后会把以后的所有a全部替换为100  &#x3D;&#x3D;用gcc编译器查看预处理指令情况&#x3D;&#x3D; 12gcc -E .">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler">
 <meta property="og:url" content="https://blog.huluapple.xin/2025/03/31/Compiler/index.html">
 <meta property="og:site_name" content="Hulu&#39;s Blog">
-<meta property="og:description" content="GCC编译器-GCC编译器简介 GCC官网  编译和链接   编译链接流程图  1. 预处理指令的处理(预编译) 123&#x2F;&#x2F;比如#include&lt;stdio.h&gt;   &#x2F;&#x2F;预处理后会把stdio.h的所有内容替换这个包含#define a 100       &#x2F;&#x2F;预处理后会把以后的所有a全部替换为100 用gcc编译器查看预处理指令情况 12gcc -E .c">
+<meta property="og:description" content="GCC编译器-GCC编译器简介 GCC官网  编译和链接 1. 预处理指令的处理(预编译)123&#x2F;&#x2F;比如#include&lt;stdio.h&gt;   &#x2F;&#x2F;预处理后会把stdio.h的所有内容替换这个包含#define a 100       &#x2F;&#x2F;预处理后会把以后的所有a全部替换为100  &#x3D;&#x3D;用gcc编译器查看预处理指令情况&#x3D;&#x3D; 12gcc -E .">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.huluapple.xin/images/Compiler/20250331224528_001.jpg">
 <meta property="og:image" content="https://blog.huluapple.xin/images/Compiler/20250331224529_002.png">
@@ -40,8 +40,8 @@
 <meta property="article:published_time" content="2025-03-31T14:35:30.000Z">
 <meta property="article:modified_time" content="2025-03-31T14:35:30.000Z">
 <meta property="article:author" content="Hulu">
-<meta property="article:tag" content="GCC Compiler">
 <meta property="article:tag" content="技术笔记">
+<meta property="article:tag" content="GCC Compiler">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.huluapple.xin/images/Compiler/20250331224528_001.jpg">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">编译和链接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4%E7%9A%84%E5%A4%84%E7%90%86%E9%A2%84%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预处理指令的处理(预编译)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.2.</span> <span class="nav-text">2.编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96"><span class="nav-number">1.3.</span> <span class="nav-text">3.汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">4.链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.5.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.1.</span> <span class="nav-text">编码问题</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">编译和链接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4%E7%9A%84%E5%A4%84%E7%90%86-%E9%A2%84%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预处理指令的处理(预编译)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%96%E8%AF%91"><span class="nav-number">1.2.</span> <span class="nav-text">2.编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B1%87%E7%BC%96"><span class="nav-number">1.3.</span> <span class="nav-text">3.汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%93%BE%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">4.链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.5.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.1.</span> <span class="nav-text">编码问题</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -289,112 +289,87 @@
     
     
     <div class="post-body" itemprop="articleBody"><ul>
-<li><a href="/files/GCC编译器.pdf">GCC编译器</a>-GCC编译器简介</li>
+<li><a href="/files/GCC%E7%BC%96%E8%AF%91%E5%99%A8.pdf">GCC编译器</a>-GCC编译器简介</li>
 <li><a target="_blank" rel="noopener" href="https://gcc.gnu.org/">GCC官网</a></li>
 </ul>
-<h1 id="编译和链接">编译和链接</h1>
-<figure>
-<img data-src="/images/Compiler/20250331224528_001.jpg"
-alt="编译链接流程图" />
-<figcaption aria-hidden="true">编译链接流程图</figcaption>
-</figure>
-<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
+<h1 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h1><p><img data-src="/images/Compiler/20250331224528_001.jpg" alt="编译链接流程图"></p>
+<h2 id="1-预处理指令的处理-预编译"><a href="#1-预处理指令的处理-预编译" class="headerlink" title="1. 预处理指令的处理(预编译)"></a>1. 预处理指令的处理(预编译)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;<strong>用<code>gcc</code>编译器查看预处理指令情况</strong>&#x3D;&#x3D;</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
+
 <p>附</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
-<figcaption aria-hidden="true">预处理示例</figcaption>
-</figure>
+
+<p><img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例"></p>
 <blockquote>
 <p>[!note]</p>
 <ul>
-<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+<li>&#x3D;&#x3D;如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行&#x3D;&#x3D;</li>
 </ul>
 </blockquote>
-<h2 id="编译">2.编译</h2>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224530_003.png"
-alt="编译过程示例1" />
-<figcaption aria-hidden="true">编译过程示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224532_004.png"
-alt="编译过程示例2" />
-<figcaption aria-hidden="true">编译过程示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224533_005.png"
-alt="编译过程示例3" />
-<figcaption aria-hidden="true">编译过程示例3</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224535_006.png"
-alt="编译过程示例4" />
-<figcaption aria-hidden="true">编译过程示例4</figcaption>
-</figure>
-<h2 id="汇编">3.汇编</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
-<figcaption aria-hidden="true">汇编过程示例</figcaption>
-</figure>
+<h2 id="2-编译"><a href="#2-编译" class="headerlink" title="2.编译"></a>2.编译</h2><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/Compiler/20250331224530_003.png" alt="编译过程示例1"></p>
+<p><img data-src="/images/Compiler/20250331224532_004.png" alt="编译过程示例2"></p>
+<p><img data-src="/images/Compiler/20250331224533_005.png" alt="编译过程示例3"></p>
+<p><img data-src="/images/Compiler/20250331224535_006.png" alt="编译过程示例4"></p>
+<h2 id="3-汇编"><a href="#3-汇编" class="headerlink" title="3.汇编"></a>3.汇编</h2><p><img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例"></p>
 <blockquote>
 <p>[!important]</p>
-<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
+<p>&#x3D;&#x3D;汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表&#x3D;&#x3D;</p>
 </blockquote>
 <pre class="mermaid">---
 title: 链接过程
 ---
 graph TD
-    第一个目标文件.o-->|链接|可执行文件
-    第二个目标文件.o-->|链接|可执行文件
-    链接库-->|链接|可执行文件
-    形成一个符号表</pre>
-<h2 id="链接">4.链接</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
-<figcaption aria-hidden="true">链接过程示例</figcaption>
-</figure>
+	第一个目标文件.o-->|链接|可执行文件
+	第二个目标文件.o-->|链接|可执行文件
+	链接库-->|链接|可执行文件
+	形成一个符号表</pre>
+
+<h2 id="4-链接"><a href="#4-链接" class="headerlink" title="4.链接"></a>4.链接</h2><p><img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例"></p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>[!warning]</p>
 <ul>
-<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
+<li><p><strong>&#x3D;&#x3D;预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件&#x3D;&#x3D;</strong></p>
+</li>
 <li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
 </ul>
 </blockquote>
 <pre class="mermaid">---
 title: 编译与链接
 ---
 graph LR
-    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+	预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<h3 id="编码问题">编码问题</h3>
-<ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
+
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a>编码问题</h3><ul>
+<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p>
+</li>
 <li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>两种格式不一样导致乱码</p></li>
+<p>  两种格式不一样导致乱码</p>
+</li>
 </ul>
 <blockquote>
 <p>[!note]</p>
 <p>解决方法</p>
-<ol type="1">
-<li><p>把编程环境改为GBK编码形式</p></li>
-<li><p>把Windows终端改为UTF-8编码格式</p></li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+<ol>
+<li><p>把编程环境改为GBK编码形式</p>
+</li>
+<li><p>把Windows终端改为UTF-8编码格式</p>
+</li>
+<li><p>指令形式编译,再编译过程加入字符编码处理</p>
+ <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<figure>
-<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
-<figcaption aria-hidden="true">编码问题示例</figcaption>
-</figure>
+<p><img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例"></p>
 
     </div>
 
@@ -421,8 +396,8 @@ graph LR
 </div>
 
           <div class="post-tags">
-              <a href="/tags/GCC-Compiler/" rel="tag"># GCC Compiler</a>
               <a href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" rel="tag"># 技术笔记</a>
+              <a href="/tags/GCC-Compiler/" rel="tag"># GCC Compiler</a>
               <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag"># 编译原理</a>
           </div>
 
