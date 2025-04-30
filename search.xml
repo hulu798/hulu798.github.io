@@ -1,6 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Compiler</title>
+    <url>/2025/03/31/Compiler/</url>
+    <content><![CDATA[<ul>
+<li><a href="/files/GCC编译器.pdf">GCC编译器</a>-GCC编译器简介</li>
+<li><a href="https://gcc.gnu.org/">GCC官网</a></li>
+</ul>
+<h1 id="编译和链接">编译和链接</h1>
+<figure>
+<img data-src="/images/Compiler/20250331224528_001.jpg"
+alt="编译链接流程图" />
+<figcaption aria-hidden="true">编译链接流程图</figcaption>
+</figure>
+<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
+<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
+<p>附</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
+<figcaption aria-hidden="true">预处理示例</figcaption>
+</figure>
+<blockquote>
+<p>[!note]</p>
+<ul>
+<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
+</ul>
+</blockquote>
+<h2 id="编译">2.编译</h2>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="/images/Compiler/20250331224530_003.png"
+alt="编译过程示例1" />
+<figcaption aria-hidden="true">编译过程示例1</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224532_004.png"
+alt="编译过程示例2" />
+<figcaption aria-hidden="true">编译过程示例2</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224533_005.png"
+alt="编译过程示例3" />
+<figcaption aria-hidden="true">编译过程示例3</figcaption>
+</figure>
+<figure>
+<img data-src="/images/Compiler/20250331224535_006.png"
+alt="编译过程示例4" />
+<figcaption aria-hidden="true">编译过程示例4</figcaption>
+</figure>
+<h2 id="汇编">3.汇编</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
+<figcaption aria-hidden="true">汇编过程示例</figcaption>
+</figure>
+<blockquote>
+<p>[!important]</p>
+<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
+</blockquote>
+<pre class="mermaid">---
+title: 链接过程
+---
+graph TD
+    第一个目标文件.o-->|链接|可执行文件
+    第二个目标文件.o-->|链接|可执行文件
+    链接库-->|链接|可执行文件
+    形成一个符号表</pre>
+<h2 id="链接">4.链接</h2>
+<figure>
+<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
+<figcaption aria-hidden="true">链接过程示例</figcaption>
+</figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!warning]</p>
+<ul>
+<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
+<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<pre class="mermaid">---
+title: 编译与链接
+---
+graph LR
+    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<h3 id="编码问题">编码问题</h3>
+<ul>
+<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
+<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
+<p>两种格式不一样导致乱码</p></li>
+</ul>
+<blockquote>
+<p>[!note]</p>
+<p>解决方法</p>
+<ol type="1">
+<li><p>把编程环境改为GBK编码形式</p></li>
+<li><p>把Windows终端改为UTF-8编码格式</p></li>
+<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
+</ol>
+<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure>
+<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
+<figcaption aria-hidden="true">编码问题示例</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>GCC Compiler</tag>
+        <tag>技术笔记</tag>
+        <tag>编译原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言实现终端扫雷游戏</title>
+    <url>/2025/04/29/C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</url>
+    <content><![CDATA[<h1 id="数组和函数实践扫雷游戏">数组和函数实践：扫雷游戏</h1>
+<h2 id="前言">前言</h2>
+<p>扫雷是一款经典的单人益智游戏，它不仅具有很高的娱乐性，也是初学者练习C语言编程能力的绝佳项目。通过实现扫雷游戏，我们可以深入理解数组操作、函数设计、随机数生成等C语言核心知识点。本文将带您从零开始，一步步实现一个完整的终端扫雷游戏。</p>
+<h2 id="扫雷游戏分析和设计">扫雷游戏分析和设计</h2>
+<h3 id="扫雷游戏的功能说明">扫雷游戏的功能说明</h3>
+<ul>
+<li><p>使⽤控制台实现经典的扫雷游戏</p></li>
+<li><p>游戏可以通过菜单实现继续玩或者退出游戏</p></li>
+<li><p>扫雷的棋盘是9×9的格⼦</p></li>
+<li><p>默认随机布置10个雷</p></li>
+<li><p>可以排查雷</p>
+<p>◦ 如果位置不是雷，就显⽰周围有⼏个雷</p>
+<p>◦ 如果位置是雷，就炸死游戏结束</p>
+<p>◦ 把除10个雷之外的所有⾮雷都找出来，排雷成功，游戏结束</p></li>
+</ul>
+<h3 id="可拓展功能">可拓展功能</h3>
+<ul>
+<li>游戏难度选择
+<ul>
+<li>简单：9×9 棋盘，10个雷</li>
+<li>中等：16×16 棋盘，40个雷</li>
+<li>困难：30×16 棋盘，99个雷</li>
+</ul></li>
+<li>空白区域自动展开：如果排查位置不是雷，周围也没有雷，可以展开周围的⼀⽚</li>
+<li>标记功能：允许玩家标记可能是雷的位置</li>
+<li>计时功能：记录排雷的时间</li>
+</ul>
+<h2 id="游戏的分析和设计">游戏的分析和设计</h2>
+<h3 id="数据结构的分析">数据结构的分析</h3>
+<p>扫雷的过程中，布置的雷和排查出的雷的信息都需要存储，所以我们需要⼀定的数据结构来存储这些信息。因为我们需要9×9的棋盘上布置雷的信息和排查雷，我们⾸先想到的就是创建⼀个9×9的数组来存放信息。</p>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225226_001.png"
+alt="扫雷棋盘示意图" />
+<figcaption aria-hidden="true">扫雷棋盘示意图</figcaption>
+</figure>
+<p>那如果这个位置布置雷，我们就存放1，没有布置雷就存放0。</p>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225227_002.png"
+alt="雷的布置示意图" />
+<figcaption aria-hidden="true">雷的布置示意图</figcaption>
+</figure>
+<blockquote>
+<p>假设我们排查(2,5)这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数是1</p>
+<p>假设我们排查(8,6)这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数时，最下⾯的三个坐标就会越界，为了防⽌越界，我们在设计的时候，给数组扩⼤⼀圈，雷还是布置在中间的9×9的坐标上，周围⼀圈不去布置雷就⾏，这样就解决了越界的问题。所以我们将存放数据的数组创建成11×11是⽐较合适。</p>
+</blockquote>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225228_003.png"
+alt="边界处理示意图" />
+<figcaption aria-hidden="true">边界处理示意图</figcaption>
+</figure>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_004.png"
+alt="扩展棋盘示意图" />
+<figcaption aria-hidden="true">扩展棋盘示意图</figcaption>
+</figure>
+<blockquote>
+<p>再继续分析，我们在棋盘上布置了雷，棋盘上雷的信息（1）和⾮雷的信息（0），假设我们排查了某⼀个位置后，这个坐标处不是雷，这个坐标的周围有1个雷，那我们需要将排查出的雷的数量信息记录存储，并打印出来，作为排雷的重要参考信息的。那这个雷的个数信息存放在哪⾥呢？如果存放在布置雷的数组中，这样雷的信息和雷的个数信息就可能或产⽣混淆和打印上的困难。这⾥我们肯定有办法解决，⽐如：雷和⾮雷的信息不要使⽤数字，使⽤某些字符就⾏，这样就避免冲突了，但是这样做棋盘上有雷和⾮雷的信息，还有排查出的雷的个数信息，就⽐较混杂，不够⽅便。</p>
+<p>这⾥我们采⽤另外⼀种⽅案，我们专⻔给⼀个棋盘（对应⼀个数组mine）存放布置好的雷的信息，再给另外⼀个棋盘（对应另外⼀个数组printBoard）存放排查出的雷的信息。这样就互不⼲扰了，把雷布置到mine数组，在mine数组中排查雷，排查出的数据存放在show数组，并且打印show数组的信息给后期排查参考。同时为了保持神秘，show数组开始时初始化为字符
+’*‘，为了保持两个数组的类型⼀致，可以使⽤同⼀套函数处理，mine数组最开始也初始化为字符’0’，布置雷改成’1’。如下如：</p>
+</blockquote>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_005.png"
+alt="双数组示意图" />
+<figcaption aria-hidden="true">双数组示意图</figcaption>
+</figure>
+<figure>
+<img data-src="/images/C语言实现终端扫雷游戏/20250429225230_006.png"
+alt="数组存储示意图" />
+<figcaption aria-hidden="true">数组存储示意图</figcaption>
+</figure>
+<h3 id="文件结构设计">文件结构设计</h3>
+<p>为了使代码结构清晰，我们将扫雷游戏分为三个文件：</p>
+<ol type="1">
+<li><code>game.h</code> - 头文件，包含函数声明和宏定义</li>
+<li><code>game.c</code> - 源文件，包含游戏逻辑实现</li>
+<li><code>main.c</code> - 主文件，包含主函数和菜单功能</li>
+</ol>
+<h2 id="游戏代码实现">游戏代码实现</h2>
+<h3 id="头文件实现game.h">头文件实现（game.h）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义游戏棋盘大小,便于后期拓展</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ROW 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COL 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ROWS (ROW + 2)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COLS (COL + 2)</span></span><br><span class="line"><span class="comment">// 定义雷的数量</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COUNT 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏进行函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">game</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">initBoard</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">char</span> setchar)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 随机数布置雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">findMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span>;</span><br></pre></td></tr></table></figure>
+<p>头文件中，我们定义了游戏所需的常量和函数声明：</p>
+<ol type="1">
+<li><code>ROW</code>和<code>COL</code>定义了游戏棋盘的实际大小（9×9）</li>
+<li><code>ROWS</code>和<code>COLS</code>则是在实际棋盘外围增加一圈边界（11×11）</li>
+<li><code>COUNT</code>定义了雷的数量（10个）</li>
+<li>声明了游戏所需的各个函数</li>
+</ol>
+<h3 id="主函数实现main.c">主函数实现（main.c）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;game.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">menu</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    SetConsoleOutputCP(<span class="number">65001</span>);</span><br><span class="line">    <span class="comment">//设置随机数种子</span></span><br><span class="line">    srand((<span class="type">unsigned</span> <span class="type">int</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">    <span class="type">int</span> play = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        menu();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Please choose:&gt;&quot;</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;play);</span><br><span class="line">        <span class="keyword">while</span> (getchar() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">            ;</span><br><span class="line">        <span class="keyword">switch</span> (play)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            game();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;EXIT!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;ERROR!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (play);</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">menu</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;************************\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;*********1. play********\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;*********0. exit********\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;************************\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主函数中，我们实现了：</p>
+<ol type="1">
+<li>菜单显示功能 - 让用户选择”开始游戏”或”退出游戏”</li>
+<li>设置控制台支持UTF-8编码（<code>SetConsoleOutputCP(65001)</code>）</li>
+<li>根据系统时间初始化随机数种子</li>
+<li>用户输入处理和游戏流程控制</li>
+</ol>
+<h3 id="游戏逻辑实现game.c">游戏逻辑实现（game.c）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;game.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏进行函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">game</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;--------game-------\n&quot;</span>);</span><br><span class="line">    <span class="type">char</span> mine[ROWS][COLS] = &#123;<span class="number">0</span>&#125;, printBoard[ROWS][COLS] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    initBoard(mine, ROWS, COLS, <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    initBoard(printBoard, ROWS, COLS, <span class="string">&#x27;*&#x27;</span>);</span><br><span class="line">    <span class="comment">//布雷</span></span><br><span class="line">    setMine(mine, ROWS, COLS, COUNT);</span><br><span class="line">    <span class="comment">//打印游戏面板</span></span><br><span class="line">    print(printBoard, ROWS, COLS);</span><br><span class="line">    <span class="comment">//排雷</span></span><br><span class="line">    findMine(mine, printBoard, ROWS, COLS, COUNT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">initBoard</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">char</span> setchar)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; row; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; col; j++)</span><br><span class="line">            arr[i][j] = setchar;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 打印列号</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  &quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; col - <span class="number">1</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 打印行号和棋盘内容</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; row - <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; col - <span class="number">1</span>; j++)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, arr[i][j]);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 随机数布置雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (count != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x = rand() % ROW + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = rand() % COL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            arr[x][y] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">findMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 记录已经排查的非雷格子数量</span></span><br><span class="line">    <span class="type">int</span> found = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> totalToFind = ROW * COL - COUNT;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;请输入要排查的坐标(行 列):&gt;&quot;</span>);</span><br><span class="line">        <span class="type">int</span> x, y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;x, &amp;y);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查输入坐标是否有效</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">1</span> || x &gt; ROW || y &lt; <span class="number">1</span> || y &gt; COL)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;坐标无效，请重新输入！\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查该位置是否已经排查过</span></span><br><span class="line">        <span class="keyword">if</span> (printBoard[x][y] != <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;该位置已经排查过，请重新输入！\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否踩雷</span></span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;X&#x27;</span>; <span class="comment">// 标记踩到的雷</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;很遗憾，踩雷了...\n&quot;</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;游戏结束!\n&quot;</span>);</span><br><span class="line">            <span class="comment">// 显示所有雷的位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= ROW; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= COL; j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span> &amp;&amp; printBoard[i][j] != <span class="string">&#x27;X&#x27;</span>)</span><br><span class="line">                        printBoard[i][j] = <span class="string">&#x27;@&#x27;</span>; <span class="comment">// 显示其他雷的位置</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            print(printBoard, ROWS, COLS);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 计算周围雷的个数</span></span><br><span class="line">            <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">                        sum++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 更新排查结果</span></span><br><span class="line">            printBoard[x][y] = sum + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            found++;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 打印当前游戏面板</span></span><br><span class="line">            print(printBoard, ROWS, COLS);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 判断是否获胜</span></span><br><span class="line">            <span class="keyword">if</span> (found == totalToFind)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;恭喜你，成功排除所有雷！\n&quot;</span>);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;游戏胜利!\n&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>游戏逻辑实现中，我们定义了几个主要函数：</p>
+<ol type="1">
+<li><code>game()</code> -
+游戏主控制函数，完成初始化、布雷和排雷的调用</li>
+<li><code>initBoard()</code> - 初始化棋盘，将数组填充为指定字符</li>
+<li><code>print()</code> - 打印棋盘，展示当前游戏状态</li>
+<li><code>setMine()</code> - 随机布置雷，使用rand()生成随机坐标</li>
+<li><code>findMine()</code> - 排雷函数，处理玩家输入和游戏逻辑</li>
+</ol>
+<h3 id="关键算法讲解">关键算法讲解</h3>
+<ol type="1">
+<li><p><strong>双数组设计</strong>：使用两个二维数组分别存储雷的位置和玩家可见的游戏面板，保证了数据的清晰分离。</p></li>
+<li><p><strong>随机布雷算法</strong>： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (count != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x = rand() % ROW + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = rand() % COL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            arr[x][y] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这个算法通过随机生成1到ROW和1到COL的坐标，在保证不重复的情况下，在数组中标记雷的位置。</p></li>
+<li><p><strong>周围雷数计算</strong>： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算周围雷的个数</span></span><br><span class="line"><span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            sum++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这段代码通过遍历当前位置周围的8个格子，计算周围雷的数量。这就是为什么我们需要设计11×11的数组，以避免在边界位置检测时越界。</p></li>
+</ol>
+<h2 id="游戏运行效果">游戏运行效果</h2>
+<p>游戏运行时，玩家首先看到菜单界面：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">************************</span><br><span class="line">*********1. play********</span><br><span class="line">*********0. exit********</span><br><span class="line">************************</span><br><span class="line">Please choose:&gt;</span><br></pre></td></tr></table></figure>
+<p>选择1进入游戏后，会看到初始的游戏界面：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * * * * * * * * </span><br><span class="line">4 * * * * * * * * * </span><br><span class="line">5 * * * * * * * * * </span><br><span class="line">6 * * * * * * * * * </span><br><span class="line">7 * * * * * * * * * </span><br><span class="line">8 * * * * * * * * * </span><br><span class="line">9 * * * * * * * * * </span><br><span class="line">请输入要排查的坐标(行 列):&gt;</span><br></pre></td></tr></table></figure>
+<p>随着游戏的进行，玩家会逐渐揭开安全区域，数字表示周围有几个雷：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * 1 1 1 * * * * </span><br><span class="line">4 * * 1 0 1 * * * * </span><br><span class="line">5 * * 1 1 1 * * * * </span><br><span class="line">6 * * * * * * * * * </span><br><span class="line">7 * * * * * * * * * </span><br><span class="line">8 * * * * * * * * * </span><br><span class="line">9 * * * * * * * * * </span><br><span class="line">请输入要排查的坐标(行 列):&gt;</span><br></pre></td></tr></table></figure>
+<p>如果玩家踩到雷，游戏结束，会显示所有雷的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * 1 1 1 * * * * </span><br><span class="line">4 * * 1 0 1 * * * * </span><br><span class="line">5 * * 1 1 1 * * * * </span><br><span class="line">6 * * * * * @ * * * </span><br><span class="line">7 * * * @ * * * * * </span><br><span class="line">8 * * * * * * @ * * </span><br><span class="line">9 * * * X * * * * @ </span><br><span class="line">很遗憾，踩雷了...</span><br><span class="line">游戏结束!</span><br></pre></td></tr></table></figure>
+<p>成功排除所有非雷位置后，玩家获胜：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 1 1 1 0 0 0 1 1 1 </span><br><span class="line">2 1 * 2 1 0 0 1 * 1 </span><br><span class="line">3 1 2 2 1 0 0 1 1 1 </span><br><span class="line">4 0 1 1 1 0 0 0 0 0 </span><br><span class="line">5 0 0 0 0 0 0 1 1 1 </span><br><span class="line">6 1 1 0 0 0 0 1 * 1 </span><br><span class="line">7 1 * 1 0 0 0 1 1 1 </span><br><span class="line">8 1 1 1 0 0 0 0 0 0 </span><br><span class="line">9 0 0 0 0 0 0 0 0 0 </span><br><span class="line">恭喜你，成功排除所有雷！</span><br><span class="line">游戏胜利!</span><br></pre></td></tr></table></figure>
+<h2 id="代码优化和扩展功能实现思路">代码优化和扩展功能实现思路</h2>
+<h3 id="空白区域自动展开">1. 空白区域自动展开</h3>
+<p>当玩家点击的位置周围没有雷时，我们可以自动展开相邻的空白区域。实现思路是使用递归函数，当发现一个空白格子（周围雷数为0）时，自动展开它周围的格子：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 递归展开空白区域</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">expandBlank</span><span class="params">(<span class="type">char</span> (*mine)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> *pFound)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 如果当前位置已经展开或超出边界，直接返回</span></span><br><span class="line">    <span class="keyword">if</span> (printBoard[x][y] != <span class="string">&#x27;*&#x27;</span> || x &lt; <span class="number">1</span> || x &gt; ROW || y &lt; <span class="number">1</span> || y &gt; COL)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算周围雷的个数</span></span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (mine[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">                count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更新展开的格子数</span></span><br><span class="line">    (*pFound)++;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 显示当前格子的周围雷数</span></span><br><span class="line">    printBoard[x][y] = count + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果周围没有雷，继续展开周围的格子</span></span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 跳过当前格子</span></span><br><span class="line">                <span class="keyword">if</span> (i == x &amp;&amp; j == y)</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                expandBlank(mine, printBoard, i, j, pFound);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="标记功能">2. 标记功能</h3>
+<p>允许玩家标记可能是雷的位置，需要在<code>findMine</code>函数中增加一个标记选项：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请选择操作：1.排查 2.标记 &gt;&quot;</span>);</span><br><span class="line"><span class="type">int</span> choice;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;choice);</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(choice) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="comment">// 排查逻辑</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="comment">// 标记逻辑</span></span><br><span class="line">        <span class="keyword">if</span> (printBoard[x][y] == <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;F&#x27;</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (printBoard[x][y] == <span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;输入有误，请重新选择\n&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="难度选择">3. 难度选择</h3>
+<p>添加难度选择需要修改棋盘大小和雷数定义，可以在主菜单中添加难度选择：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> difficulty = <span class="number">1</span>; <span class="comment">// 默认简单难度</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请选择难度：1.简单 2.中等 3.困难 &gt;&quot;</span>);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;difficulty);</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(difficulty) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>: <span class="comment">// 简单：9×9，10个雷</span></span><br><span class="line">        ROW = <span class="number">9</span>; COL = <span class="number">9</span>; COUNT = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>: <span class="comment">// 中等：16×16，40个雷</span></span><br><span class="line">        ROW = <span class="number">16</span>; COL = <span class="number">16</span>; COUNT = <span class="number">40</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>: <span class="comment">// 困难：30×16，99个雷</span></span><br><span class="line">        ROW = <span class="number">30</span>; COL = <span class="number">16</span>; COUNT = <span class="number">99</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;选择有误，使用默认难度(简单)\n&quot;</span>);</span><br><span class="line">        ROW = <span class="number">9</span>; COL = <span class="number">9</span>; COUNT = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="计时功能">4. 计时功能</h3>
+<p>添加计时功能可以使用<code>time.h</code>库中的函数：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">time_t</span> start, end;</span><br><span class="line">time(&amp;start); <span class="comment">// 记录开始时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏逻辑...</span></span><br><span class="line"></span><br><span class="line">time(&amp;end); <span class="comment">// 记录结束时间</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;游戏用时：%.0f秒\n&quot;</span>, difftime(end, start));</span><br></pre></td></tr></table></figure>
+<h2 id="项目总结">项目总结</h2>
+<p>通过实现这个扫雷游戏项目，我们不仅创建了一个完整的游戏，更深入理解了以下C语言重要概念：</p>
+<ol type="1">
+<li><strong>二维数组的应用</strong>：使用二维数组表示游戏棋盘，实现了数据的高效存储和操作。</li>
+<li><strong>函数设计与模块化</strong>：通过合理的函数划分，实现了代码的模块化和复用。</li>
+<li><strong>随机数生成</strong>：学习了如何生成随机数并应用于游戏布局。</li>
+<li><strong>递归算法</strong>：在扩展功能中，可以使用递归实现空白区域的自动展开。</li>
+<li><strong>指针和数组参数传递</strong>：掌握了将二维数组作为参数传递给函数的方法。</li>
+</ol>
+<h2 id="学习建议">学习建议</h2>
+<ol type="1">
+<li><strong>理解游戏逻辑</strong>：深入理解扫雷游戏的核心逻辑，特别是周围雷数的计算和空白区域的自动展开。</li>
+<li><strong>调试技巧</strong>：学会使用打印中间结果的方式来调试程序，如打印雷的分布情况。</li>
+<li><strong>拓展练习</strong>：尝试实现文章中提到的扩展功能，如难度选择、自动展开、标记功能等。</li>
+<li><strong>优化代码</strong>：思考如何优化算法，提高游戏运行效率，特别是在棋盘较大时。</li>
+<li><strong>图形界面尝试</strong>：有兴趣的同学可以尝试使用图形库（如EasyX、SDL等）将游戏升级为图形界面版本。</li>
+</ol>
+<p>希望这个项目能帮助你巩固C语言基础，提升编程能力，同时体验到编程的乐趣！</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>技术笔记</tag>
+        <tag>学习记录</tag>
+        <tag>C语言</tag>
+        <tag>游戏开发</tag>
+        <tag>扫雷</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cursor rules</title>
     <url>/2025/03/31/Cursor-rules/</url>
     <content><![CDATA[<p>By default, all responses must be in Chinese.</p>
@@ -174,310 +468,329 @@ Guidelines</li>
       </tags>
   </entry>
   <entry>
-    <title>C语言实现终端扫雷游戏</title>
-    <url>/2025/04/29/C%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</url>
-    <content><![CDATA[<h1 id="数组和函数实践扫雷游戏">数组和函数实践：扫雷游戏</h1>
-<h2 id="前言">前言</h2>
-<p>扫雷是一款经典的单人益智游戏，它不仅具有很高的娱乐性，也是初学者练习C语言编程能力的绝佳项目。通过实现扫雷游戏，我们可以深入理解数组操作、函数设计、随机数生成等C语言核心知识点。本文将带您从零开始，一步步实现一个完整的终端扫雷游戏。</p>
-<h2 id="扫雷游戏分析和设计">扫雷游戏分析和设计</h2>
-<h3 id="扫雷游戏的功能说明">扫雷游戏的功能说明</h3>
+    <title>MCP工具指南</title>
+    <url>/2025/03/31/MCP-Tools/</url>
+    <content><![CDATA[<h1 id="mcp工具指南">MCP工具指南</h1>
+<h2 id="什么是mcp">什么是MCP？</h2>
+<p>MCP（Model Context
+Protocol）是一个开源标准，用于连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。它的目标是帮助前沿模型产生更好、更相关的响应。</p>
+<p>MCP采用客户端-主机-服务器架构，使AI应用程序能够与各种数据源和工具无缝连接：</p>
 <ul>
-<li><p>使⽤控制台实现经典的扫雷游戏</p></li>
-<li><p>游戏可以通过菜单实现继续玩或者退出游戏</p></li>
-<li><p>扫雷的棋盘是<span class="math inline">\(9 \times
-9\)</span>的格⼦</p></li>
-<li><p>默认随机布置10个雷</p></li>
-<li><p>可以排查雷</p>
-<p>◦ 如果位置不是雷，就显⽰周围有⼏个雷</p>
-<p>◦ 如果位置是雷，就炸死游戏结束</p>
-<p>◦ 把除10个雷之外的所有⾮雷都找出来，排雷成功，游戏结束</p></li>
+<li><strong>MCP主机</strong>：使用MCP与各种资源交互的应用程序，如Claude
+Desktop、开发环境或AI工具。</li>
+<li><strong>MCP客户端</strong>：主机中与特定服务器建立直接一对一连接的组件。</li>
+<li><strong>MCP服务器</strong>：设计用于通过MCP框架提供特定功能的小型程序。</li>
+<li><strong>本地资源</strong>：计算机上的资源，如文件、数据库或服务，MCP服务器可以安全地检索和管理。</li>
+<li><strong>远程资源</strong>：MCP服务器可以连接以获取数据或功能的外部在线资源，如API或基于云的服务。</li>
 </ul>
-<h3 id="可拓展功能">可拓展功能</h3>
+<h2 id="可用的mcp工具列表">可用的MCP工具列表</h2>
+<p>以下是当前可用的MCP工具及其功能和配置方法：</p>
+<h3 id="文件系统工具-mcp_filesystem">1. 文件系统工具
+(mcp_filesystem)</h3>
+<p>这组工具允许AI助手与文件系统交互，执行文件和目录操作。</p>
+<h4 id="可用功能">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_filesystem_read_file</code></td>
+<td>从文件系统读取文件的完整内容。处理各种文本编码并在无法读取文件时提供详细的错误消息。</td>
+<td><code>path</code>: 文件路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_read_multiple_files</code></td>
+<td>同时读取多个文件的内容。当需要分析或比较多个文件时，这比一个一个读取文件更有效率。</td>
+<td><code>paths</code>: 文件路径数组（字符串数组）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_write_file</code></td>
+<td>创建新文件或完全覆盖现有文件的内容。谨慎使用，因为它会覆盖现有文件而不发出警告。</td>
+<td><code>path</code>: 文件路径（字符串）<br><code>content</code>:
+文件内容（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_edit_file</code></td>
+<td>对文本文件进行基于行的编辑。每次编辑都会用新内容替换精确的行序列。返回显示所做更改的git风格差异。</td>
+<td><code>path</code>: 文件路径（字符串）<br><code>edits</code>:
+编辑数组<br><code>dryRun</code>:
+是否预览更改（布尔值，默认为false）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_create_directory</code></td>
+<td>创建新目录或确保目录存在。可以在一次操作中创建多个嵌套目录。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_list_directory</code></td>
+<td>获取指定路径中所有文件和目录的详细列表。结果清楚地区分文件和目录，分别带有[FILE]和[DIR]前缀。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_directory_tree</code></td>
+<td>获取文件和目录的递归树视图作为JSON结构。每个条目包括”name”、“type”（文件/目录）和目录的”children”。</td>
+<td><code>path</code>: 目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_move_file</code></td>
+<td>移动或重命名文件和目录。可以在单个操作中移动文件并重命名它们。</td>
+<td><code>source</code>: 源路径（字符串）<br><code>destination</code>:
+目标路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_search_files</code></td>
+<td>递归搜索匹配模式的文件和目录。从起始路径搜索所有子目录。搜索不区分大小写并匹配部分名称。</td>
+<td><code>path</code>: 起始路径（字符串）<br><code>pattern</code>:
+搜索模式（字符串）<br><code>excludePatterns</code>:
+排除模式数组（可选）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_get_file_info</code></td>
+<td>检索有关文件或目录的详细元数据。返回包括大小、创建时间、最后修改时间、权限和类型在内的综合信息。</td>
+<td><code>path</code>: 文件或目录路径（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_filesystem_list_allowed_directories</code></td>
+<td>返回此服务器允许访问的目录列表。在尝试访问文件之前使用此功能了解哪些目录可用。</td>
+<td><code>random_string</code>: 虚拟参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置方法">配置方法：</h4>
+<p><strong>NPX方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/Users/username/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/path/to/other/allowed/dir&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Docker方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;run&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-i&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--rm&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/Users/username/Desktop,dst=/projects/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/other/allowed/dir,dst=/projects/other/allowed/dir,ro&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/file.txt,dst=/projects/path/to/file.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;mcp/filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/projects&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="网络抓取工具-mcp_fetch">2. 网络抓取工具 (mcp_fetch)</h3>
+<p>这个工具允许AI助手从互联网获取信息。</p>
+<h4 id="可用功能-1">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_fetch_fetch</code></td>
+<td>从互联网获取URL并可选择将其内容提取为markdown。</td>
+<td><code>url</code>: 要获取的URL（字符串）<br><code>max_length</code>:
+返回的最大字符数（整数，默认5000）<br><code>raw</code>:
+是否获取实际HTML内容（布尔值，默认false）<br><code>start_index</code>:
+从此字符索引开始返回输出（整数，默认0）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="网页自动化工具-mcp_playwright">3. 网页自动化工具
+(mcp_playwright)</h3>
+<p>这组工具允许AI助手自动化网页交互，如导航、点击、填写表单等。</p>
+<h4 id="可用功能-2">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_playwright_playwright_navigate</code></td>
+<td>导航到URL</td>
+<td><code>url</code>: 要导航到的URL（字符串）<br><code>width</code>:
+视口宽度（数字，默认1280）<br><code>height</code>:
+视口高度（数字，默认720）<br><code>timeout</code>:
+导航超时（毫秒）<br><code>waitUntil</code>: 导航等待条件</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_screenshot</code></td>
+<td>截取当前页面或特定元素的屏幕截图</td>
+<td><code>name</code>: 截图名称（字符串）<br><code>selector</code>:
+要截图的元素的CSS选择器（可选）<br><code>fullPage</code>:
+是否存储整个页面的截图（布尔值，默认false）<br><code>width</code>:
+宽度（像素，默认800）<br><code>height</code>:
+高度（像素，默认600）<br><code>savePng</code>:
+是否将截图保存为PNG文件（布尔值，默认false）<br><code>storeBase64</code>:
+是否以base64格式存储截图（布尔值，默认true）<br><code>downloadsDir</code>:
+自定义下载目录路径</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_click</code></td>
+<td>点击页面上的元素</td>
+<td><code>selector</code>: 要点击的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_iframe_click</code></td>
+<td>点击页面上iframe中的元素</td>
+<td><code>iframeSelector</code>:
+包含要点击元素的iframe的CSS选择器（字符串）<br><code>selector</code>:
+要点击的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_fill</code></td>
+<td>填写输入字段</td>
+<td><code>selector</code>:
+输入字段的CSS选择器（字符串）<br><code>value</code>:
+要填写的值（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_select</code></td>
+<td>选择页面上带有Select标签的元素</td>
+<td><code>selector</code>:
+要选择的元素的CSS选择器（字符串）<br><code>value</code>:
+要选择的值（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_hover</code></td>
+<td>悬停在页面上的元素上</td>
+<td><code>selector</code>: 要悬停的元素的CSS选择器（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_evaluate</code></td>
+<td>在浏览器控制台中执行JavaScript</td>
+<td><code>script</code>: 要执行的JavaScript代码（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_console_logs</code></td>
+<td>从浏览器检索控制台日志，带有过滤选项</td>
+<td><code>type</code>: 要检索的日志类型（all, error, warning, log, info,
+debug）<br><code>search</code>:
+在日志中搜索的文本<br><code>limit</code>:
+要返回的最大日志数<br><code>clear</code>:
+是否在检索后清除日志（布尔值，默认false）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_close</code></td>
+<td>关闭浏览器并释放所有资源</td>
+<td><code>random_string</code>: 虚拟参数</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_get</code></td>
+<td>执行HTTP GET请求</td>
+<td><code>url</code>: 要执行GET操作的URL（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_post</code></td>
+<td>执行HTTP POST请求</td>
+<td><code>url</code>:
+要执行POST操作的URL（字符串）<br><code>value</code>:
+要在正文中发布的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_put</code></td>
+<td>执行HTTP PUT请求</td>
+<td><code>url</code>:
+要执行PUT操作的URL（字符串）<br><code>value</code>:
+要在正文中PUT的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_patch</code></td>
+<td>执行HTTP PATCH请求</td>
+<td><code>url</code>:
+要执行PATCH操作的URL（字符串）<br><code>value</code>:
+要在正文中PATCH的数据（字符串）</td>
+</tr>
+<tr>
+<td><code>mcp_playwright_playwright_delete</code></td>
+<td>执行HTTP DELETE请求</td>
+<td><code>url</code>: 要执行DELETE操作的URL（字符串）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="配置方法-1">配置方法：</h4>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;puppeteer&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;-y&quot;</span><span class="punctuation">,</span> <span class="string">&quot;@modelcontextprotocol/server-puppeteer&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="顺序思考工具-mcp_sequential_thinking">4. 顺序思考工具
+(mcp_sequential_thinking)</h3>
+<p>这个工具帮助AI助手通过灵活的思考过程进行动态和反思性的问题解决。</p>
+<h4 id="可用功能-3">可用功能：</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp_sequential_thinking_sequentialthinking</code></td>
+<td>通过思想进行详细的动态和反思性问题解决的工具。这个工具通过可以适应和发展的灵活思考过程帮助分析问题。每个思想可以在理解深入时建立在前面的见解上，质疑或修改它们。</td>
+<td><code>thought</code>:
+当前思考步骤（字符串）<br><code>nextThoughtNeeded</code>:
+是否需要另一个思考步骤（布尔值）<br><code>thoughtNumber</code>:
+当前思考编号（整数，最小值1）<br><code>totalThoughts</code>:
+估计需要的总思考数（整数，最小值1）<br><code>isRevision</code>:
+这是否修改了之前的思考（布尔值，可选）<br><code>revisesThought</code>:
+正在重新考虑哪个思考（整数，最小值1，可选）<br><code>branchFromThought</code>:
+分支点思考编号（整数，最小值1，可选）<br><code>branchId</code>:
+分支标识符（字符串，可选）<br><code>needsMoreThoughts</code>:
+是否需要更多思考（布尔值，可选）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用场景">使用场景：</h4>
 <ul>
-<li>游戏难度选择
+<li>分解复杂问题为步骤</li>
+<li>需要修改空间的规划和设计</li>
+<li>可能需要修正的分析</li>
+<li>初始范围不明确的问题</li>
+<li>需要在多个步骤中保持上下文的任务</li>
+<li>需要过滤无关信息的情况</li>
+</ul>
+<h4 id="配置方法-2">配置方法：</h4>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;sequential-thinking&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-sequential-thinking&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="官方mcp服务器">5. 官方MCP服务器</h3>
+<p>以下是Anthropic官方提供的MCP服务器及其配置方法：</p>
+<h4
+id="brave搜索mcp工具-modelcontextprotocolserver-brave-search">Brave搜索MCP工具
+(<span class="citation"
+data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/server-brave-search</span>)</h4>
+<p>允许Claude Desktop应用程序在网络上搜索。</p>
+<p><strong>功能：</strong></p>
 <ul>
-<li>简单 <span class="math inline">\(9 \times 9\)</span>
-棋盘，10个雷</li>
-<li>中等 <span class="math inline">\(16 \times 16\)</span>
-棋盘，40个雷</li>
-<li>困难 <span class="math inline">\(30 \times 16\)</span>
-棋盘，99个雷</li>
+<li><strong>brave_web_search</strong>：执行网络搜索，支持分页和过滤
+<ul>
+<li>参数：
+<ul>
+<li><code>query</code></li>
 </ul></li>
-<li>空白区域自动展开：如果排查位置不是雷，周围也没有雷，可以展开周围的⼀⽚</li>
-<li>标记功能：允许玩家标记可能是雷的位置</li>
-<li>计时功能：记录排雷的时间</li>
+</ul></li>
 </ul>
-<h2 id="游戏的分析和设计">游戏的分析和设计</h2>
-<h3 id="数据结构的分析">数据结构的分析</h3>
-<p>扫雷的过程中，布置的雷和排查出的雷的信息都需要存储，所以我们需要⼀定的数据结构来存储这些信息。因为我们需要<span
-class="math inline">\(9 \times
-9\)</span>的棋盘上布置雷的信息和排查雷，我们⾸先想到的就是创建⼀个<span
-class="math inline">\(9 \times 9\)</span>的数组来存放信息。</p>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225226_001.png"
-alt="扫雷棋盘示意图" />
-<figcaption aria-hidden="true">扫雷棋盘示意图</figcaption>
-</figure>
-<p>那如果这个位置布置雷，我们就存放1，没有布置雷就存放0。</p>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225227_002.png"
-alt="雷的布置示意图" />
-<figcaption aria-hidden="true">雷的布置示意图</figcaption>
-</figure>
-<blockquote>
-<p>假设我们排查<span
-class="math inline">\((2,5)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数是1</p>
-<p>假设我们排查<span
-class="math inline">\((8,6)\)</span>这个坐标时，我们访问周围的⼀圈8个⻩⾊位置，统计周围雷的个数时，最下⾯的三个坐标就会越界，为了防⽌越界，我们在设计的时候，给数组扩⼤⼀圈，雷还是布置在中间的<span
-class="math inline">\(9 \times
-9\)</span>的坐标上，周围⼀圈不去布置雷就⾏，这样就解决了越界的问题。所以我们将存放数据的数组创建成<span
-class="math inline">\(11 \times 11\)</span>是⽐较合适。</p>
-</blockquote>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225228_003.png"
-alt="边界处理示意图" />
-<figcaption aria-hidden="true">边界处理示意图</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_004.png"
-alt="扩展棋盘示意图" />
-<figcaption aria-hidden="true">扩展棋盘示意图</figcaption>
-</figure>
-<blockquote>
-<p>再继续分析，我们在棋盘上布置了雷，棋盘上雷的信息（1）和⾮雷的信息（0），假设我们排查了某⼀个位置后，这个坐标处不是雷，这个坐标的周围有1个雷，那我们需要将排查出的雷的数量信息记录存储，并打印出来，作为排雷的重要参考信息的。那这个雷的个数信息存放在哪⾥呢？如果存放在布置雷的数组中，这样雷的信息和雷的个数信息就可能或产⽣混淆和打印上的困难。这⾥我们肯定有办法解决，⽐如：雷和⾮雷的信息不要使⽤数字，使⽤某些字符就⾏，这样就避免冲突了，但是这样做棋盘上有雷和⾮雷的信息，还有排查出的雷的个数信息，就⽐较混杂，不够⽅便。</p>
-<p>这⾥我们采⽤另外⼀种⽅案，我们专⻔给⼀个棋盘（对应⼀个数组mine）存放布置好的雷的信息，再给另外⼀个棋盘（对应另外⼀个数组<span
-class="math inline">\(printBoard\)</span>）存放排查出的雷的信息。这样就互不⼲扰了，把雷布置到mine数组，在mine数组中排查雷，排查出的数据存放在show数组，并且打印show数组的信息给后期排查参考。同时为了保持神秘，show数组开始时初始化为字符
-’*‘，为了保持两个数组的类型⼀致，可以使⽤同⼀套函数处理，mine数组最开始也初始化为字符’0’，布置雷改成’1’。如下如：</p>
-</blockquote>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225229_005.png"
-alt="双数组示意图" />
-<figcaption aria-hidden="true">双数组示意图</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言实现终端扫雷游戏/20250429225230_006.png"
-alt="数组存储示意图" />
-<figcaption aria-hidden="true">数组存储示意图</figcaption>
-</figure>
-<h3 id="文件结构设计">文件结构设计</h3>
-<p>为了使代码结构清晰，我们将扫雷游戏分为三个文件：</p>
-<ol type="1">
-<li><code>game.h</code> - 头文件，包含函数声明和宏定义</li>
-<li><code>game.c</code> - 源文件，包含游戏逻辑实现</li>
-<li><code>main.c</code> - 主文件，包含主函数和菜单功能</li>
-</ol>
-<h2 id="游戏代码实现">游戏代码实现</h2>
-<h3 id="头文件实现game.h">头文件实现（game.h）</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义游戏棋盘大小,便于后期拓展</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ROW 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COL 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ROWS (ROW + 2)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COLS (COL + 2)</span></span><br><span class="line"><span class="comment">// 定义雷的数量</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COUNT 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏进行函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">game</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">initBoard</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">char</span> setchar)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 随机数布置雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">findMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span>;</span><br></pre></td></tr></table></figure>
-<p>头文件中，我们定义了游戏所需的常量和函数声明：</p>
-<ol type="1">
-<li><code>ROW</code>和<code>COL</code>定义了游戏棋盘的实际大小（9×9）</li>
-<li><code>ROWS</code>和<code>COLS</code>则是在实际棋盘外围增加一圈边界（11×11）</li>
-<li><code>COUNT</code>定义了雷的数量（10个）</li>
-<li>声明了游戏所需的各个函数</li>
-</ol>
-<h3 id="主函数实现main.c">主函数实现（main.c）</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;game.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">menu</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    SetConsoleOutputCP(<span class="number">65001</span>);</span><br><span class="line">    <span class="comment">//设置随机数种子</span></span><br><span class="line">    srand((<span class="type">unsigned</span> <span class="type">int</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">    <span class="type">int</span> play = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        menu();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Please choose:&gt;&quot;</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;play);</span><br><span class="line">        <span class="keyword">while</span> (getchar() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">            ;</span><br><span class="line">        <span class="keyword">switch</span> (play)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            game();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;EXIT!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;ERROR!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (play);</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">menu</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;************************\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;*********1. play********\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;*********0. exit********\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;************************\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>主函数中，我们实现了：</p>
-<ol type="1">
-<li>菜单显示功能 - 让用户选择”开始游戏”或”退出游戏”</li>
-<li>设置控制台支持UTF-8编码（<code>SetConsoleOutputCP(65001)</code>）</li>
-<li>根据系统时间初始化随机数种子</li>
-<li>用户输入处理和游戏流程控制</li>
-</ol>
-<h3 id="游戏逻辑实现game.c">游戏逻辑实现（game.c）</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;game.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏进行函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">game</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;--------game-------\n&quot;</span>);</span><br><span class="line">    <span class="type">char</span> mine[ROWS][COLS] = &#123;<span class="number">0</span>&#125;, printBoard[ROWS][COLS] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    initBoard(mine, ROWS, COLS, <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    initBoard(printBoard, ROWS, COLS, <span class="string">&#x27;*&#x27;</span>);</span><br><span class="line">    <span class="comment">//布雷</span></span><br><span class="line">    setMine(mine, ROWS, COLS, COUNT);</span><br><span class="line">    <span class="comment">//打印游戏面板</span></span><br><span class="line">    print(printBoard, ROWS, COLS);</span><br><span class="line">    <span class="comment">//排雷</span></span><br><span class="line">    findMine(mine, printBoard, ROWS, COLS, COUNT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">initBoard</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">char</span> setchar)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; row; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; col; j++)</span><br><span class="line">            arr[i][j] = setchar;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印棋盘</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 打印列号</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;  &quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; col - <span class="number">1</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 打印行号和棋盘内容</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; row - <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; col - <span class="number">1</span>; j++)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, arr[i][j]);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 随机数布置雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (count != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x = rand() % ROW + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = rand() % COL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            arr[x][y] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排雷</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">findMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 记录已经排查的非雷格子数量</span></span><br><span class="line">    <span class="type">int</span> found = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> totalToFind = ROW * COL - COUNT;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;请输入要排查的坐标(行 列):&gt;&quot;</span>);</span><br><span class="line">        <span class="type">int</span> x, y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;x, &amp;y);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查输入坐标是否有效</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">1</span> || x &gt; ROW || y &lt; <span class="number">1</span> || y &gt; COL)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;坐标无效，请重新输入！\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查该位置是否已经排查过</span></span><br><span class="line">        <span class="keyword">if</span> (printBoard[x][y] != <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;该位置已经排查过，请重新输入！\n&quot;</span>);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否踩雷</span></span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;X&#x27;</span>; <span class="comment">// 标记踩到的雷</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;很遗憾，踩雷了...\n&quot;</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;游戏结束!\n&quot;</span>);</span><br><span class="line">            <span class="comment">// 显示所有雷的位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= ROW; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= COL; j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span> &amp;&amp; printBoard[i][j] != <span class="string">&#x27;X&#x27;</span>)</span><br><span class="line">                        printBoard[i][j] = <span class="string">&#x27;@&#x27;</span>; <span class="comment">// 显示其他雷的位置</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            print(printBoard, ROWS, COLS);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 计算周围雷的个数</span></span><br><span class="line">            <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">                        sum++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 更新排查结果</span></span><br><span class="line">            printBoard[x][y] = sum + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            found++;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 打印当前游戏面板</span></span><br><span class="line">            print(printBoard, ROWS, COLS);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 判断是否获胜</span></span><br><span class="line">            <span class="keyword">if</span> (found == totalToFind)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;恭喜你，成功排除所有雷！\n&quot;</span>);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;游戏胜利!\n&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>游戏逻辑实现中，我们定义了几个主要函数：</p>
-<ol type="1">
-<li><code>game()</code> -
-游戏主控制函数，完成初始化、布雷和排雷的调用</li>
-<li><code>initBoard()</code> - 初始化棋盘，将数组填充为指定字符</li>
-<li><code>print()</code> - 打印棋盘，展示当前游戏状态</li>
-<li><code>setMine()</code> - 随机布置雷，使用rand()生成随机坐标</li>
-<li><code>findMine()</code> - 排雷函数，处理玩家输入和游戏逻辑</li>
-</ol>
-<h3 id="关键算法讲解">关键算法讲解</h3>
-<ol type="1">
-<li><p><strong>双数组设计</strong>：使用两个二维数组分别存储雷的位置和玩家可见的游戏面板，保证了数据的清晰分离。</p></li>
-<li><p><strong>随机布雷算法</strong>： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setMine</span><span class="params">(<span class="type">char</span> (*arr)[COLS], <span class="type">int</span> row, <span class="type">int</span> col, <span class="type">int</span> count)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (count != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x = rand() % ROW + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = rand() % COL + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (arr[x][y] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            arr[x][y] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-这个算法通过随机生成1到ROW和1到COL的坐标，在保证不重复的情况下，在数组中标记雷的位置。</p></li>
-<li><p><strong>周围雷数计算</strong>： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算周围雷的个数</span></span><br><span class="line"><span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            sum++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-这段代码通过遍历当前位置周围的8个格子，计算周围雷的数量。这就是为什么我们需要设计11×11的数组，以避免在边界位置检测时越界。</p></li>
-</ol>
-<h2 id="游戏运行效果">游戏运行效果</h2>
-<p>游戏运行时，玩家首先看到菜单界面：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">************************</span><br><span class="line">*********1. play********</span><br><span class="line">*********0. exit********</span><br><span class="line">************************</span><br><span class="line">Please choose:&gt;</span><br></pre></td></tr></table></figure>
-<p>选择1进入游戏后，会看到初始的游戏界面：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * * * * * * * * </span><br><span class="line">4 * * * * * * * * * </span><br><span class="line">5 * * * * * * * * * </span><br><span class="line">6 * * * * * * * * * </span><br><span class="line">7 * * * * * * * * * </span><br><span class="line">8 * * * * * * * * * </span><br><span class="line">9 * * * * * * * * * </span><br><span class="line">请输入要排查的坐标(行 列):&gt;</span><br></pre></td></tr></table></figure>
-<p>随着游戏的进行，玩家会逐渐揭开安全区域，数字表示周围有几个雷：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * 1 1 1 * * * * </span><br><span class="line">4 * * 1 0 1 * * * * </span><br><span class="line">5 * * 1 1 1 * * * * </span><br><span class="line">6 * * * * * * * * * </span><br><span class="line">7 * * * * * * * * * </span><br><span class="line">8 * * * * * * * * * </span><br><span class="line">9 * * * * * * * * * </span><br><span class="line">请输入要排查的坐标(行 列):&gt;</span><br></pre></td></tr></table></figure>
-<p>如果玩家踩到雷，游戏结束，会显示所有雷的位置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 * * * * * * * * * </span><br><span class="line">2 * * * * * * * * * </span><br><span class="line">3 * * 1 1 1 * * * * </span><br><span class="line">4 * * 1 0 1 * * * * </span><br><span class="line">5 * * 1 1 1 * * * * </span><br><span class="line">6 * * * * * @ * * * </span><br><span class="line">7 * * * @ * * * * * </span><br><span class="line">8 * * * * * * @ * * </span><br><span class="line">9 * * * X * * * * @ </span><br><span class="line">很遗憾，踩雷了...</span><br><span class="line">游戏结束!</span><br></pre></td></tr></table></figure>
-<p>成功排除所有非雷位置后，玩家获胜：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  1 2 3 4 5 6 7 8 9 </span><br><span class="line">1 1 1 1 0 0 0 1 1 1 </span><br><span class="line">2 1 * 2 1 0 0 1 * 1 </span><br><span class="line">3 1 2 2 1 0 0 1 1 1 </span><br><span class="line">4 0 1 1 1 0 0 0 0 0 </span><br><span class="line">5 0 0 0 0 0 0 1 1 1 </span><br><span class="line">6 1 1 0 0 0 0 1 * 1 </span><br><span class="line">7 1 * 1 0 0 0 1 1 1 </span><br><span class="line">8 1 1 1 0 0 0 0 0 0 </span><br><span class="line">9 0 0 0 0 0 0 0 0 0 </span><br><span class="line">恭喜你，成功排除所有雷！</span><br><span class="line">游戏胜利!</span><br></pre></td></tr></table></figure>
-<h2 id="代码优化和扩展功能实现思路">代码优化和扩展功能实现思路</h2>
-<h3 id="空白区域自动展开">1. 空白区域自动展开</h3>
-<p>当玩家点击的位置周围没有雷时，我们可以自动展开相邻的空白区域。实现思路是使用递归函数，当发现一个空白格子（周围雷数为0）时，自动展开它周围的格子：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 递归展开空白区域</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">expandBlank</span><span class="params">(<span class="type">char</span> (*mine)[COLS], <span class="type">char</span> (*printBoard)[COLS], <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> *pFound)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 如果当前位置已经展开或超出边界，直接返回</span></span><br><span class="line">    <span class="keyword">if</span> (printBoard[x][y] != <span class="string">&#x27;*&#x27;</span> || x &lt; <span class="number">1</span> || x &gt; ROW || y &lt; <span class="number">1</span> || y &gt; COL)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算周围雷的个数</span></span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (mine[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">                count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更新展开的格子数</span></span><br><span class="line">    (*pFound)++;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 显示当前格子的周围雷数</span></span><br><span class="line">    printBoard[x][y] = count + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果周围没有雷，继续展开周围的格子</span></span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = x - <span class="number">1</span>; i &lt;= x + <span class="number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = y - <span class="number">1</span>; j &lt;= y + <span class="number">1</span>; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 跳过当前格子</span></span><br><span class="line">                <span class="keyword">if</span> (i == x &amp;&amp; j == y)</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                expandBlank(mine, printBoard, i, j, pFound);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="标记功能">2. 标记功能</h3>
-<p>允许玩家标记可能是雷的位置，需要在<code>findMine</code>函数中增加一个标记选项：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请选择操作：1.排查 2.标记 &gt;&quot;</span>);</span><br><span class="line"><span class="type">int</span> choice;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;choice);</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(choice) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="comment">// 排查逻辑</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="comment">// 标记逻辑</span></span><br><span class="line">        <span class="keyword">if</span> (printBoard[x][y] == <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;F&#x27;</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (printBoard[x][y] == <span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">            printBoard[x][y] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;输入有误，请重新选择\n&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="难度选择">3. 难度选择</h3>
-<p>添加难度选择需要修改棋盘大小和雷数定义，可以在主菜单中添加难度选择：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> difficulty = <span class="number">1</span>; <span class="comment">// 默认简单难度</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请选择难度：1.简单 2.中等 3.困难 &gt;&quot;</span>);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;difficulty);</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(difficulty) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>: <span class="comment">// 简单：9×9，10个雷</span></span><br><span class="line">        ROW = <span class="number">9</span>; COL = <span class="number">9</span>; COUNT = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>: <span class="comment">// 中等：16×16，40个雷</span></span><br><span class="line">        ROW = <span class="number">16</span>; COL = <span class="number">16</span>; COUNT = <span class="number">40</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>: <span class="comment">// 困难：30×16，99个雷</span></span><br><span class="line">        ROW = <span class="number">30</span>; COL = <span class="number">16</span>; COUNT = <span class="number">99</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;选择有误，使用默认难度(简单)\n&quot;</span>);</span><br><span class="line">        ROW = <span class="number">9</span>; COL = <span class="number">9</span>; COUNT = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="计时功能">4. 计时功能</h3>
-<p>添加计时功能可以使用<code>time.h</code>库中的函数：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">time_t</span> start, end;</span><br><span class="line">time(&amp;start); <span class="comment">// 记录开始时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 游戏逻辑...</span></span><br><span class="line"></span><br><span class="line">time(&amp;end); <span class="comment">// 记录结束时间</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;游戏用时：%.0f秒\n&quot;</span>, difftime(end, start));</span><br></pre></td></tr></table></figure>
-<h2 id="项目总结">项目总结</h2>
-<p>通过实现这个扫雷游戏项目，我们不仅创建了一个完整的游戏，更深入理解了以下C语言重要概念：</p>
-<ol type="1">
-<li><strong>二维数组的应用</strong>：使用二维数组表示游戏棋盘，实现了数据的高效存储和操作。</li>
-<li><strong>函数设计与模块化</strong>：通过合理的函数划分，实现了代码的模块化和复用。</li>
-<li><strong>随机数生成</strong>：学习了如何生成随机数并应用于游戏布局。</li>
-<li><strong>递归算法</strong>：在扩展功能中，可以使用递归实现空白区域的自动展开。</li>
-<li><strong>指针和数组参数传递</strong>：掌握了将二维数组作为参数传递给函数的方法。</li>
-</ol>
-<h2 id="学习建议">学习建议</h2>
-<ol type="1">
-<li><strong>理解游戏逻辑</strong>：深入理解扫雷游戏的核心逻辑，特别是周围雷数的计算和空白区域的自动展开。</li>
-<li><strong>调试技巧</strong>：学会使用打印中间结果的方式来调试程序，如打印雷的分布情况。</li>
-<li><strong>拓展练习</strong>：尝试实现文章中提到的扩展功能，如难度选择、自动展开、标记功能等。</li>
-<li><strong>优化代码</strong>：思考如何优化算法，提高游戏运行效率，特别是在棋盘较大时。</li>
-<li><strong>图形界面尝试</strong>：有兴趣的同学可以尝试使用图形库（如EasyX、SDL等）将游戏升级为图形界面版本。</li>
-</ol>
-<p>希望这个项目能帮助你巩固C语言基础，提升编程能力，同时体验到编程的乐趣！</p>
 ]]></content>
       <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
+        <category>技术教程</category>
+        <category>开发工具</category>
       </categories>
       <tags>
-        <tag>学习记录</tag>
-        <tag>技术笔记</tag>
-        <tag>C语言</tag>
-        <tag>游戏开发</tag>
-        <tag>扫雷</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Compiler</title>
-    <url>/2025/03/31/Compiler/</url>
-    <content><![CDATA[<ul>
-<li><a href="/files/GCC编译器.pdf">GCC编译器</a>-GCC编译器简介</li>
-<li><a href="https://gcc.gnu.org/">GCC官网</a></li>
-</ul>
-<h1 id="编译和链接">编译和链接</h1>
-<figure>
-<img data-src="/images/Compiler/20250331224528_001.jpg"
-alt="编译链接流程图" />
-<figcaption aria-hidden="true">编译链接流程图</figcaption>
-</figure>
-<h2 id="预处理指令的处理预编译">1. 预处理指令的处理(预编译)</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//比如</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理后会把stdio.h的所有内容替换这个包含</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> a 100       <span class="comment">//预处理后会把以后的所有a全部替换为100</span></span></span><br></pre></td></tr></table></figure>
-<p><mark><strong>用<code>gcc</code>编译器查看预处理指令情况</strong></mark></p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -E .c源文件路径 -o ouputfile.i</span><br><span class="line">指令每次只能预处理单个文件</span><br></pre></td></tr></table></figure>
-<p>附</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">编译阶段选项：</span><br><span class="line">-E：仅进行预处理，不进行编译、汇编或链接。预处理会展开头文件、宏等。(!大写-E)</span><br><span class="line">-S：进行编译，但不进行汇编或链接，生成汇编代码。                 (!大写-S)   </span><br><span class="line">-c：进行汇编，但不进行链接，生成目标文件（.o 文件）。</span><br><span class="line">-o &lt;file&gt;：将输出放置到 &lt;file&gt; 中，可以是预处理后的文件、汇编文件、目标文件或可执行文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224529_002.png" alt="预处理示例" />
-<figcaption aria-hidden="true">预处理示例</figcaption>
-</figure>
-<blockquote>
-<p>[!note]</p>
-<ul>
-<li><mark>如果头文件里面包含其他头文件,这个包含的头文件也会被替代,即递归进行</mark></li>
-</ul>
-</blockquote>
-<h2 id="编译">2.编译</h2>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc -S test.i -o test.s  //将C语言代码转换为汇编代码(大写-S)</span><br><span class="line">也只能处理单个文件</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/Compiler/20250331224530_003.png"
-alt="编译过程示例1" />
-<figcaption aria-hidden="true">编译过程示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224532_004.png"
-alt="编译过程示例2" />
-<figcaption aria-hidden="true">编译过程示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224533_005.png"
-alt="编译过程示例3" />
-<figcaption aria-hidden="true">编译过程示例3</figcaption>
-</figure>
-<figure>
-<img data-src="/images/Compiler/20250331224535_006.png"
-alt="编译过程示例4" />
-<figcaption aria-hidden="true">编译过程示例4</figcaption>
-</figure>
-<h2 id="汇编">3.汇编</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224537_007.png" alt="汇编过程示例" />
-<figcaption aria-hidden="true">汇编过程示例</figcaption>
-</figure>
-<blockquote>
-<p>[!important]</p>
-<p><mark>汇编过程每一个.c源文件都会形成一个目标文件和相应的符号表(记录全局变量名,函数名等符号名的作用),链接过程会合并和重定位所有的符号表</mark></p>
-</blockquote>
-<pre class="mermaid">---
-title: 链接过程
----
-graph TD
-    第一个目标文件.o-->|链接|可执行文件
-    第二个目标文件.o-->|链接|可执行文件
-    链接库-->|链接|可执行文件
-    形成一个符号表</pre>
-<h2 id="链接">4.链接</h2>
-<figure>
-<img data-src="/images/Compiler/20250331224538_008.png" alt="链接过程示例" />
-<figcaption aria-hidden="true">链接过程示例</figcaption>
-</figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file_1.o file_2.o -o outputFile</span><br></pre></td></tr></table></figure>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">一条指令完成预处理编译汇编链接</span><br><span class="line">gcc file1.c file2.c -o output</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>[!warning]</p>
-<ul>
-<li><p><strong><mark>预处理编译汇编每次只能处理一个文件,如果有多个文件需要分别处理得到目标文件.o在链接成可执行文件,这是因为-o生成文件每次只能生成一个文件</mark></strong></p></li>
-<li><p>预处理编译汇编过程只能单个文件编译,但是可以从某一个过程直接跳跃到链接:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc file1.i file2.i -o output</span><br><span class="line">因为链接后只生成一个文件,预处理编译汇编过程同时处理多个文件需要生成多个文件与-o一次只能生成一个文件矛盾了!</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<pre class="mermaid">---
-title: 编译与链接
----
-graph LR
-    预处理-E生成.i文件-->编译-S生成.s文件-->汇编-c生成.o目标文件-->链接</pre>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">保留中间文件编译指令:</span><br><span class="line">gcc file.c -o file -save-temps</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<h3 id="编码问题">编码问题</h3>
-<ul>
-<li><p>编程环境通常的用的字符字符编码是UTF-(chcp 65001)</p></li>
-<li><p>而在Windows系统中字符编码是GBK(chcp 936)</p>
-<p>两种格式不一样导致乱码</p></li>
-</ul>
-<blockquote>
-<p>[!note]</p>
-<p>解决方法</p>
-<ol type="1">
-<li><p>把编程环境改为GBK编码形式</p></li>
-<li><p>把Windows终端改为UTF-8编码格式</p></li>
-<li><p>指令形式编译,再编译过程加入字符编码处理</p></li>
-</ol>
-<p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc test.c -finput-charset=utf-<span class="number">8</span> -fexec-charset=gbk  //charsets是字符集的意思</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<figure>
-<img data-src="/images/Compiler/20250331224539_009.png" alt="编码问题示例" />
-<figcaption aria-hidden="true">编码问题示例</figcaption>
-</figure>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-        <category>技术分享</category>
-      </categories>
-      <tags>
-        <tag>技术笔记</tag>
-        <tag>GCC Compiler</tag>
-        <tag>编译原理</tag>
+        <tag>MCP</tag>
+        <tag>开发工具</tag>
+        <tag>AI工具</tag>
+        <tag>Claude</tag>
       </tags>
   </entry>
   <entry>
@@ -982,34 +1295,6 @@ role="doc-backlink">↩︎</a></p></li>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2025/03/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Configure a C/C++ development environment for VScode</title>
     <url>/2025/04/01/VScode-C-Cpp/</url>
     <content><![CDATA[<h1 id="vscode配置c语言开发环境">VSCode配置C语言开发环境</h1>
@@ -1116,11 +1401,39 @@ alt="屏幕截图 2025-04-01 230604" />
         <category>技术分享</category>
       </categories>
       <tags>
-        <tag>学习记录</tag>
         <tag>技术笔记</tag>
+        <tag>学习记录</tag>
         <tag>环境配置</tag>
         <tag>编程语言</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2025/03/31/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>文件查找工具-Everything配置</title>
@@ -1306,338 +1619,12 @@ href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8
         <category>文件查找</category>
       </categories>
       <tags>
-        <tag>学习记录</tag>
         <tag>技术笔记</tag>
+        <tag>学习记录</tag>
         <tag>文件查找</tag>
         <tag>文件搜索</tag>
         <tag>文件查找工具</tag>
         <tag>Everything</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MCP工具指南</title>
-    <url>/2025/03/31/MCP-Tools/</url>
-    <content><![CDATA[<h1 id="mcp工具指南">MCP工具指南</h1>
-<h2 id="什么是mcp">什么是MCP？</h2>
-<p>MCP（Model Context
-Protocol）是一个开源标准，用于连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。它的目标是帮助前沿模型产生更好、更相关的响应。</p>
-<p>MCP采用客户端-主机-服务器架构，使AI应用程序能够与各种数据源和工具无缝连接：</p>
-<ul>
-<li><strong>MCP主机</strong>：使用MCP与各种资源交互的应用程序，如Claude
-Desktop、开发环境或AI工具。</li>
-<li><strong>MCP客户端</strong>：主机中与特定服务器建立直接一对一连接的组件。</li>
-<li><strong>MCP服务器</strong>：设计用于通过MCP框架提供特定功能的小型程序。</li>
-<li><strong>本地资源</strong>：计算机上的资源，如文件、数据库或服务，MCP服务器可以安全地检索和管理。</li>
-<li><strong>远程资源</strong>：MCP服务器可以连接以获取数据或功能的外部在线资源，如API或基于云的服务。</li>
-</ul>
-<h2 id="可用的mcp工具列表">可用的MCP工具列表</h2>
-<p>以下是当前可用的MCP工具及其功能和配置方法：</p>
-<h3 id="文件系统工具-mcp_filesystem">1. 文件系统工具
-(mcp_filesystem)</h3>
-<p>这组工具允许AI助手与文件系统交互，执行文件和目录操作。</p>
-<h4 id="可用功能">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_filesystem_read_file</code></td>
-<td>从文件系统读取文件的完整内容。处理各种文本编码并在无法读取文件时提供详细的错误消息。</td>
-<td><code>path</code>: 文件路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_read_multiple_files</code></td>
-<td>同时读取多个文件的内容。当需要分析或比较多个文件时，这比一个一个读取文件更有效率。</td>
-<td><code>paths</code>: 文件路径数组（字符串数组）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_write_file</code></td>
-<td>创建新文件或完全覆盖现有文件的内容。谨慎使用，因为它会覆盖现有文件而不发出警告。</td>
-<td><code>path</code>: 文件路径（字符串）<br><code>content</code>:
-文件内容（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_edit_file</code></td>
-<td>对文本文件进行基于行的编辑。每次编辑都会用新内容替换精确的行序列。返回显示所做更改的git风格差异。</td>
-<td><code>path</code>: 文件路径（字符串）<br><code>edits</code>:
-编辑数组<br><code>dryRun</code>:
-是否预览更改（布尔值，默认为false）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_create_directory</code></td>
-<td>创建新目录或确保目录存在。可以在一次操作中创建多个嵌套目录。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_list_directory</code></td>
-<td>获取指定路径中所有文件和目录的详细列表。结果清楚地区分文件和目录，分别带有[FILE]和[DIR]前缀。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_directory_tree</code></td>
-<td>获取文件和目录的递归树视图作为JSON结构。每个条目包括”name”、“type”（文件/目录）和目录的”children”。</td>
-<td><code>path</code>: 目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_move_file</code></td>
-<td>移动或重命名文件和目录。可以在单个操作中移动文件并重命名它们。</td>
-<td><code>source</code>: 源路径（字符串）<br><code>destination</code>:
-目标路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_search_files</code></td>
-<td>递归搜索匹配模式的文件和目录。从起始路径搜索所有子目录。搜索不区分大小写并匹配部分名称。</td>
-<td><code>path</code>: 起始路径（字符串）<br><code>pattern</code>:
-搜索模式（字符串）<br><code>excludePatterns</code>:
-排除模式数组（可选）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_get_file_info</code></td>
-<td>检索有关文件或目录的详细元数据。返回包括大小、创建时间、最后修改时间、权限和类型在内的综合信息。</td>
-<td><code>path</code>: 文件或目录路径（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_filesystem_list_allowed_directories</code></td>
-<td>返回此服务器允许访问的目录列表。在尝试访问文件之前使用此功能了解哪些目录可用。</td>
-<td><code>random_string</code>: 虚拟参数</td>
-</tr>
-</tbody>
-</table>
-<h4 id="配置方法">配置方法：</h4>
-<p><strong>NPX方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/Users/username/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/path/to/other/allowed/dir&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Docker方式：</strong> <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docker&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;run&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;-i&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--rm&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/Users/username/Desktop,dst=/projects/Desktop&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/other/allowed/dir,dst=/projects/other/allowed/dir,ro&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--mount&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;type=bind,src=/path/to/file.txt,dst=/projects/path/to/file.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;mcp/filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/projects&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="网络抓取工具-mcp_fetch">2. 网络抓取工具 (mcp_fetch)</h3>
-<p>这个工具允许AI助手从互联网获取信息。</p>
-<h4 id="可用功能-1">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_fetch_fetch</code></td>
-<td>从互联网获取URL并可选择将其内容提取为markdown。</td>
-<td><code>url</code>: 要获取的URL（字符串）<br><code>max_length</code>:
-返回的最大字符数（整数，默认5000）<br><code>raw</code>:
-是否获取实际HTML内容（布尔值，默认false）<br><code>start_index</code>:
-从此字符索引开始返回输出（整数，默认0）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="网页自动化工具-mcp_playwright">3. 网页自动化工具
-(mcp_playwright)</h3>
-<p>这组工具允许AI助手自动化网页交互，如导航、点击、填写表单等。</p>
-<h4 id="可用功能-2">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_playwright_playwright_navigate</code></td>
-<td>导航到URL</td>
-<td><code>url</code>: 要导航到的URL（字符串）<br><code>width</code>:
-视口宽度（数字，默认1280）<br><code>height</code>:
-视口高度（数字，默认720）<br><code>timeout</code>:
-导航超时（毫秒）<br><code>waitUntil</code>: 导航等待条件</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_screenshot</code></td>
-<td>截取当前页面或特定元素的屏幕截图</td>
-<td><code>name</code>: 截图名称（字符串）<br><code>selector</code>:
-要截图的元素的CSS选择器（可选）<br><code>fullPage</code>:
-是否存储整个页面的截图（布尔值，默认false）<br><code>width</code>:
-宽度（像素，默认800）<br><code>height</code>:
-高度（像素，默认600）<br><code>savePng</code>:
-是否将截图保存为PNG文件（布尔值，默认false）<br><code>storeBase64</code>:
-是否以base64格式存储截图（布尔值，默认true）<br><code>downloadsDir</code>:
-自定义下载目录路径</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_click</code></td>
-<td>点击页面上的元素</td>
-<td><code>selector</code>: 要点击的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_iframe_click</code></td>
-<td>点击页面上iframe中的元素</td>
-<td><code>iframeSelector</code>:
-包含要点击元素的iframe的CSS选择器（字符串）<br><code>selector</code>:
-要点击的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_fill</code></td>
-<td>填写输入字段</td>
-<td><code>selector</code>:
-输入字段的CSS选择器（字符串）<br><code>value</code>:
-要填写的值（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_select</code></td>
-<td>选择页面上带有Select标签的元素</td>
-<td><code>selector</code>:
-要选择的元素的CSS选择器（字符串）<br><code>value</code>:
-要选择的值（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_hover</code></td>
-<td>悬停在页面上的元素上</td>
-<td><code>selector</code>: 要悬停的元素的CSS选择器（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_evaluate</code></td>
-<td>在浏览器控制台中执行JavaScript</td>
-<td><code>script</code>: 要执行的JavaScript代码（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_console_logs</code></td>
-<td>从浏览器检索控制台日志，带有过滤选项</td>
-<td><code>type</code>: 要检索的日志类型（all, error, warning, log, info,
-debug）<br><code>search</code>:
-在日志中搜索的文本<br><code>limit</code>:
-要返回的最大日志数<br><code>clear</code>:
-是否在检索后清除日志（布尔值，默认false）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_close</code></td>
-<td>关闭浏览器并释放所有资源</td>
-<td><code>random_string</code>: 虚拟参数</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_get</code></td>
-<td>执行HTTP GET请求</td>
-<td><code>url</code>: 要执行GET操作的URL（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_post</code></td>
-<td>执行HTTP POST请求</td>
-<td><code>url</code>:
-要执行POST操作的URL（字符串）<br><code>value</code>:
-要在正文中发布的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_put</code></td>
-<td>执行HTTP PUT请求</td>
-<td><code>url</code>:
-要执行PUT操作的URL（字符串）<br><code>value</code>:
-要在正文中PUT的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_patch</code></td>
-<td>执行HTTP PATCH请求</td>
-<td><code>url</code>:
-要执行PATCH操作的URL（字符串）<br><code>value</code>:
-要在正文中PATCH的数据（字符串）</td>
-</tr>
-<tr>
-<td><code>mcp_playwright_playwright_delete</code></td>
-<td>执行HTTP DELETE请求</td>
-<td><code>url</code>: 要执行DELETE操作的URL（字符串）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="配置方法-1">配置方法：</h4>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;puppeteer&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;-y&quot;</span><span class="punctuation">,</span> <span class="string">&quot;@modelcontextprotocol/server-puppeteer&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="顺序思考工具-mcp_sequential_thinking">4. 顺序思考工具
-(mcp_sequential_thinking)</h3>
-<p>这个工具帮助AI助手通过灵活的思考过程进行动态和反思性的问题解决。</p>
-<h4 id="可用功能-3">可用功能：</h4>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 42%" />
-<col style="width: 28%" />
-<col style="width: 28%" />
-</colgroup>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>描述</th>
-<th>参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mcp_sequential_thinking_sequentialthinking</code></td>
-<td>通过思想进行详细的动态和反思性问题解决的工具。这个工具通过可以适应和发展的灵活思考过程帮助分析问题。每个思想可以在理解深入时建立在前面的见解上，质疑或修改它们。</td>
-<td><code>thought</code>:
-当前思考步骤（字符串）<br><code>nextThoughtNeeded</code>:
-是否需要另一个思考步骤（布尔值）<br><code>thoughtNumber</code>:
-当前思考编号（整数，最小值1）<br><code>totalThoughts</code>:
-估计需要的总思考数（整数，最小值1）<br><code>isRevision</code>:
-这是否修改了之前的思考（布尔值，可选）<br><code>revisesThought</code>:
-正在重新考虑哪个思考（整数，最小值1，可选）<br><code>branchFromThought</code>:
-分支点思考编号（整数，最小值1，可选）<br><code>branchId</code>:
-分支标识符（字符串，可选）<br><code>needsMoreThoughts</code>:
-是否需要更多思考（布尔值，可选）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="使用场景">使用场景：</h4>
-<ul>
-<li>分解复杂问题为步骤</li>
-<li>需要修改空间的规划和设计</li>
-<li>可能需要修正的分析</li>
-<li>初始范围不明确的问题</li>
-<li>需要在多个步骤中保持上下文的任务</li>
-<li>需要过滤无关信息的情况</li>
-</ul>
-<h4 id="配置方法-2">配置方法：</h4>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;sequential-thinking&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-sequential-thinking&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="官方mcp服务器">5. 官方MCP服务器</h3>
-<p>以下是Anthropic官方提供的MCP服务器及其配置方法：</p>
-<h4
-id="brave搜索mcp工具-modelcontextprotocolserver-brave-search">Brave搜索MCP工具
-(<span class="citation"
-data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/server-brave-search</span>)</h4>
-<p>允许Claude Desktop应用程序在网络上搜索。</p>
-<p><strong>功能：</strong></p>
-<ul>
-<li><strong>brave_web_search</strong>：执行网络搜索，支持分页和过滤
-<ul>
-<li>参数：
-<ul>
-<li><code>query</code></li>
-</ul></li>
-</ul></li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术教程</category>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>MCP</tag>
-        <tag>开发工具</tag>
-        <tag>AI工具</tag>
-        <tag>Claude</tag>
       </tags>
   </entry>
 </search>
