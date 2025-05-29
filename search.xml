@@ -1296,102 +1296,73 @@ data-cites="modelcontextprotocol/server-brave-search">@modelcontextprotocol/serv
   <entry>
     <title>Configure a C/C++ development environment for VScode</title>
     <url>/2025/04/01/VScode-C-Cpp/</url>
-    <content><![CDATA[<h1 id="vscode配置c语言开发环境">VSCode配置C语言开发环境</h1>
-<h2 id="windows系统">Windows系统</h2>
-<h3 id="下载visual-studio-code">下载Visual Studio Code</h3>
-<p>进入官网下载<a href="https://code.visualstudio.com/">官网地址</a></p>
-<h4 id="下载cc插件">下载C/C++插件</h4>
-<p>只建议下载以下(小项目可以直接用插件带的运行或者终端手动调整参数,大项目用CMake构建,不推荐使用Code_Runner,第一次搭建C语言环境下载这个插件把环境搞乱到红温😅😅)</p>
-<figure>
-<img data-src="/images/VScode-C-Cpp/20250402000218_001.png"
-alt="image-20250401225734475" />
-<figcaption aria-hidden="true">image-20250401225734475</figcaption>
-</figure>
-<h3 id="下载cc编译工具">下载C/C++编译工具</h3>
-<p>到官网下载合适系统的MINGW编译工具链 <a
-href="https://www.mingw-w64.org/">MinGW官网</a></p>
+    <content><![CDATA[<h1 id="VSCode配置C语言开发环境"><a href="#VSCode配置C语言开发环境" class="headerlink" title="VSCode配置C语言开发环境"></a>VSCode配置C语言开发环境</h1><h2 id="Windows系统"><a href="#Windows系统" class="headerlink" title="Windows系统"></a>Windows系统</h2><h3 id="下载Visual-Studio-Code"><a href="#下载Visual-Studio-Code" class="headerlink" title="下载Visual Studio Code"></a>下载Visual Studio Code</h3><p>进入官网下载<a href="https://code.visualstudio.com/">官网地址</a></p>
+<h4 id="下载C-C-插件"><a href="#下载C-C-插件" class="headerlink" title="下载C&#x2F;C++插件"></a>下载C&#x2F;C++插件</h4><p>只建议下载以下(小项目可以直接用插件带的运行或者终端手动调整参数,大项目用CMake构建,不推荐使用Code_Runner)</p>
+<p><img data-src="/images/VScode-C-Cpp/20250402000218_001.png" alt="image-20250401225734475"></p>
+<h3 id="下载C-C-编译工具"><a href="#下载C-C-编译工具" class="headerlink" title="下载C&#x2F;C++编译工具"></a>下载C&#x2F;C++编译工具</h3><p>到官网下载合适系统的MINGW编译工具链 <a href="https://www.mingw-w64.org/">MinGW官网</a></p>
 <p><a href="https://sourceforge.net/projects/mingw/files/">MinGW</a></p>
-<h4 id="配置编译工具环境变量">配置编译工具环境变量</h4>
-<p>将MinGW的bin目录添加到系统环境变量PATH中： -
-搜索并打开”编辑系统环境变量” - 点击”环境变量” -
-在”用户变量”区域找到PATH变量并编辑 -
-添加新路径：<code>\path\bin</code>（请调整路径） -
-点击”确定”保存设置</p>
-<p><strong><mark>验证安装：打开命令提示符（CMD）并输入以下命令检查是否安装成功：</mark></strong></p>
+<h4 id="配置编译工具环境变量"><a href="#配置编译工具环境变量" class="headerlink" title="配置编译工具环境变量"></a>配置编译工具环境变量</h4><p>将MinGW的bin目录添加到系统环境变量PATH中：</p>
+<ul>
+<li>搜索并打开”编辑系统环境变量”</li>
+<li>点击”环境变量”</li>
+<li>在”用户变量”区域找到PATH变量并编辑</li>
+<li>添加新路径：<code>\path\bin</code>（请调整路径）</li>
+<li>点击”确定”保存设置</li>
+</ul>
+<p> <strong>&#x3D;&#x3D;验证安装：打开命令提示符（CMD）并输入以下命令检查是否安装成功：&#x3D;&#x3D;</strong></p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">gcc --version</span><br><span class="line">g++ --version</span><br><span class="line">gdb --version</span><br></pre></td></tr></table></figure>
+
+
+
 <p>完成以上操作后就可以正式开始搭建编程环境</p>
-<p>打开一个文件夹,新建一个源文件编译,选择编译器gcc,会生成一个.vscode目录和task.json文件
-<img data-src="/images/VScode-C-Cpp/20250402000219_002.png"
-alt="image-20250401231051819" /></p>
-<p>然后可以在生成的.vscode目录细化配置,我的配置如下,由于Windows系统兼容性问题,对C语言long
-double类型数据兼容有问题,在args添加<code>"-D__USE_MINGW_ANSI_STDIO=1"</code>即可解决这个问题
-然后<code>"$&#123;fileDirname&#125;\\*.c"</code>编译的目录改为当前文件目录的所有.c文件,方便编译小项目文件,
-<code>"$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe"</code>把可执行文件在当前目录的output目录生成(自动生成output目录)</p>
+<p>打开一个文件夹,新建一个源文件编译,选择编译器gcc,会生成一个.vscode目录和task.json文件<br><img data-src="/images/VScode-C-Cpp/20250402000219_002.png" alt="image-20250401231051819"></p>
+<p>然后可以在生成的.vscode目录细化配置,我的配置如下,由于Windows系统兼容性问题,对C语言long double类型数据兼容有问题,在args添加<code>&quot;-D__USE_MINGW_ANSI_STDIO=1&quot;</code>即可解决这个问题<br>然后<code>&quot;$&#123;fileDirname&#125;\\*.c&quot;</code>编译的目录改为当前文件目录的所有.c文件,方便编译小项目文件,<br><code>&quot;$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</code>把可执行文件在当前目录的output目录生成(自动生成output目录)</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppbuild&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: gcc.exe 生成活动文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\gcc.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;-D__USE_MINGW_ANSI_STDIO=1&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-fdiagnostics-color=always&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;\\*.c&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-lpowrprof&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;options&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$gcc&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;detail&quot;</span><span class="punctuation">:</span> <span class="string">&quot;调试器生成的任务。&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppbuild&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: clang.exe build active file&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\clang.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;-fcolor-diagnostics&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-fansi-escape-codes&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;\\*.c&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-lpowrprof&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;options&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$gcc&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;detail&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Task generated by Debugger.&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shared&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;showReuseMessage&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;clear&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h4 id="调试">调试</h4>
-<p>打断点就可以调试了,自定义调试可以<img data-src="/images/VScode-C-Cpp/20250402000221_003.png"
-alt="image-20250401231833484" /></p>
+
+
+
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>打断点就可以调试了,自定义调试可以<img data-src="/images/VScode-C-Cpp/20250402000221_003.png" alt="image-20250401231833484"></p>
 <p>选择<code>create a launch.json file</code>,选择GDB</p>
-<figure>
-<img data-src="/images/VScode-C-Cpp/20250402000222_004.png"
-alt="image-20250401231951295" />
-<figcaption aria-hidden="true">image-20250401231951295</figcaption>
-</figure>
-<figure>
-<img data-src="/images/VScode-C-Cpp/20250402000223_005.png"
-alt="image-20250401232023543" />
-<figcaption aria-hidden="true">image-20250401232023543</figcaption>
-</figure>
+<p><img data-src="/images/VScode-C-Cpp/20250402000222_004.png" alt="image-20250401231951295"></p>
+<p><img data-src="/images/VScode-C-Cpp/20250402000223_005.png" alt="image-20250401232023543"></p>
 <p>选择<code>Attach</code>得到</p>
-<figure>
-<img data-src="/images/VScode-C-Cpp/20250402000226_006.png"
-alt="image-20250401232115546" />
-<figcaption aria-hidden="true">image-20250401232115546</figcaption>
-</figure>
+<p><img data-src="/images/VScode-C-Cpp/20250402000226_006.png" alt="image-20250401232115546"></p>
 <p>需要修改<code>program</code>为<code>task.json</code>可执行文件生成路径如果没有改动可执行文件路径就可以填这个</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">$<span class="punctuation">&#123;</span>fileDirname<span class="punctuation">&#125;</span>\\$<span class="punctuation">&#123;</span>fileBasenameNoExtension<span class="punctuation">&#125;</span>.exe</span><br></pre></td></tr></table></figure>
+
 <p>把<code>miDebuggerPath</code>改为gdb调试器的路径,可以在<code>\path\bin</code>找到</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(gdb) Launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\gdb.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: gcc.exe 生成活动文件&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: clang.exe build and debug active file&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;\\output\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lldb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\lldb.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Set Disassembly Flavor to Intel&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: clang.exe build active file&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p>然后以下是一些其他的配置,会生成<code>c_cpp_properties.json</code>文件</p>
-<p><code>ctrl+shift+P</code>输入C/C++选择这个 <img data-src="/images/VScode-C-Cpp/20250402000228_007.png"
-alt="image-20250401230521055" /></p>
-<p>然后填写相关的内容 <img data-src="/images/VScode-C-Cpp/20250402000229_008.png"
-alt="屏幕截图 2025-04-01 230551" /></p>
-<figure>
-<img data-src="/images/VScode-C-Cpp/20250402000232_009.png"
-alt="屏幕截图 2025-04-01 230604" />
-<figcaption aria-hidden="true">屏幕截图 2025-04-01 230604</figcaption>
-</figure>
+<p><code>ctrl+shift+P</code>输入C&#x2F;C++选择这个<br><img data-src="/images/VScode-C-Cpp/20250402000228_007.png" alt="image-20250401230521055"></p>
+<p>然后填写相关的内容<br><img data-src="/images/VScode-C-Cpp/20250402000229_008.png" alt="屏幕截图 2025-04-01 230551"></p>
+<p><img data-src="/images/VScode-C-Cpp/20250402000232_009.png" alt="屏幕截图 2025-04-01 230604"></p>
 <p>根据实际情况填写</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;_DEBUG&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;UNICODE&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;_UNICODE&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;windowsSdkVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.0.22621.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\gcc.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c17&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c++17&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gcc-x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerArgs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C++&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;defines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;_DEBUG&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;UNICODE&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;_UNICODE&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;windowsSdkVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.0.22621.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;compilerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\BianYiQi\\mingw64\\bin\\g++.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c17&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cppStandard&quot;</span><span class="punctuation">:</span> <span class="string">&quot;c++17&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gcc-x64&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
 <p>至此Windows系统环境就配置好了,比Linux系统麻烦一点</p>
-<h2 id="linux系统">Linux系统</h2>
-<p>由于Ubuntu的配置有点问题,找了很多方法都没有解决调试找不到系统库的问题,所以只以CentOS为例</p>
-<h3 id="下载code">下载code</h3>
-<p>官网下载安装即可</p>
-<h3 id="编译器">编译器</h3>
-<p>CentOS自带编译工具,无需额外下载</p>
-<h3 id="配置环境">配置环境</h3>
-<p>打开一个目录,新建源文件运行,选择相应的编译器即可,然后调试方面创建Launch.json文件安装Windows系统类似配置即可,不过Linux系统下即使有GUI还是感觉终端编译方便一点,还可以自己加参数,见Compiler文章介绍gcc编译一些基础参数</p>
-<h2 id="进阶配置">进阶配置</h2>
-<h3 id="配置多文件项目">配置多文件项目</h3>
-<p>对于包含多个源文件的项目，可以修改<code>tasks.json</code>中的<code>args</code>数组，添加所有需要编译的源文件：</p>
+<h2 id="Linux系统"><a href="#Linux系统" class="headerlink" title="Linux系统"></a>Linux系统</h2><p>由于Ubuntu的配置有点问题,找了很多方法都没有解决调试找不到系统库的问题,所以只以CentOS为例</p>
+<h3 id="下载code"><a href="#下载code" class="headerlink" title="下载code"></a>下载code</h3><p>官网下载安装即可</p>
+<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><p>CentOS自带编译工具,无需额外下载</p>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><p>打开一个目录,新建源文件运行,选择相应的编译器即可,然后调试方面创建Launch.json文件安装Windows系统类似配置即可,不过Linux系统下即使有GUI还是感觉终端编译方便一点,还可以自己加参数,见Compiler文章介绍gcc编译一些基础参数</p>
+<h2 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h2><h3 id="配置多文件项目"><a href="#配置多文件项目" class="headerlink" title="配置多文件项目"></a>配置多文件项目</h3><p>对于包含多个源文件的项目，可以修改<code>tasks.json</code>中的<code>args</code>数组，添加所有需要编译的源文件：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;-fdiagnostics-color=always&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;\\*.c&quot;</span><span class="punctuation">,</span>  <span class="comment">// 编译所有.c文件,上面$&#123;fileDirname&#125;\\*.c编译当前目录下所有.c文件,这里是当前工作区,很大不同</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;\\main.exe&quot;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<h3 id="添加头文件目录">添加头文件目录</h3>
-<p>如果项目包含自定义头文件目录，可以在<code>args</code>数组中添加<code>-I</code>参数：</p>
+
+<h3 id="添加头文件目录"><a href="#添加头文件目录" class="headerlink" title="添加头文件目录"></a>添加头文件目录</h3><p>如果项目包含自定义头文件目录，可以在<code>args</code>数组中添加<code>-I</code>参数：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;-fdiagnostics-color=always&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-I$&#123;workspaceFolder&#125;\\include&quot;</span><span class="punctuation">,</span>  <span class="comment">// 添加头文件目录</span></span><br><span class="line">    <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<h3 id="链接外部库">链接外部库</h3>
-<p>如果需要链接外部库，可以在<code>args</code>数组中添加<code>-l</code>参数：</p>
+
+<h3 id="链接外部库"><a href="#链接外部库" class="headerlink" title="链接外部库"></a>链接外部库</h3><p>如果需要链接外部库，可以在<code>args</code>数组中添加<code>-l</code>参数：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;-fdiagnostics-color=always&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;-lm&quot;</span>  <span class="comment">// 链接数学库</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<h2 id="常见问题及其解决方法">常见问题及其解决方法</h2>
-<h3 id="找不到编译器或调试器">1. 找不到编译器或调试器</h3>
-<p>确保MinGW的bin目录已正确添加到系统PATH环境变量中，并检查<code>tasks.json</code>和<code>launch.json</code>中的路径是否正确。</p>
-<h3 id="调试时出现找不到任务错误">2. 调试时出现”找不到任务”错误</h3>
-<p>确保<code>launch.json</code>中的<code>preLaunchTask</code>字段值与<code>tasks.json</code>中的<code>label</code>字段值完全一致。</p>
-<h3 id="调试时出现程序不存在错误">3. 调试时出现”程序不存在”错误</h3>
-<p>确保<code>launch.json</code>中的<code>program</code>字段路径与<code>tasks.json</code>中<code>args</code>数组中的<code>-o</code>参数指定的输出文件路径一致。</p>
-<h3 id="调试器错误">4. 调试器错误：</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;unrecognized command line option &#x27;--interpreter=mi&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见问题及其解决方法"><a href="#常见问题及其解决方法" class="headerlink" title="常见问题及其解决方法"></a>常见问题及其解决方法</h2><h3 id="1-找不到编译器或调试器"><a href="#1-找不到编译器或调试器" class="headerlink" title="1. 找不到编译器或调试器"></a>1. 找不到编译器或调试器</h3><p>确保MinGW的bin目录已正确添加到系统PATH环境变量中，并检查<code>tasks.json</code>和<code>launch.json</code>中的路径是否正确。</p>
+<h3 id="2-调试时出现”找不到任务”错误"><a href="#2-调试时出现”找不到任务”错误" class="headerlink" title="2. 调试时出现”找不到任务”错误"></a>2. 调试时出现”找不到任务”错误</h3><p>确保<code>launch.json</code>中的<code>preLaunchTask</code>字段值与<code>tasks.json</code>中的<code>label</code>字段值完全一致。</p>
+<h3 id="3-调试时出现”程序不存在”错误"><a href="#3-调试时出现”程序不存在”错误" class="headerlink" title="3. 调试时出现”程序不存在”错误"></a>3. 调试时出现”程序不存在”错误</h3><p>确保<code>launch.json</code>中的<code>program</code>字段路径与<code>tasks.json</code>中<code>args</code>数组中的<code>-o</code>参数指定的输出文件路径一致。</p>
+<h3 id="4-调试器错误："><a href="#4-调试器错误：" class="headerlink" title="4. 调试器错误："></a>4. 调试器错误：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;unrecognized command line option &#x27;--interpreter=mi&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
 <p>这通常是因为在<code>launch.json</code>中错误地将编译器（gcc.exe）指定为调试器。确保<code>miDebuggerPath</code>指向的是调试器（gdb.exe）而不是编译器。</p>
 <p><a href="https://code.visualstudio.com/docs">参考</a></p>
 ]]></content>
@@ -1625,5 +1596,525 @@ href="https://hexo.io/docs/generating.html">Generating</a></p>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>C语言指针学习笔记</title>
+    <url>/2025/05/29/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<!-- 目录自动生成，通过页面配置toc:true实现 -->
+
+<blockquote>
+<p>指针是C语言的精髓，也是C语言相对其他高级语言的一大特色。正确理解和使用指针对于深入学习C语言至关重要。本文将从基本概念出发，详细介绍各种指针类型、指针操作以及常见应用场景，帮助读者全面掌握C语言指针。</p>
+</blockquote>
+<h1 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h1><h2 id="指针介绍"><a href="#指针介绍" class="headerlink" title="指针介绍"></a>指针介绍</h2><blockquote>
+<p><strong>警告</strong></p>
+<p>*号在不同地方意义不同</p>
+<ul>
+<li>*前面有类型:表示指针</li>
+<li>*前面没有类型:表示解引用运算符</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>通常的指针是指针变量的简称,是一个指向对象地址的变量指针以指向对象的类型不同分为很多种不同的指针,比如说指向int的一级指针,int**的二级指针$…$</p>
+</li>
+<li><p><strong>指针做加减元素,地址变化的值是:加减的整数乘上指针指向的数据类型占用字节大小</strong></p>
+</li>
+</ul>
+<p>比如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span>* p=&amp;a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n%p\n&quot;</span>,p,p+<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指针变化的值是$4*4&#x3D;16$</p>
+<blockquote>
+<p><strong>注意</strong></p>
+<p>专门用%td表示两个相同类型的指针的差值(相同类型的意思是指向相同类型的数据,比如说都指向int,指向int*)</p>
+</blockquote>
+<ul>
+<li><p>两个指针的比较</p>
+<p>  使用关系运算符可以比较两个指针的值，前提是两个指针都指向使用关系运算符可以比较两个指针的值，前提是两个指针都指向相同类型的对象</p>
+</li>
+</ul>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_001.png" alt="image-20250315180903892"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_002.png" alt="image-20250315214007621"></p>
+<blockquote>
+<p><strong>重要</strong> </p>
+<p><strong>给函数形参加const防止改变数组元素:</strong></p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_003.png" alt="image-20250315220717732"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_004.png" alt="image-20250315220731318"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_005.png" alt="image-20250315220748555"></p>
+<h3 id="步长-偏移量"><a href="#步长-偏移量" class="headerlink" title="步长(偏移量)"></a>步长(偏移量)</h3><p>步长取决于指针指向变量的类型</p>
+<p>注意对指针加减都是以元素为单位计量的,比如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">5</span>];</span><br><span class="line"><span class="type">int</span> *ptr1=(arr+<span class="number">4</span>);</span><br><span class="line"><span class="type">int</span> *ptr2=(arr+<span class="number">2</span>);</span><br><span class="line"><span class="type">int</span> len=ptr1-ptr2 ;<span class="comment">//得到的是2,而不是8</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_006.png" alt="image-20250315235453620"></p>
+<h3 id="指针运算"><a href="#指针运算" class="headerlink" title="指针运算"></a>指针运算</h3><blockquote>
+<p><strong>提示</strong></p>
+<p><strong>一条语句(语句以分号为结束)多个变量声明的时候,指针指向的类型和*分开,类型在最前面,*和变量连在一起</strong></p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_007.png" alt="image-20250316002120252"></p>
+<h3 id="sizeof-与strlen比较"><a href="#sizeof-与strlen比较" class="headerlink" title="sizeof 与strlen比较"></a><code>sizeof</code> 与<code>strlen</code>比较</h3><p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_008.png" alt="image-20250521141852262"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_009.png" alt="image-20250521141912736"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_010.png" alt="image-20250521141923632"></p>
+<p>⭐⭐⭐<strong>示例代码使用<code>sizeof</code>,主要理解数组名发生隐式转换(退化)为首元素地址的例外情况</strong></p>
+<blockquote>
+<p><strong>警告</strong></p>
+<p>注意只有<code>sizeof+数组</code>和<code>&amp;+数组</code>数组名才不会隐式转换为首元素地址,<strong>要是放的不是数组名或者数组名等价表示(如<code>*&amp;arr</code>)均会隐式转换为地址</strong>,下面的函数名退化规则和数组 名退化规则完全一致,只不过函数名退化为函数入口地址,和<code>&amp;函数名</code>结果一样,省去很多麻烦,以后如果数组不是以上两种情况不隐式转换的时候,<strong>都需要使用首元素地址去分析问题</strong></p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a));      <span class="comment">//16,sizeof(数组名)此时数组名不会隐式转换为地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a + <span class="number">0</span>));	 <span class="comment">//⭐8,a+0转换为(多了+0导致的)首元素地址,然后再计算地址大小</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(*a));     <span class="comment">//4,一个int类型</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a + <span class="number">1</span>));	 <span class="comment">//8,同上</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a[<span class="number">1</span>]));	 <span class="comment">//4,int类型</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a));	 <span class="comment">//8,&amp;+数组名数组不会隐式转换,此时&amp;a表示整个数组地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(*&amp;a));    <span class="comment">//⭐16,&amp;a整个数组地址,再解引用得到数组,sizeof(数组名)不退化</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;*a));    <span class="comment">//⭐8,表示首元素地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a + <span class="number">1</span>)); <span class="comment">//8,一个地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>]));  <span class="comment">//8一个地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>] + <span class="number">1</span>)); <span class="comment">//8,一个地址</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_011.png" alt="image-20250521155337472"></p>
+<blockquote>
+<p><strong>提示</strong></p>
+<p>⭐⭐⭐使用<code>strlen</code>函数计算字符串长度传入的参数是<code>cosnt char*</code>类型,第三和第四的个传入<code>char</code>类型,<strong>会强转为指针类型,但是该地址不可访问导致段错误,倒数第二,三个也会强转,但是强转后还是指针,是可访问的</strong></p>
+</blockquote>
+<p><strong>练习</strong></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_012.png" alt="image-20250521160108256"></p>
+<blockquote>
+<p><strong>答案:</strong></p>
+<ol>
+<li>第3个<code>a[0]</code>代表第一行,<code>sizof</code>直接加数组不会隐式转换为首元素指针,所以是16</li>
+<li>第4个<code>a[0]+1</code>,数组名退化为首元素指针,结果是4&#x2F;8</li>
+<li>第5个<code>*(a[0]+1)</code>代表第二行,直接<code>sizeof</code>不会隐式转换为指针</li>
+<li>第6个同上退化为指针,结果8</li>
+<li>第7个代表第二行,而且直接在<code>sizeof</code>后面,结果16</li>
+<li>第8个<code>sizeof(&amp;a[0]+1)</code>,对第一行取地址得到第一行地址,加一得到第二行地址,<code>sizeof</code>计算得8</li>
+</ol>
+<p><strong>关键分析出数组是否退化(隐式转换)为首元素指针,只有<code>&amp;+数组</code>和<code>sizeof+数组</code>才不会隐式转换,需要分清</strong></p>
+</blockquote>
+<h2 id="const修饰指针"><a href="#const修饰指针" class="headerlink" title="const修饰指针"></a>const修饰指针</h2><blockquote>
+<p>前言<br>即使是const修饰变量,指针还是可以操作地址改变其值,因为const修饰作用是限制直接修改变量的值,从而有了const修饰指针</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *p=&amp;num; <span class="comment">//和int const *p等价,相当于int可以忽略,const直接修饰*p</span></span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> p=&amp;num;  <span class="comment">//const在p右边修饰p</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//const修饰对象不同导致作用不同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//const int *p:修饰的是*p表示指针指向的是常变量,不能修改*p(注意*p不能修改而已,但是可以通过其他指针或者num本身修改num值)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//int* const p:修饰的是指针p,表示p的值不能改变,即p只能指向&amp;num,p++非法</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> p=&amp;num; <span class="comment">//既修饰*p也修饰p,表示*p和p都不可以修改</span></span><br></pre></td></tr></table></figure>
+
+<p>注:const修饰int *p的时候*理解为解引用表示const修饰*p</p>
+<blockquote>
+<p><strong>重要</strong></p>
+<p><strong>总结</strong>: const修饰指针变量的时候看是修饰*p还是p如果是*p则表示*p的值不能改变,如果修饰p表示p的值不能改变,这个和const用法是一样的,但是需要具体分析其表达的含有:<br><strong>修饰*p(称为指向常量的指针)</strong>,*p的值不能改变,则不能通过这个指针修改变量的值,但是可以直接修改或者其他指针修改变量的值<br><strong>修饰p(成为常量指针)</strong>,p的值不能改变,则指针p只能指向一个固定的地址,如果修饰p但是p未初始化,这这个指针可以指向任意地址</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num;</span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> p;</span><br><span class="line">p=&amp;num;   <span class="comment">//非法的,const修饰p不能修改p的值,这个时候p是一个可能指向任意地址的野指针(段错误)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>修饰*p和p(称为指向常量的常量指针)</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>警告</strong></p>
+<p>把const指针赋值给非const指针是危险的行为,这样会导致const失效–&gt;其他指针可以直接修改对应地址上面的值</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* p1 = &amp;a;</span><br><span class="line"><span class="type">int</span>* p2 = p1;    <span class="comment">//把const指针赋值给const指针,一级指针这样做会报警告,二多级指针直接导致编译错误!!</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="const修饰多级指针"><a href="#const修饰多级指针" class="headerlink" title="const修饰多级指针"></a><code>const</code>修饰多级指针</h3><p><code>const</code>修饰多级指针与上面相似,但是有些方面更加严格,以二级指针为例:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="type">const</span> **pptr;   <span class="comment">//const修饰**pptr,即**pptr为常量,不可以用**pptr直接修改对应整数变量上面的值</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span>*pptr;	<span class="comment">//const修饰*pptr,即*pptr为常量,不可以直接修改*pptr的值</span></span><br><span class="line"><span class="type">int</span> **<span class="type">const</span> pptr;	<span class="comment">//const修饰ptr,即这个指针是指针常量,不可以修改这个指针指向的值</span></span><br></pre></td></tr></table></figure>
+
+<p>以上是<code>const</code>修饰多级指针时候和一级指针一样的地方,但是为了防止多级指针间接修改对应的值,多级指针在有个const赋值更加严格</p>
+<h2 id="void-指针"><a href="#void-指针" class="headerlink" title="void*指针"></a>void*指针</h2><blockquote>
+<p>用于接收任意类型指针的指针类型,是一种泛型指针,但是注意这种指针<strong>不可以直接进行加减整数和解引用操作,需要配合强转使用</strong>,但是可以两个void*指针间作减法 </p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">20</span>;</span><br><span class="line">    <span class="type">void</span> *pa = &amp;a;</span><br><span class="line">    *(<span class="type">int</span> *)pa = <span class="number">10</span>;  <span class="comment">//解引用pa需要先确定pa指向内存的大小,否则无法确定解引用的结果,偏移也是,需要先知道偏移量,这里都需要先进行强制类型转换使得void*指针转变为特定类型的指针</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="野指针"><a href="#野指针" class="headerlink" title="野指针"></a>野指针</h2><p><strong>野指针指的是指向不可用内存区域的指针</strong></p>
+<p>举例:</p>
+<ul>
+<li>未被初始化的指针</li>
+<li>数组越界访问(在一些OJ环境越界访问是不允许的)</li>
+<li>指针指向的空间释放了<ul>
+<li>动态内存分配释放内存没有把NULL赋值给指向这块内存的指针,此时指针指向了不可访问的内存</li>
+<li>指向销毁的局部变量和函数栈帧等</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span>* p;</span><br><span class="line">    *p=<span class="number">100</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问了不能访问的内存发生错误,会报段错误<code>:Segmentation fault</code></p>
+<img data-src="/images/C语言指针学习笔记/20250529131033_013.png" alt="image-20250316105217704"  />
+
+<blockquote>
+<p>什么是段错误？<br>段错误是操作系统检测到程序试图访问非法内存地址时发出的信号（通常是 SIGSEGV）。在现代操作系统中，内存被划分为不同的段（如代码段、数据段、堆、栈等），每个段有特定的权限（读、写、执行）。当程序违反这些权限或访问未分配的内存时，就会触发段错误。<br>比如常见的段错误:<strong>读写越界,修改只读内存</strong>(常见的几种)</p>
+</blockquote>
+<img data-src="/images/C语言指针学习笔记/20250529131033_014.png" alt="image-20250316104725445" style="zoom:67%;" />
+
+<blockquote>
+<p><strong>注意</strong></p>
+<p>定义指针的时候如果不初始化,把指针定义为NULL</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* p=<span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="assert-断言"><a href="#assert-断言" class="headerlink" title="assert:断言"></a>assert:断言</h2><blockquote>
+<p><code>assert.h </code>头⽂件定义了宏 <code>assert()</code> ，⽤于在运⾏时确保程序符合指定条件，如果不符合，就报错终⽌运⾏。这个宏常常被称为**”断言”**</p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_015.png" alt="image-20250517123010809"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_016.png" alt="image-20250517123055783"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_017.png" alt="image-20250517122920608"></p>
+<blockquote>
+<p><strong>提示</strong></p>
+<p>使用<code>assert()</code>函数在调试过程加入一些条件判断,可以鉴定程序是否符合预期运行.如果不符合预期程序就停止运行且显示错误位置和表达式</p>
+<p>如果不需要<code>assert</code>,只需在定义宏<code>#define NDEDUG</code>即可跳过<code>assert</code>语句</p>
+</blockquote>
+<h2 id="万能指针和malloc函数"><a href="#万能指针和malloc函数" class="headerlink" title="万能指针和malloc函数"></a>万能指针和malloc函数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//无类型指针称为万能指针:</span></span><br><span class="line"><span class="type">void</span>* p;   <span class="comment">//可以通过强制类型转换转换为某种类型指针:(int*)p转换为指向int数据类型的指针</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>重要</strong></p>
+<p>malloc函数向系统申请内存空间,参数为申请内存空间(堆内存)字节大小,返回值为内存首元素的地址,由于不知道这块地址存放数据类型,故返回void*的指针,需要的时候强制转换成对应类型的指针</p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_018.png" alt="image-20250401153132143"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_019.png" alt="image-20250316110952290"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_020.png" alt="image-20250316111613885"></p>
+<blockquote>
+<p><strong>警告</strong></p>
+<p>申请完内存空间使用完后需要手动释放,用free函数释放手动申请的内存空间防止内存泄漏,同时把str指针赋值为NULL,因为内存已经释放,不对str赋值为NULL变成野指针(指向不可以内存空间的指针)</p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_021.png" alt="image-20250316113440011"></p>
+<blockquote>
+<p><strong>警告</strong></p>
+<p><code>malloc</code>分配内存空间是未初始化的垃圾值,需要先初始化,用<code>memset</code>函数</p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_022.png" alt="image-20250401152432625"></p>
+<p>例如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *output = (<span class="type">char</span>*)<span class="built_in">malloc</span>(<span class="number">100</span>);</span><br><span class="line"><span class="built_in">memset</span>(output, <span class="string">&#x27;\0&#x27;</span>, <span class="number">100</span>);  <span class="comment">//将分配内存存储字符修改为&#x27;\0&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者用<code>calloc</code>函数分配内存空间</p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_023.png" alt="image-20250401152612704"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *output = (<span class="type">char</span>*)<span class="built_in">calloc</span>(<span class="number">100</span>, <span class="keyword">sizeof</span>(<span class="type">char</span>)); </span><br></pre></td></tr></table></figure>
+
+<h2 id="对比malloc和calloc"><a href="#对比malloc和calloc" class="headerlink" title="对比malloc和calloc"></a>对比<code>malloc</code>和<code>calloc</code></h2><p><strong>在 C 语言中，malloc 和 calloc 都是用于动态分配内存的函数，但它们在用法和行为上有一些关键区别。以下是两者的对比，特别是传参和功能的差异：</strong></p>
+<h3 id="1-函数签名和传参"><a href="#1-函数签名和传参" class="headerlink" title="1. 函数签名和传参"></a>1. <strong>函数签名和传参</strong></h3><ul>
+<li><p><code>malloc</code></p>
+<ul>
+<li><p>原型：<code>void *malloc(size_t size);</code></p>
+</li>
+<li><p>参数：只接受一个参数 size，表示要分配的字节数。</p>
+</li>
+<li><p>返回：指向分配内存的指针（类型为 void*，需要手动转换为目标类型）。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *ptr = (char*)malloc(100); // 分配 100 字节</code></p>
+</li>
+<li><p>特点：分配的是一块连续的内存，size 是总字节数。</p>
+</li>
+</ul>
+</li>
+<li><p><code>calloc</code></p>
+<ul>
+<li><p>原型：<code>void *calloc(size_t num, size_t size);</code></p>
+</li>
+<li><p>参数：接受两个参数：</p>
+<ul>
+<li>num：要分配的元素个数。</li>
+<li>size：每个元素的大小（以字节为单位）。</li>
+</ul>
+</li>
+<li><p>返回：指向分配内存的指针（类型为 void*，同样需要手动转换）。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *ptr = (char*)calloc(100, sizeof(char)); // 分配 100 个 char 大小的内存</code></p>
+</li>
+<li><p>特点：分配的内存大小是 num * size，并且会将所有字节初始化为 0。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-内存初始化"><a href="#2-内存初始化" class="headerlink" title="2. 内存初始化"></a>2. <strong>内存初始化</strong></h3><ul>
+<li><p><code>malloc</code></p>
+<ul>
+<li><p>分配的内存内容是未初始化的，可能是随机值（”垃圾值”）。</p>
+</li>
+<li><p>如果需要初始化，需要手动调用 memset 或其他方法。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *ptr = (char*)malloc(100); // ptr 的内容是未定义的 memset(ptr, &#39;\0&#39;, 100); // 手动初始化为 &#39;\0&#39;</code></p>
+</li>
+</ul>
+</li>
+<li><p><code>calloc</code></p>
+<ul>
+<li><p>分配的内存会被自动初始化为 0（对于字符来说就是 ‘\0’）。</p>
+</li>
+<li><p>这是一个内置行为，无需额外操作。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *ptr = (char*)calloc(100, sizeof(char)); // ptr 的 100 个字节已自动初始化为 &#39;\0&#39;</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-使用场景"><a href="#3-使用场景" class="headerlink" title="3. 使用场景"></a>3. <strong>使用场景</strong></h3><ul>
+<li><code>malloc</code><ul>
+<li>适用于只需要分配内存、不关心初始值的情况。</li>
+<li>性能略高于 <code>calloc</code>，因为不执行初始化操作。</li>
+</ul>
+</li>
+<li><code>calloc</code><ul>
+<li>适用于需要确保内存初始值为 0 的情况（例如字符串缓冲区或计数器数组）。</li>
+<li>参数分离（num 和 size）使得分配多元素数组更直观。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-内存分配的等价性"><a href="#4-内存分配的等价性" class="headerlink" title="4. 内存分配的等价性"></a>4. <strong>内存分配的等价性</strong></h3><ul>
+<li><p><code>malloc(100)</code> 和 <code>calloc(100, 1)</code> 在分配的总字节数上是等价的（都是 100 字节），但 <code>calloc</code> 会额外将内存清零。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *m = (char*)malloc(100);           // 100 字节，未初始化 char *c = (char*)calloc(100, sizeof(char)); // 100 字节，初始化为 0</code></p>
+</li>
+</ul>
+<h3 id="5-错误处理"><a href="#5-错误处理" class="headerlink" title="5. 错误处理"></a>5. <strong>错误处理</strong></h3><ul>
+<li><p>两者在分配失败时都返回 <code>NULL</code>，这一点没有区别。</p>
+</li>
+<li><p>示例：</p>
+<p>  <code>char *ptr = (char*)malloc(100); if (ptr == NULL) &#123;    // 分配失败 &#125;</code></p>
+</li>
+</ul>
+<h3 id="总结表"><a href="#总结表" class="headerlink" title="总结表"></a>总结表</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>malloc</code></th>
+<th><code>calloc</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>参数</strong></td>
+<td>一个：size（总字节数）</td>
+<td>两个：num（个数），size（每元素字节数）</td>
+</tr>
+<tr>
+<td><strong>初始化</strong></td>
+<td>不初始化，内容未定义</td>
+<td>自动初始化为 0</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>较快（无初始化开销）</td>
+<td>稍慢（有初始化开销）</td>
+</tr>
+<tr>
+<td><strong>典型用途</strong></td>
+<td>通用内存分配</td>
+<td>需要清零的数组或缓冲区</td>
+</tr>
+</tbody></table>
+<h3 id="实际选择"><a href="#实际选择" class="headerlink" title="实际选择"></a>实际选择</h3><ul>
+<li>如果你只需要内存且不在乎初始值，用<code> malloc</code></li>
+<li>如果需要内存清零（比如字符串或计数器），用 <code>calloc</code> 会更方便。</li>
+</ul>
+<h2 id="char-ch和char-arr-区别"><a href="#char-ch和char-arr-区别" class="headerlink" title="char *ch和char arr[]区别"></a><code>char *ch和char arr[]</code>区别</h2><p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_024.png" alt="image-20250423070924107"></p>
+<blockquote>
+<p>把字符串常量赋值给数组(只有初始化的时候可以这样)会把这个字符串常量赋值到栈区,<strong>把整个字符串拷贝给数组</strong>,而把字符串常量赋值给指针变量,会把首元素地址赋值给指针,这个时候<strong>指针指向静态区的字符串常量</strong></p>
+</blockquote>
+<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><h3 id="函数指针定义"><a href="#函数指针定义" class="headerlink" title="函数指针定义"></a>函数指针定义</h3><blockquote>
+<p><strong>重要</strong></p>
+<p>首先区分一下数组指针和函数指针,数组名退化和函数名退化规则</p>
+<ul>
+<li><p>数组名在除<code>&amp;arr</code>和<code>sizeof(arr)</code>之外会退化(<strong>隐式转换</strong>)为首元素地址,<code>type_t arr[len]</code>中<code>arr</code>从<code>type_t [len]</code>类型退化为<code>type_t *</code>类型,即退化为首元素的地址(指针)</p>
+</li>
+<li><p>而函数名有所不同除<code>&amp;function</code>和<code>sizeof(function)</code>外(这里补充一下对函数进行<code>sizeof(function)</code>是不合法的,因为标准禁止 <code>sizeof</code> 函数类型C11 §6.5.3.4&#x2F;1 只允许对”对象”或完整的类型做 <code>sizeof，</code>函数既不是对象，也不是完整的可测类型,如果需要计算函数入口地址的大小可以<code>sizeof(&amp;fun)</code>,由于函数名在面对&amp;操作符的时候不会退化为入口地址,这个时候对函数名取地地址得到函数的入口地址,再用<code>sizeof</code>即可),<code>type_t function(parameter)</code>中<code>function</code>会从<code>type_t (parameter)</code>类型退化为(<strong>隐式转换</strong>)为<code>type_t (*)(parameter)</code>类型,表示的是函数的入口地址,我们又发现,不发生隐式转换的情况的是对函数取地址,其实对函数取地址<code>&amp;function</code>恰好是<code>type_t (*)(parameter)</code>类型,<strong>即<code>&amp;function</code>和<code>function</code>是等价的</strong>,这个是与数组不同的地方,原因是数组名和函数名隐式转换的类型不同,一个转换为首元素的地址,一个转换为<strong>函数入口地址</strong></p>
+</li>
+</ul>
+</blockquote>
+<p>⭐<code>&amp;fun</code>和<code>fun</code>是等价的(<strong>隐式转换的原因</strong>)</p>
+<blockquote>
+<p>根据前⾯学习整型指针，数组指针的时候，我们的类比关系，我们不难得出结论：<strong>函数指针变量应该是⽤来存放函数地址的，未来通过地址能够调⽤函数的</strong>。</p>
+</blockquote>
+<p>函数指针是变量存储函数的地址,对函数名取地址<code>&amp;function</code>得到函数的地址,这个与对数组名取地址得到数组的地址一致,这个时候需要用函数指针接收这个地址</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">test</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">void</span> (*p)()=test;  <span class="comment">//指向函数的指针(test和&amp;test等价,都是函数入口地址)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;&amp;test =%p\n&quot;</span>,&amp;test);   <span class="comment">//分别打印&amp;test,test,p的值发现三个值完全一样,</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;test  =%p\n&quot;</span>,test);	   <span class="comment">//&amp;test函数的地址(入口地址),用函数指针的指针接收,</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;p     =%p\n&quot;</span>,p);	   <span class="comment">//但是函数名又会退化为函数入口地址,所以test与&amp;test完全等价</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_025.png" alt="image-20250519144648181"></p>
+<blockquote>
+<p><strong>提示</strong></p>
+<p>类似数组指针,使用函数指针需要用到函数调用操作符<code>()</code>(使用数组指针使用的是数组下标运算符<code>[]</code>)</p>
+</blockquote>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_026.png" alt="image-20250518163745953"></p>
+<blockquote>
+<p><strong>提示</strong></p>
+<p>注意函数指针定义的时候可以<strong>省略函数参数名,也可以不省略,没什么影响</strong>,反正使用函数指针调用函数的时候需要传实际参数,省不省略参数名参数名都不起作用</p>
+</blockquote>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> (*pf)(<span class="type">int</span>,<span class="type">int</span> )=add;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,&amp;add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,*add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,pf);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_027.png" alt="image-20250518165008144"></p>
+<p>下面从”类型转换”角度来看 <code>*add</code> 到底是什么意思：(<strong>函数设计器&#x3D;函数名</strong>)</p>
+<ol>
+<li><p>函数名的默认转换</p>
+<ul>
+<li>在大多数表达式中，写到 <code>add</code>（函数设计器）时，编译器会把它隐式转换成”指向该函数的指针”，类型是 <code>int (*)(int,int)</code>。</li>
+<li>所以 <code>add</code> ≡ <code>&amp;add</code>，二者都是函数入口地址。</li>
+</ul>
+</li>
+<li><p>对函数指针做一元 <code>*</code></p>
+<ul>
+<li><code>add</code> 先变成一个指针，然后 <code>*add</code> 就是”解引用”这个指针，得到一个函数设计器，类型回退到”函数类型” <code>int(int,int)</code>。</li>
+<li>但是，<strong>在除 <code>sizeof</code>&#x2F;<code>&amp;</code>&#x2F;<code>_Alignof</code> 之外的几乎所有上下文中</strong>，这个函数设计器又会马上再”退化”成指向它的指针。</li>
+</ul>
+</li>
+<li><p>在 <code>printf(&quot;%p\n&quot;, *add);</code> 中的流程：</p>
+<ol>
+<li><code>add </code>→ 隐式转换 → <code>int (*)(int,int)</code> 类型的函数指针</li>
+<li><code>*add</code> → 解引用 → 得到函数设计器，类型 <code>int(int,int)</code></li>
+<li>作为 <code>printf</code>参数，又触发函数设计器→函数指针的隐式转换→ 最终传进去的还是那个入口地址</li>
+</ol>
+</li>
+<li><p>和调用写法对比</p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> (*pf)(<span class="type">int</span>,<span class="type">int</span>) = add;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = pf(<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">// *pf → 解引用 → 函数设计器 → 隐式转回指针 → 调用*</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> b = (*pf)(<span class="number">1</span>,<span class="number">2</span>); <span class="comment">// *显式先解引用，再调用，效果完全一样*</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>小结：</strong></p>
+<ul>
+<li><code>*add</code> 并不是一个新函数或特殊符号，只是”对函数指针解引用”→得到函数设计器→ 再次退化成指针。</li>
+<li>因此 <code>add</code>、<code>&amp;add</code>、<code>*add</code>、<code>pf</code> 在打印地址时都一样。</li>
+</ul>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_028.png" alt="image-20250519145109904"></p>
+<h3 id="函数指针使用"><a href="#函数指针使用" class="headerlink" title="函数指针使用"></a>函数指针使用</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> (*pf)(<span class="type">int</span> ,<span class="type">int</span> )=add;<span class="comment">//或者&amp;add,二者等价</span></span><br><span class="line">    <span class="comment">//使用函数指针,类型数组指针解引用得到数组元素,对函数指针解引用得到函数.但是由于数组和函数隐式转换有点不同的原因,这里也有些区别</span></span><br><span class="line">    (*pf)(<span class="number">20</span>,<span class="number">30</span>); <span class="comment">//对pf解引用,由于pf存储的是函数入口地址,则*pf得到add,再使用函数调用操作符()调用函数,由前面可知*pf和pf是等价的,因为除sizeof和&amp;以,函数都退化(隐式转换)为入口地址,即此时*pf得到函数,退化为入口地址</span></span><br><span class="line">  	<span class="comment">//使用函数指针等价于</span></span><br><span class="line">    pf(<span class="number">20</span>,<span class="number">30</span>); <span class="comment">//甚至可以(**************pf)(20,30),反正都是等价的</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="有趣的代码"><a href="#有趣的代码" class="headerlink" title="有趣的代码"></a>有趣的代码</h4><ul>
+<li><pre><code class="language-c">  (*(void (*)())0)(); //与((void(*)())0)()等价
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">	**解释:**`void (*)()`是一个函数指针类型,把0强转为`void (*)()`类型,然后对调用函数指针0,**从中可得到一个把函数指针置空的方法**:`void (*p)()=(void (*)())0`,即把0强转为相应类型的指针,实际上一级指针的空指针类型NULL在定义的时候就是这样做的:`#define NULL ((void *)0)`也是把0强转为相应指针类型,</span><br><span class="line"></span><br><span class="line">	也可以让其隐式转换为相应的类型置空:`void (*p)()=0`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- ```c</span><br><span class="line">	void (*signal(int , void(*)(int)))(int);</span><br></pre></td></tr></table></figure>
+
+  **解释:**声明函数`signal`有两个参数,一个是int类型,一个是返回值是void,参数是 int 的函数指针,这个函数的返回值是一个指针,指针指向的是一个返回值是void ,参数是int的函数
+</code></pre>
+</li>
+</ul>
+<p>有上面两个例子看出复杂 的指针晦涩难懂,所以引入类型重定义关键字<code>typedef</code></p>
+<h2 id="关键字typedef"><a href="#关键字typedef" class="headerlink" title="关键字typedef"></a>关键字typedef</h2><p><code>typedef</code>是C语言中的关键字，用于为类型创建别名，使复杂的类型声明更易读、更易维护。特别是对于复杂的函数指针类型，使用<code>typedef</code>可以大大提高代码的可读性。</p>
+<p>例如，可以将复杂的函数指针类型定义为更简单的形式：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不使用typedef的函数指针声明</span></span><br><span class="line"><span class="type">void</span> (*signal(<span class="type">int</span>, <span class="type">void</span> (*)(<span class="type">int</span>)))(<span class="type">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用typedef简化</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*<span class="type">signal_handler_t</span>)</span><span class="params">(<span class="type">int</span>)</span>;</span><br><span class="line"><span class="type">signal_handler_t</span> <span class="title function_">signal</span><span class="params">(<span class="type">int</span>, <span class="type">signal_handler_t</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_029.png" alt="image-20250519164714731"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_030.png" alt="image-20250519165426862"></p>
+<h2 id="qsort函数"><a href="#qsort函数" class="headerlink" title="qsort函数"></a><code>qsort</code>函数</h2><p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_031.png" alt="image-20250519171134505"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_032.png" alt="image-20250519171615064"></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_033.png" alt="image-20250519172320200"></p>
+<blockquote>
+<p><code>qsort</code>函数接收四个参数(实现排序任意类型的数据)</p>
+<ol>
+<li><p>首元素地址</p>
+</li>
+<li><p>元素个数</p>
+</li>
+<li><p>每个元素占用字节大小</p>
+</li>
+<li><p><strong>排序比较函数指针<code>int(*)(const void*,conts void *)</code>类型的函数指针</strong></p>
+<p> <strong>注意:<strong>传第四个参数的时候类型要匹配,即一定要传<code>int(*)(const void*,conts void *)</code>类型的函数指针,否则类型不匹配报错,所以我们自己定义比较函数的时候返回类型和参数必须保持一致,否则参数类型不匹配</strong>(当然也可以在传参的时候强转,见下面示例代码)</strong></p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	qsort函数排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//正常传参int(*)(const void*,const void*)类型函数指针</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *x, <span class="type">const</span> <span class="type">void</span> *y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> *((<span class="type">int</span> *)x) - *((<span class="type">int</span> *)y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">423</span>, <span class="number">55</span>, <span class="number">54646</span>, <span class="number">4243</span>, <span class="number">54654</span>, <span class="number">4243</span>, <span class="number">6546</span>, <span class="number">8567</span>, <span class="number">3132</span>, <span class="number">546</span>&#125;;</span><br><span class="line">    qsort(arr, <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), compare);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//对函数指针类型强转为qsort需要的类型传参</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span> *x,<span class="type">int</span> *y)</span>  <span class="comment">//比较函数 int (*)(int *,int*)类型函数指针接收</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> *x-*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">423</span>, <span class="number">55</span>, <span class="number">54646</span>, <span class="number">4243</span>, <span class="number">54654</span>, <span class="number">4243</span>, <span class="number">6546</span>, <span class="number">8567</span>, <span class="number">3132</span>, <span class="number">546</span>&#125;;</span><br><span class="line">    qsort(arr, <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), (<span class="type">int</span>(*)(<span class="type">const</span> <span class="type">void</span>*,<span class="type">const</span> <span class="type">void</span>*))compare);   <span class="comment">//把函数指针类型强转为int (*)(const void*,const void *)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释强转传参的合理性:</strong></p>
+<blockquote>
+<p><strong>提示</strong></p>
+<p>把比较函数指针强转为<code>int (*)(const void *,const void *)</code>类型,用<code>compare</code>函数指针变量接收这个地址,<code>qsort</code>函数内部使用<code>compare</code>函数指针变量调用回调函数的时候把函数指针的两个<code>const void*</code>类型参数传给回调函数,而回调函数的参数是普通的<code>const</code>指针类型不是泛型指针,<strong>此时发生隐式转换,把<code>const void*</code>指针转换为<code>const</code>普通类型指针</strong>,从而达到目的</p>
+</blockquote>
+<p>**示例:**使用<code>qsort</code>排序其他数据类型-&gt;结构体</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line">    <span class="type">int</span> year;</span><br><span class="line">&#125; persion;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(persion *arr, <span class="type">int</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i].year); <span class="comment">//也可以使用-&gt;操作符,类似数组[]操作符,-&gt;和(*arr).year</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);					<span class="comment">//等价,即可以(arr+i)-&gt;year,和下标运算符非常类似,用于结构体</span></span><br><span class="line">&#125;									<span class="comment">//指针直接访问成员</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *x, <span class="type">const</span> <span class="type">void</span> *y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="type">const</span> persion*)x)-&gt;year-((<span class="type">const</span> persion*)y)-&gt;year;</span><br><span class="line">    <span class="comment">//⭐把const void*指针强转为结构体指针const persion*类型--解引用--访问成员year</span></span><br><span class="line">&#125;	<span class="comment">//													 或者使用指向结构体成员操作符</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    srand((<span class="type">unsigned</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">    persion arr[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++)</span><br><span class="line">        arr[i].year = rand() % <span class="number">60</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;排序前:\n&quot;</span>);</span><br><span class="line">    print(arr, <span class="number">20</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;排序后:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]));</span><br><span class="line">    qsort(arr, <span class="number">20</span>, <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), compare);</span><br><span class="line">    print(arr, <span class="number">20</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果<br><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_034.png" alt="image-20250519182058443"></p>
+<p><u><strong>指针通关测试题</strong></u></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> *c[] = &#123;<span class="string">&quot;ENTER&quot;</span>, <span class="string">&quot;NEW&quot;</span>, <span class="string">&quot;POINT&quot;</span>, <span class="string">&quot;FIRST&quot;</span>&#125;;</span><br><span class="line">    <span class="type">char</span> **cp[] = &#123;c + <span class="number">3</span>, c + <span class="number">2</span>, c + <span class="number">1</span>, c&#125;;</span><br><span class="line">    <span class="type">char</span> ***cpp = cp;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, **++cpp);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, *--*++cpp + <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, *cpp[<span class="number">-2</span>] + <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, cpp[<span class="number">-1</span>][<span class="number">-1</span>] + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行结果</strong></p>
+<p><img data-src="/images/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20250529131033_035.png" alt="image-20250522152448746"></p>
+<h3 id="解析过程"><a href="#解析过程" class="headerlink" title="解析过程"></a>解析过程</h3><p>这道题涉及到多级指针的操作，需要逐行分析每一条语句的执行过程：</p>
+<ol>
+<li><p>首先来看数据初始化：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *c[] = &#123;<span class="string">&quot;ENTER&quot;</span>, <span class="string">&quot;NEW&quot;</span>, <span class="string">&quot;POINT&quot;</span>, <span class="string">&quot;FIRST&quot;</span>&#125;;  <span class="comment">// 字符串指针数组</span></span><br><span class="line"><span class="type">char</span> **cp[] = &#123;c + <span class="number">3</span>, c + <span class="number">2</span>, c + <span class="number">1</span>, c&#125;;  <span class="comment">// 指向字符指针的指针数组</span></span><br><span class="line"><span class="type">char</span> ***cpp = cp;  <span class="comment">// 指向指针数组的指针</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第一条打印语句：<code>printf(&quot;%s\n&quot;, **++cpp);</code></p>
+<ul>
+<li><code>++cpp</code>: cpp先自增，从指向cp[0]变为指向cp[1]，即指向c+2</li>
+<li><code>**++cpp</code>: 解引用两次，即 **(c+2) &#x3D; *(c+2) &#x3D; “POINT”</li>
+<li>所以打印出 “POINT”</li>
+</ul>
+</li>
+<li><p>第二条打印语句：<code>printf(&quot;%s\n&quot;, *--*++cpp + 3);</code></p>
+<ul>
+<li><code>++cpp</code>: cpp再次自增，指向cp[2]，即c+1</li>
+<li><code>*++cpp</code>: 解引用得到c+1</li>
+<li><code>--*++cpp</code>: 将c+1减1，得到c</li>
+<li><code>*--*++cpp</code>: 解引用c，得到”ENTER”</li>
+<li><code>*--*++cpp + 3</code>: 字符串”ENTER”偏移3个字符，得到”ER”</li>
+<li>所以打印出 “ER”</li>
+</ul>
+</li>
+<li><p>第三条打印语句：<code>printf(&quot;%s\n&quot;, *cpp[-2] + 3);</code></p>
+<ul>
+<li><code>cpp[-2]</code>: 等价于*(cpp-2)，cpp当前指向cp[2]，向前偏移2个位置指向cp[0]，即c+3</li>
+<li><code>*cpp[-2]</code>: 解引用c+3，得到”FIRST”</li>
+<li><code>*cpp[-2] + 3</code>: 字符串”FIRST”偏移3个字符，得到”ST”</li>
+<li>所以打印出 “ST”</li>
+</ul>
+</li>
+<li><p>第四条打印语句：<code>printf(&quot;%s\n&quot;, cpp[-1][-1] + 1);</code></p>
+<ul>
+<li><code>cpp[-1]</code>: 等价于*(cpp-1)，cpp当前指向cp[2]，向前偏移1个位置指向cp[1]，即c+2</li>
+<li><code>cpp[-1][-1]</code>: 等价于*(*(cpp-1)-1)，先得到c+2，再减1得到c+1，解引用得到”NEW”</li>
+<li><code>cpp[-1][-1] + 1</code>: 字符串”NEW”偏移1个字符，得到”EW”</li>
+<li>所以打印出 “EW”</li>
+</ul>
+</li>
+</ol>
+<p>这道题考察了多级指针、指针运算、数组访问以及字符串指针操作的综合应用，是理解指针概念的一个很好的练习。</p>
+<h1 id="总结与思考"><a href="#总结与思考" class="headerlink" title="总结与思考"></a>总结与思考</h1><h2 id="指针的核心概念回顾"><a href="#指针的核心概念回顾" class="headerlink" title="指针的核心概念回顾"></a>指针的核心概念回顾</h2><ol>
+<li><p><strong>指针的本质</strong>：指针是一种特殊的变量，它存储的是内存地址。通过指针，我们可以间接访问和操作内存中的数据。</p>
+</li>
+<li><p><strong>指针的分类</strong>：</p>
+<ul>
+<li>基本数据类型指针（如 <code>int*</code>, <code>char*</code>）</li>
+<li>数组指针</li>
+<li>函数指针</li>
+<li>多级指针（如二级指针 <code>int**</code>）</li>
+<li>泛型指针（<code>void*</code>）</li>
+</ul>
+</li>
+<li><p><strong>指针操作</strong>：</p>
+<ul>
+<li>取地址操作：使用 <code>&amp;</code> 获取变量的地址</li>
+<li>解引用操作：使用 <code>*</code> 访问指针指向的内存中的值</li>
+<li>指针运算：加减操作、指针比较等</li>
+</ul>
+</li>
+<li><p><strong>特殊用法</strong>：</p>
+<ul>
+<li>函数指针和回调函数</li>
+<li>指针与数组的关系</li>
+<li><code>const</code> 修饰的指针</li>
+<li>多级指针的应用</li>
+</ul>
+</li>
+</ol>
+<h2 id="指针使用的注意事项"><a href="#指针使用的注意事项" class="headerlink" title="指针使用的注意事项"></a>指针使用的注意事项</h2><ol>
+<li><p><strong>内存安全</strong>：使用指针时要特别注意内存安全问题，避免：</p>
+<ul>
+<li>使用未初始化的指针</li>
+<li>访问已释放的内存（悬垂指针）</li>
+<li>缓冲区溢出</li>
+<li>内存泄漏</li>
+</ul>
+</li>
+<li><p><strong>野指针防范</strong>：养成良好习惯，初始化指针为 <code>NULL</code>，在使用前检查指针是否为 <code>NULL</code>，释放内存后将指针置为 <code>NULL</code>。</p>
+</li>
+<li><p><strong>理解指针与数组的区别</strong>：尽管数组名在大多数情况下会退化为指向首元素的指针，但它们在本质上是不同的。</p>
+</li>
+</ol>
+<h2 id="指针的意义与价值"><a href="#指针的意义与价值" class="headerlink" title="指针的意义与价值"></a>指针的意义与价值</h2><p>指针是C语言的强大特性，它使程序员能够：</p>
+<ol>
+<li><strong>直接操作内存</strong>：实现高效的内存管理和数据结构</li>
+<li><strong>实现复杂的数据结构</strong>：链表、树、图等</li>
+<li><strong>提高程序效率</strong>：通过传递指针而非整个数据结构来减少数据复制</li>
+<li><strong>实现动态内存分配</strong>：根据程序运行时的需求分配内存</li>
+</ol>
+<p>通过深入理解和正确使用指针，我们可以编写出更高效、更灵活的C语言程序。然而，指针的灵活性也带来了潜在的风险，因此在使用指针时必须保持谨慎，并采取必要的防范措施避免出现内存相关的问题。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>技术分享</category>
+      </categories>
+      <tags>
+        <tag>学习记录</tag>
+        <tag>技术笔记</tag>
+      </tags>
   </entry>
 </search>
