@@ -1630,71 +1630,31 @@ class="math inline">\(…\)</span></p></li>
 <li><p>两个指针的比较</p>
 <p>使用关系运算符可以比较两个指针的值，前提是两个指针都指向使用关系运算符可以比较两个指针的值，前提是两个指针都指向相同类型的对象</p></li>
 </ul>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131033_001.png"
-alt="指针比较代码示例" />
-<figcaption aria-hidden="true">指针比较代码示例</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131035_002.png"
-alt="指针与数组的比较" />
-<figcaption aria-hidden="true">指针与数组的比较</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131033_001.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131035_002.png" /></p>
 <blockquote>
 <p><strong>重要</strong></p>
 <p><strong>给函数形参加const防止改变数组元素:</strong></p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131036_003.png"
-alt="const防止修改数组元素示例1" />
-<figcaption aria-hidden="true">const防止修改数组元素示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131038_004.png"
-alt="const防止修改数组元素示例2" />
-<figcaption aria-hidden="true">const防止修改数组元素示例2</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131039_005.png"
-alt="const防止修改数组元素示例3" />
-<figcaption aria-hidden="true">const防止修改数组元素示例3</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131036_003.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131038_004.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131039_005.png" /></p>
 <h3 id="步长偏移量">步长(偏移量)</h3>
 <p>步长取决于指针指向变量的类型</p>
 <p>注意对指针加减都是以元素为单位计量的,比如</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">5</span>];</span><br><span class="line"><span class="type">int</span> *ptr1=(arr+<span class="number">4</span>);</span><br><span class="line"><span class="type">int</span> *ptr2=(arr+<span class="number">2</span>);</span><br><span class="line"><span class="type">int</span> len=ptr1-ptr2 ;<span class="comment">//得到的是2,而不是8</span></span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131041_006.png"
-alt="指针步长计算示例" />
-<figcaption aria-hidden="true">指针步长计算示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131041_006.png" /></p>
 <h3 id="指针运算">指针运算</h3>
 <blockquote>
 <p><strong>提示</strong></p>
 <p><strong>一条语句(语句以分号为结束)多个变量声明的时候,指针指向的类型和*分开,类型在最前面,*和变量连在一起</strong></p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131043_007.png"
-alt="多个指针变量声明语法" />
-<figcaption aria-hidden="true">多个指针变量声明语法</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131043_007.png" /></p>
 <h3 id="sizeof-与strlen比较"><code>sizeof</code>
 与<code>strlen</code>比较</h3>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131044_008.png"
-alt="sizeof函数用法示例" />
-<figcaption aria-hidden="true">sizeof函数用法示例</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131046_009.png"
-alt="sizeof与strlen对比示例1" />
-<figcaption aria-hidden="true">sizeof与strlen对比示例1</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131047_010.png"
-alt="sizeof与strlen对比示例2" />
-<figcaption aria-hidden="true">sizeof与strlen对比示例2</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131044_008.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131046_009.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131047_010.png" /></p>
 <p>⭐⭐⭐<strong>示例代码使用<code>sizeof</code>,主要理解数组名发生隐式转换(退化)为首元素地址的例外情况</strong></p>
 <blockquote>
 <p><strong>警告</strong></p>
@@ -1702,21 +1662,13 @@ alt="sizeof与strlen对比示例2" />
 名退化规则完全一致,只不过函数名退化为函数入口地址,和<code>&amp;函数名</code>结果一样,省去很多麻烦,以后如果数组不是以上两种情况不隐式转换的时候,<strong>都需要使用首元素地址去分析问题</strong></p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a));      <span class="comment">//16,sizeof(数组名)此时数组名不会隐式转换为地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a + <span class="number">0</span>));	 <span class="comment">//⭐8,a+0转换为(多了+0导致的)首元素地址,然后再计算地址大小</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(*a));     <span class="comment">//4,一个int类型</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a + <span class="number">1</span>));	 <span class="comment">//8,同上</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(a[<span class="number">1</span>]));	 <span class="comment">//4,int类型</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a));	 <span class="comment">//8,&amp;+数组名数组不会隐式转换,此时&amp;a表示整个数组地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(*&amp;a));    <span class="comment">//⭐16,&amp;a整个数组地址,再解引用得到数组,sizeof(数组名)不退化</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;*a));    <span class="comment">//⭐8,表示首元素地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a + <span class="number">1</span>)); <span class="comment">//8,一个地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>]));  <span class="comment">//8一个地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>] + <span class="number">1</span>)); <span class="comment">//8,一个地址</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131049_011.png"
-alt="sizeof与数组名退化示例" />
-<figcaption aria-hidden="true">sizeof与数组名退化示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131049_011.png" /></p>
 <blockquote>
 <p><strong>提示</strong></p>
 <p>⭐⭐⭐使用<code>strlen</code>函数计算字符串长度传入的参数是<code>cosnt char*</code>类型,第三和第四的个传入<code>char</code>类型,<strong>会强转为指针类型,但是该地址不可访问导致段错误,倒数第二,三个也会强转,但是强转后还是指针,是可访问的</strong></p>
 </blockquote>
 <p><strong>练习</strong></p>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131050_012.png"
-alt="数组指针和二维数组练习题" />
-<figcaption aria-hidden="true">数组指针和二维数组练习题</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131050_012.png" /></p>
 <blockquote>
 <p><strong>答案:</strong></p>
 <ol type="1">
@@ -1773,14 +1725,14 @@ const修饰指针变量的时候看是修饰*p还是p如果是*p则表示*p的�
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span>* p;</span><br><span class="line">    *p=<span class="number">100</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>访问了不能访问的内存发生错误,会报段错误<code>:Segmentation fault</code></p>
-<p><img data-src="/images/C语言指针学习笔记/20250529131103_013.png" alt="image-20250316105217704"  /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131052_013.png" /></p>
 <blockquote>
 <p>什么是段错误？
 段错误是操作系统检测到程序试图访问非法内存地址时发出的信号（通常是
 SIGSEGV）。在现代操作系统中，内存被划分为不同的段（如代码段、数据段、堆、栈等），每个段有特定的权限（读、写、执行）。当程序违反这些权限或访问未分配的内存时，就会触发段错误。
 比如常见的段错误:<strong>读写越界,修改只读内存</strong>(常见的几种)</p>
 </blockquote>
-<p><img data-src="/images/C语言指针学习笔记/20250529131103_014.png" alt="image-20250316104725445" style="zoom:67%;" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131053_014.png" /></p>
 <blockquote>
 <p><strong>注意</strong></p>
 <p>定义指针的时候如果不初始化,把指针定义为NULL <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* p=<span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></p>
@@ -1790,21 +1742,9 @@ SIGSEGV）。在现代操作系统中，内存被划分为不同的段（如代�
 <p><code>assert.h</code>头⽂件定义了宏 <code>assert()</code>
 ，⽤于在运⾏时确保程序符合指定条件，如果不符合，就报错终⽌运⾏。这个宏常常被称为<strong>“断言”</strong></p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131055_015.png"
-alt="assert函数原型" />
-<figcaption aria-hidden="true">assert函数原型</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131056_016.png"
-alt="assert函数使用示例" />
-<figcaption aria-hidden="true">assert函数使用示例</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131057_017.png"
-alt="assert函数报错演示" />
-<figcaption aria-hidden="true">assert函数报错演示</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131055_015.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131056_016.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131057_017.png" /></p>
 <blockquote>
 <p><strong>提示</strong></p>
 <p>使用<code>assert()</code>函数在调试过程加入一些条件判断,可以鉴定程序是否符合预期运行.如果不符合预期程序就停止运行且显示错误位置和表达式</p>
@@ -1816,47 +1756,23 @@ alt="assert函数报错演示" />
 <p><strong>重要</strong></p>
 <p>malloc函数向系统申请内存空间,参数为申请内存空间(堆内存)字节大小,返回值为内存首元素的地址,由于不知道这块地址存放数据类型,故返回void*的指针,需要的时候强制转换成对应类型的指针</p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131106_018.png"
-alt="malloc函数原型" />
-<figcaption aria-hidden="true">malloc函数原型</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131107_019.png"
-alt="动态内存分配示例" />
-<figcaption aria-hidden="true">动态内存分配示例</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131108_020.png"
-alt="malloc使用注意事项" />
-<figcaption aria-hidden="true">malloc使用注意事项</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131059_018.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131101_019.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131102_020.png" /></p>
 <blockquote>
 <p><strong>警告</strong></p>
 <p>申请完内存空间使用完后需要手动释放,用free函数释放手动申请的内存空间防止内存泄漏,同时把str指针赋值为NULL,因为内存已经释放,不对str赋值为NULL变成野指针(指向不可以内存空间的指针)</p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131103_021.png"
-alt="free函数使用示例" />
-<figcaption aria-hidden="true">free函数使用示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131103_021.png" /></p>
 <blockquote>
 <p><strong>警告</strong></p>
 <p><code>malloc</code>分配内存空间是未初始化的垃圾值,需要先初始化,用<code>memset</code>函数</p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131106_022.png"
-alt="memset函数使用方法" />
-<figcaption aria-hidden="true">memset函数使用方法</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131106_022.png" /></p>
 <p>例如</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *output = (<span class="type">char</span>*)<span class="built_in">malloc</span>(<span class="number">100</span>);</span><br><span class="line"><span class="built_in">memset</span>(output, <span class="string">&#x27;\0&#x27;</span>, <span class="number">100</span>);  <span class="comment">//将分配内存存储字符修改为&#x27;\0&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>或者用<code>calloc</code>函数分配内存空间</p>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131107_023.png"
-alt="calloc函数使用示例" />
-<figcaption aria-hidden="true">calloc函数使用示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131107_023.png" /></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *output = (<span class="type">char</span>*)<span class="built_in">calloc</span>(<span class="number">100</span>, <span class="keyword">sizeof</span>(<span class="type">char</span>)); </span><br></pre></td></tr></table></figure>
 <h2
 id="对比malloc和calloc">对比<code>malloc</code>和<code>calloc</code></h2>
@@ -1981,11 +1897,7 @@ void*，同样需要手动转换）。</p></li>
 </ul>
 <h2
 id="char-ch和char-arr区别"><code>char *ch和char arr[]</code>区别</h2>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131108_024.png"
-alt="字符指针与字符数组的区别" />
-<figcaption aria-hidden="true">字符指针与字符数组的区别</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131108_024.png" /></p>
 <blockquote>
 <p>把字符串常量赋值给数组(只有初始化的时候可以这样)会把这个字符串常量赋值到栈区,<strong>把整个字符串拷贝给数组</strong>,而把字符串常量赋值给指针变量,会把首元素地址赋值给指针,这个时候<strong>指针指向静态区的字符串常量</strong></p>
 </blockquote>
@@ -2007,31 +1919,19 @@ alt="字符指针与字符数组的区别" />
 </blockquote>
 <p>函数指针是变量存储函数的地址,对函数名取地址<code>&amp;function</code>得到函数的地址,这个与对数组名取地址得到数组的地址一致,这个时候需要用函数指针接收这个地址</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">test</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">void</span> (*p)()=test;  <span class="comment">//指向函数的指针(test和&amp;test等价,都是函数入口地址)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;&amp;test =%p\n&quot;</span>,&amp;test);   <span class="comment">//分别打印&amp;test,test,p的值发现三个值完全一样,</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;test  =%p\n&quot;</span>,test);	   <span class="comment">//&amp;test函数的地址(入口地址),用函数指针的指针接收,</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;p     =%p\n&quot;</span>,p);	   <span class="comment">//但是函数名又会退化为函数入口地址,所以test与&amp;test完全等价</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131109_025.png"
-alt="函数指针地址等价性示例" />
-<figcaption aria-hidden="true">函数指针地址等价性示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131109_025.png" /></p>
 <blockquote>
 <p><strong>提示</strong></p>
 <p>类似数组指针,使用函数指针需要用到函数调用操作符<code>()</code>(使用数组指针使用的是数组下标运算符<code>[]</code>)</p>
 </blockquote>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131111_026.png"
-alt="函数指针调用方式" />
-<figcaption aria-hidden="true">函数指针调用方式</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131111_026.png" /></p>
 <blockquote>
 <p><strong>提示</strong></p>
 <p>注意函数指针定义的时候可以<strong>省略函数参数名,也可以不省略,没什么影响</strong>,反正使用函数指针调用函数的时候需要传实际参数,省不省略参数名参数名都不起作用</p>
 </blockquote>
 <h4 id="示例">示例</h4>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> (*pf)(<span class="type">int</span>,<span class="type">int</span> )=add;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,&amp;add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,*add);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>,pf);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131112_027.png"
-alt="函数指针和函数名地址值比较" />
-<figcaption aria-hidden="true">函数指针和函数名地址值比较</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131112_027.png" /></p>
 <p><strong>小结：</strong></p>
 <ul>
 <li><code>*add</code>
@@ -2041,48 +1941,30 @@ alt="函数指针和函数名地址值比较" />
 <code>add</code>、<code>&amp;add</code>、<code>*add</code>、<code>pf</code>
 在打印地址时都一样。</li>
 </ul>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131113_028.png"
-alt="函数指针解引用等价性" />
-<figcaption aria-hidden="true">函数指针解引用等价性</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131113_028.png" /></p>
 <h2 id="回调函数">回调函数</h2>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131116_029.png"
-alt="回调函数定义" />
-<figcaption aria-hidden="true">回调函数定义</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131117_030.png"
-alt="回调函数示例" />
-<figcaption aria-hidden="true">回调函数示例</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131116_029.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131117_030.png" /></p>
 <h2 id="qsort函数"><code>qsort</code>函数</h2>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131120_031.png"
-alt="qsort函数原型" />
-<figcaption aria-hidden="true">qsort函数原型</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131121_032.png"
-alt="qsort函数参数说明" />
-<figcaption aria-hidden="true">qsort函数参数说明</figcaption>
-</figure>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131122_033.png"
-alt="qsort使用示例" />
-<figcaption aria-hidden="true">qsort使用示例</figcaption>
-</figure>
-<p>运行结果 <img data-src="/images/C语言指针学习笔记/20250529131123_034.png"
-alt="qsort排序结构体示例结果" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131120_031.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131121_032.png" /></p>
+<p><img data-src="/images/C语言指针学习笔记/20250529131122_033.png" /></p>
+<blockquote>
+<p><code>qsort</code>函数接收四个参数(实现排序任意类型的数据)</p>
+<ol type="1">
+<li><p>首元素地址</p></li>
+<li><p>元素个数</p></li>
+<li><p>每个元素占用字节大小</p></li>
+<li><p>**排序比较函数指针<code>int(*)(const void*,conts void *)</code>类型的函数指针</p></li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	qsort函数排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//正常传参int(*)(const void*,const void*)类型函数指针</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *x, <span class="type">const</span> <span class="type">void</span> *y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> *((<span class="type">int</span> *)x) - *((<span class="type">int</span> *)y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">423</span>, <span class="number">55</span>, <span class="number">54646</span>, <span class="number">4243</span>, <span class="number">54654</span>, <span class="number">4243</span>, <span class="number">6546</span>, <span class="number">8567</span>, <span class="number">3132</span>, <span class="number">546</span>&#125;;</span><br><span class="line">    qsort(arr, <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), compare);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//对函数指针类型强转为qsort需要的类型传参</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span> *x,<span class="type">int</span> *y)</span>  <span class="comment">//比较函数 int (*)(int *,int*)类型函数指针接收</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> *x-*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">423</span>, <span class="number">55</span>, <span class="number">54646</span>, <span class="number">4243</span>, <span class="number">54654</span>, <span class="number">4243</span>, <span class="number">6546</span>, <span class="number">8567</span>, <span class="number">3132</span>, <span class="number">546</span>&#125;;</span><br><span class="line">    qsort(arr, <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), (<span class="type">int</span>(*)(<span class="type">const</span> <span class="type">void</span>*,<span class="type">const</span> <span class="type">void</span>*))compare);   <span class="comment">//把函数指针类型强转为int (*)(const void*,const void *)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line">    <span class="type">int</span> year;</span><br><span class="line">&#125; persion;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">print</span><span class="params">(persion *arr, <span class="type">int</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, arr[i].year); <span class="comment">//也可以使用-&gt;操作符,类似数组[]操作符,-&gt;和(*arr).year</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);					<span class="comment">//等价,即可以(arr+i)-&gt;year,和下标运算符非常类似,用于结构体</span></span><br><span class="line">&#125;									<span class="comment">//指针直接访问成员</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *x, <span class="type">const</span> <span class="type">void</span> *y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="type">const</span> persion*)x)-&gt;year-((<span class="type">const</span> persion*)y)-&gt;year;</span><br><span class="line">    <span class="comment">//⭐把const void*指针强转为结构体指针const persion*类型--解引用--访问成员year</span></span><br><span class="line">&#125;	<span class="comment">//													 或者使用指向结构体成员操作符</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    srand((<span class="type">unsigned</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">    persion arr[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++)</span><br><span class="line">        arr[i].year = rand() % <span class="number">60</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;排序前:\n&quot;</span>);</span><br><span class="line">    print(arr, <span class="number">20</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;排序后:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%zu\n&quot;</span>, <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]));</span><br><span class="line">    qsort(arr, <span class="number">20</span>, <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]), compare);</span><br><span class="line">    print(arr, <span class="number">20</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果 <img data-src="/images/C语言指针学习笔记/20250529131123_034.png" /></p>
 <p><u><strong>指针通关测试题</strong></u></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> *c[] = &#123;<span class="string">&quot;ENTER&quot;</span>, <span class="string">&quot;NEW&quot;</span>, <span class="string">&quot;POINT&quot;</span>, <span class="string">&quot;FIRST&quot;</span>&#125;;</span><br><span class="line">    <span class="type">char</span> **cp[] = &#123;c + <span class="number">3</span>, c + <span class="number">2</span>, c + <span class="number">1</span>, c&#125;;</span><br><span class="line">    <span class="type">char</span> ***cpp = cp;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, **++cpp);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, *--*++cpp + <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, *cpp[<span class="number">-2</span>] + <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, cpp[<span class="number">-1</span>][<span class="number">-1</span>] + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>运行结果</strong></p>
-<figure>
-<img data-src="/images/C语言指针学习笔记/20250529131124_035.png"
-alt="多级指针测试题运行结果" />
-<figcaption aria-hidden="true">多级指针测试题运行结果</figcaption>
-</figure>
+<p><img data-src="/images/C语言指针学习笔记/20250529131124_035.png" /></p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
